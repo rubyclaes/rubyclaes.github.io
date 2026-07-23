@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruby Claes — Full CV</title>
+
+<script>
+  (function () {
+    var isHttp = /^https?:$/i.test(window.location.protocol);
+    var isTrailingCvRoute = /\/cv\/$/i.test(window.location.pathname);
+    if (isHttp && isTrailingCvRoute) {
+      var target = window.location.pathname.replace(/\/cv\/$/i, "/cv");
+      window.location.replace(target + window.location.search + window.location.hash);
+    }
+  })();
+</script>
+
+<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="shortcut icon" href="icons/favicon.ico">
+<link rel="manifest" href="icons/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+<meta name="msapplication-config" content="icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<link rel="stylesheet" href="styles.css?v=20260722f">
+<script defer src="https://analytics.kwokah.com/script.js" data-website-id="da9b9f51-0f4f-4b73-8ba0-0e90532a5e77"></script>
+<script defer src="https://analytics.kwokah.com/recorder.js" data-website-id="da9b9f51-0f4f-4b73-8ba0-0e90532a5e77"></script>
+</head>
+<body class="cv-page">
+
+<div class="sheet">
+  <div class="map-coords map-coords-top" aria-hidden="true">
+    <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+  </div>
+  <div class="map-coords map-coords-bottom" aria-hidden="true">
+    <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+  </div>
+  <div class="map-coords map-coords-left" aria-hidden="true">
+    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+  </div>
+  <div class="map-coords map-coords-right" aria-hidden="true">
+    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+  </div>
+
+  <!-- Full Header (same as index.html) -->
+  <svg class="corner corner-tl" viewBox="0 0 24 24"><path d="M2 2 L2 10 M2 2 L10 2" /></svg>
+  <svg class="corner corner-tr" viewBox="0 0 24 24"><path d="M22 2 L22 10 M22 2 L14 2" /></svg>
+  <svg class="corner corner-bl" viewBox="0 0 24 24"><path d="M2 22 L2 14 M2 22 L10 22" /></svg>
+  <svg class="corner corner-br" viewBox="0 0 24 24"><path d="M22 22 L22 14 M22 22 L14 22" /></svg>
+
+  <header class="titleblock">
+    <svg class="contour-hero" viewBox="0 0 800 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M -20 180 C 120 140, 180 200, 300 160 S 520 120, 640 170 S 780 140, 860 160" class="contour contour-1" />
+      <path d="M -20 140 C 140 100, 220 160, 340 120 S 540 80, 660 130 S 800 100, 860 120" class="contour contour-2" />
+      <path d="M -20 100 C 160 60, 260 120, 380 80 S 560 40, 680 90 S 800 60, 860 80" class="contour contour-3" />
+      <path d="M -20 60  C 180 20, 300 80, 420 40  S 580 0,  700 50  S 800 20, 860 40" class="contour contour-4" />
+    </svg>
+
+    <div class="title-main">
+      <p class="eyebrow">Full CV</p>
+      <h1 id="name"></h1>
+      <p class="tagline" id="tagline"></p>
+    </div>
+    <div class="title-contact" id="contact"></div>
+  </header>
+
+  <p class="citizenship" id="citizenship"></p>
+
+  <nav class="neatline-nav">
+    <a href="index.html">← Back to Portfolio</a>
+    <button type="button" id="download-cv-btn" class="cv-download-btn">⬇ Download CV (PDF)</button>
+  </nav>
+
+  <section class="block" id="profile-cv">
+    <h2 class="section-label"><span class="tick">＋</span> Profile</h2>
+    <p id="full-profile-text"></p>
+  </section>
+
+  <section class="block" id="skills-cv">
+    <h2 class="section-label"><span class="tick">＋</span> Skills</h2>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="block" id="education-cv">
+    <h2 class="section-label"><span class="tick">＋</span> Education</h2>
+    <div id="education"></div>
+  </section>
+
+  <section class="block" id="experience-cv">
+    <h2 class="section-label"><span class="tick">＋</span> Field Experience</h2>
+    <div id="experience"></div>
+  </section>
+
+  <section class="block" id="languages-cv">
+    <h2 class="section-label"><span class="tick">＋</span> Languages</h2>
+    <p id="languages"></p>
+  </section>
+
+  <footer class="plate">
+    <div class="plate-col scale-col">
+      <span class="plate-label">Scale</span>
+      <svg class="scale-bar" viewBox="0 0 180 24" aria-hidden="true">
+        <line x1="2" y1="12" x2="178" y2="12" />
+        <line x1="2" y1="6" x2="2" y2="18" />
+        <line x1="60" y1="6" x2="60" y2="18" />
+        <line x1="119" y1="6" x2="119" y2="18" />
+        <line x1="178" y1="6" x2="178" y2="18" />
+        <rect x="2" y="9" width="58" height="6" class="scale-fill" />
+        <rect x="119" y="9" width="59" height="6" class="scale-fill" />
+      </svg>
+      <span class="plate-caption">Entry-level → Field-ready</span>
+    </div>
+
+    <div class="plate-col north-col">
+      <svg class="north-arrow" viewBox="0 0 40 60" aria-hidden="true">
+        <path d="M20 2 L32 40 L20 32 L8 40 Z" />
+        <text x="20" y="55">N</text>
+      </svg>
+    </div>
+
+    <div class="plate-col info-col">
+      <span class="plate-label">Availability</span>
+      <p id="availability"></p>
+    </div>
+  </footer>
+</div>
+
+<script src="content.js?v=20260722e"></script>
+<script src="script.js?v=20260722e"></script>
+<script src="theme.js?v=20260722e"></script>
+<script>
+  (function () {
+    var columnLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+    function setSideLabels(container, count) {
+      var html = '';
+      for (var i = 1; i <= count; i += 1) {
+        html += '<span>' + i + '</span>';
+      }
+      container.innerHTML = html;
+    }
+
+    function setColumnLabels(container, labels, offsetX, coordCell) {
+      var html = '';
+      for (var i = 0; i < labels.length; i += 1) {
+        var x = offsetX + ((i + 0.5) * coordCell);
+        html += '<span style="left:' + x + 'px">' + labels[i] + '</span>';
+      }
+      container.innerHTML = html;
+    }
+
+    function syncCvMapCoords() {
+      var sheet = document.querySelector('.sheet');
+      var top = sheet && sheet.querySelector('.map-coords-top');
+      var bottom = sheet && sheet.querySelector('.map-coords-bottom');
+      var left = sheet && sheet.querySelector('.map-coords-left');
+      var right = sheet && sheet.querySelector('.map-coords-right');
+      if (!sheet || !top || !bottom || !left || !right) return;
+
+      var coordCell = sheet.clientWidth / columnLabels.length;
+      if (!Number.isFinite(coordCell) || coordCell <= 0) {
+        coordCell = sheet.clientWidth / columnLabels.length;
+      }
+      if (!Number.isFinite(coordCell) || coordCell <= 0) return;
+
+      var gridWidth = coordCell * columnLabels.length;
+      var offsetX = (sheet.clientWidth - gridWidth) / 2;
+
+      sheet.style.setProperty('--coord-cell', coordCell + 'px');
+      sheet.style.setProperty('--coord-grid-offset-x', offsetX + 'px');
+
+      var rowCount = Math.max(7, Math.floor(sheet.clientHeight / coordCell));
+      sheet.style.setProperty('--coord-rows', String(rowCount));
+
+      setColumnLabels(top, columnLabels, offsetX, coordCell);
+      setColumnLabels(bottom, columnLabels, offsetX, coordCell);
+      setSideLabels(left, rowCount);
+      setSideLabels(right, rowCount);
+    }
+
+    var rafId = 0;
+    function scheduleSync() {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(syncCvMapCoords);
+    }
+
+    scheduleSync();
+    window.addEventListener('load', scheduleSync);
+    window.addEventListener('resize', scheduleSync);
+
+    if ('ResizeObserver' in window) {
+      var sheet = document.querySelector('.sheet');
+      if (sheet) {
+        var observer = new ResizeObserver(scheduleSync);
+        observer.observe(sheet);
+      }
+    }
+  })();
+</script>
+</body>
+</html>

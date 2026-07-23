@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruby Claes — Cartography & GIS</title>
+<meta name="description" content="Ruby Claes — GIS & Cartography Portfolio">
+
+<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="shortcut icon" href="icons/favicon.ico">
+<link rel="manifest" href="icons/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+<meta name="msapplication-config" content="icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20260722f">
+<script defer src="https://analytics.kwokah.com/script.js" data-website-id="da9b9f51-0f4f-4b73-8ba0-0e90532a5e77"></script>
+<script defer src="https://analytics.kwokah.com/recorder.js" data-website-id="da9b9f51-0f4f-4b73-8ba0-0e90532a5e77"></script>
+</head>
+<body class="portfolio-page">
+
+<div class="sheet">
+  <svg class="corner corner-tl" viewBox="0 0 24 24"><path d="M2 2 L2 10 M2 2 L10 2" /></svg>
+  <svg class="corner corner-tr" viewBox="0 0 24 24"><path d="M22 2 L22 10 M22 2 L14 2" /></svg>
+  <svg class="corner corner-bl" viewBox="0 0 24 24"><path d="M2 22 L2 14 M2 22 L10 22" /></svg>
+  <svg class="corner corner-br" viewBox="0 0 24 24"><path d="M22 22 L22 14 M22 22 L14 22" /></svg>
+
+  <header class="titleblock">
+    <svg class="contour-hero" viewBox="0 0 800 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M -20 180 C 120 140, 180 200, 300 160 S 520 120, 640 170 S 780 140, 860 160" class="contour contour-1" />
+      <path d="M -20 140 C 140 100, 220 160, 340 120 S 540 80, 660 130 S 800 100, 860 120" class="contour contour-2" />
+      <path d="M -20 100 C 160 60, 260 120, 380 80 S 560 40, 680 90 S 800 60, 860 80" class="contour contour-3" />
+      <path d="M -20 60  C 180 20, 300 80, 420 40  S 580 0,  700 50  S 800 20, 860 40" class="contour contour-4" />
+    </svg>
+
+    <div class="title-main">
+      <p class="eyebrow">Portfolio</p>
+      <h1 id="name"></h1>
+      <p class="tagline" id="tagline"></p>
+    </div>
+    <div class="title-contact" id="contact"></div>
+  </header>
+
+  <p class="citizenship" id="citizenship"></p>
+
+  <nav class="neatline-nav">
+    <a href="#profile">Profile</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="cv.html" class="nav-external" aria-label="Open full CV page">
+      <span class="cv-label-desktop">Full CV</span>
+      <span class="cv-label-mobile">CV</span>
+    </a>
+  </nav>
+
+  <section class="block" id="profile">
+    <h2 class="section-label"><span class="tick">＋</span> Profile</h2>
+    <p id="profile-text"></p>
+  </section>
+
+  <section class="block" id="skills">
+    <h2 class="section-label"><span class="tick">＋</span> Skills</h2>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="block" id="projects">
+    <h2 class="section-label"><span class="tick">＋</span> Mapped Projects</h2>
+    <p class="hint">Highlight reel. See <a href="cv.html">full CV</a> for more context.</p>
+    <div class="projects" id="projects-list"></div>
+  </section>
+
+  <footer class="plate">
+    <div class="plate-col scale-col">
+      <span class="plate-label">Scale</span>
+      <svg class="scale-bar" viewBox="0 0 180 24" aria-hidden="true">
+        <line x1="2" y1="12" x2="178" y2="12" />
+        <line x1="2" y1="6" x2="2" y2="18" />
+        <line x1="60" y1="6" x2="60" y2="18" />
+        <line x1="119" y1="6" x2="119" y2="18" />
+        <line x1="178" y1="6" x2="178" y2="18" />
+        <rect x="2" y="9" width="58" height="6" class="scale-fill" />
+        <rect x="119" y="9" width="59" height="6" class="scale-fill" />
+      </svg>
+      <span class="plate-caption">Entry-level → Field-ready</span>
+    </div>
+
+    <div class="plate-col north-col">
+      <svg class="north-arrow" viewBox="0 0 40 60" aria-hidden="true">
+        <path d="M20 2 L32 40 L20 32 L8 40 Z" />
+        <text x="20" y="55">N</text>
+      </svg>
+    </div>
+
+    <div class="plate-col info-col">
+      <span class="plate-label">Availability</span>
+      <p id="availability"></p>
+    </div>
+  </footer>
+</div>
+
+<script src="content.js?v=20260722e"></script>
+<script src="script.js?v=20260722e"></script>
+<script src="theme.js?v=20260722e"></script>
+</body>
+</html>

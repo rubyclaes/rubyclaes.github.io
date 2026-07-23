@@ -1,0 +1,864 @@
+/* ==========================================================================
+   Ruby Claes — Portfolio
+   Design concept: the page as a printed topographic map sheet —
+   neatline border, corner registration marks, a legend for skills,
+   a scale bar + north arrow in the footer "plate".
+   ========================================================================== */
+
+:root {
+  --paper:        #E9EBDC;
+  --sheet:        #FBFAF3;
+  --ink:          #22303A;
+  --muted:        #5B6660;
+  --line:         #C7CBB2;
+  --line-soft:    #DBDECB;
+  --contour-green:#4F7A5B;
+  --contour-brown:#8B6A4C;
+  --water:        #3A6EA5;
+  --accent:       #C1560B;
+  --symbol-accent:#B08A4A;
+
+  --display: 'Fraunces', Georgia, serif;
+  --body:    'Work Sans', -apple-system, sans-serif;
+  --mono:    'JetBrains Mono', 'Courier New', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.cv-page {
+  background: var(--paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---------- the "sheet" ---------- */
+
+.sheet {
+  position: relative;
+  container-type: inline-size;
+  --coord-cell: 126px;
+  --coord-rows: 7;
+  --coord-cols: 8;
+  --coord-grid-offset-x: 0px;
+  max-width: 880px;
+  margin: 28px auto;
+  padding: 44px 56px 32px;
+  background: var(--sheet);
+  border: 1px solid var(--ink);
+  outline: 1px solid var(--line);
+  outline-offset: -8px;
+}
+
+@supports (width: 1cqw) {
+  .sheet {
+    --coord-cell: calc(100cqw / 8);
+  }
+}
+
+.cv-page .sheet {
+  --sheet:        #ffffff;
+  --ink:          #22303A;
+  --muted:        #5B6660;
+  --line:         #C7CBB2;
+  --line-soft:    #DBDECB;
+  --contour-green:#4F7A5B;
+  --contour-brown:#8B6A4C;
+  --water:        #3A6EA5;
+  --accent:       #C1560B;
+  --symbol-accent:#B08A4A;
+  background: #ffffff;
+  box-shadow: none;
+  color: var(--ink);
+}
+
+[data-theme="dark"] .cv-page .sheet {
+  border-color: var(--ink);
+  outline-color: var(--line);
+  box-shadow: none;
+}
+
+.cv-page .sheet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(34, 48, 58, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 48, 58, 0.03) 1px, transparent 1px);
+  background-size: var(--coord-cell) var(--coord-cell);
+  background-position:
+    var(--coord-grid-offset-x) 0,
+    var(--coord-grid-offset-x) 0;
+  z-index: 0;
+}
+
+.cv-page .sheet > :not(.map-coords):not(.corner) {
+  position: relative;
+  z-index: 1;
+}
+
+.portfolio-page {
+  background: #ffffff;
+}
+
+[data-theme="dark"] .portfolio-page {
+  background: var(--paper);
+}
+
+.portfolio-page .sheet {
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.portfolio-page .corner {
+  display: none;
+}
+
+.corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  stroke: var(--ink);
+  stroke-width: 1.4;
+  fill: none;
+}
+.corner-tl { top: -1px; left: -1px; }
+.corner-tr { top: -1px; right: -1px; }
+.corner-bl { bottom: -1px; left: -1px; }
+.corner-br { bottom: -1px; right: -1px; }
+
+/* ---------- map coordinate rails (cv page) ---------- */
+
+.map-coords {
+  position: absolute;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+
+.map-coords span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0;
+}
+
+.map-coords-top,
+.map-coords-bottom {
+  left: 0;
+  right: 0;
+  height: 0;
+  transform: none;
+  display: block;
+}
+
+.map-coords-top span,
+.map-coords-bottom span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.map-coords-top { top: -16px; }
+.map-coords-bottom { bottom: -16px; }
+
+.map-coords-left,
+.map-coords-right {
+  top: 0;
+  height: calc(var(--coord-cell) * var(--coord-rows));
+  display: grid;
+  grid-template-rows: repeat(var(--coord-rows), var(--coord-cell));
+  align-items: center;
+}
+
+.map-coords-left { left: -16px; }
+.map-coords-right { right: -16px; }
+
+.map-coords-top::before,
+.map-coords-top::after,
+.map-coords-bottom::before,
+.map-coords-bottom::after {
+  content: '+';
+  position: absolute;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.map-coords-top::before,
+.map-coords-bottom::before { left: -14px; }
+
+.map-coords-top::after,
+.map-coords-bottom::after { right: -14px; }
+
+/* ---------- title block ---------- */
+
+.titleblock {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--ink);
+  overflow: hidden;
+  min-height: 140px;
+}
+
+.contour-hero {
+  position: absolute;
+  inset: -20px -56px auto -56px;
+  height: 160px;
+  width: calc(100% + 112px);
+  z-index: 0;
+  opacity: 0.55;
+}
+.contour { fill: none; stroke-width: 2; }
+.contour-1 { stroke: var(--water); opacity: 0.35; }
+.contour-2 { stroke: var(--contour-green); opacity: 0.4; }
+.contour-3 { stroke: var(--contour-brown); opacity: 0.45; }
+.contour-4 { stroke: var(--ink); opacity: 0.25; }
+
+.title-main { position: relative; z-index: 1; }
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+h1#name {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 52px;
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.tagline {
+  margin: 6px 0 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title-contact {
+  position: relative;
+  z-index: 1;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.9;
+  white-space: nowrap;
+}
+.title-contact a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+.title-contact a:hover { border-color: var(--accent); color: var(--accent); }
+
+.citizenship {
+  margin: 14px 0 0;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.03em;
+  color: var(--contour-green);
+  font-weight: 600;
+}
+
+/* ---------- nav ---------- */
+
+.neatline-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 22px;
+  margin: 22px 0 6px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.neatline-nav a {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+}
+.neatline-nav a:hover { color: var(--accent); }
+
+.portfolio-page .neatline-nav .nav-external {
+  margin-left: auto;
+  padding: 7px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent);
+  color: #111111;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.22);
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.portfolio-page .neatline-nav .nav-external::after {
+  content: " ->";
+}
+
+.neatline-nav .nav-external .cv-label-desktop {
+  display: inline;
+}
+
+.neatline-nav .nav-external .cv-label-mobile {
+  display: none;
+}
+
+.portfolio-page .neatline-nav .nav-external:hover {
+  color: var(--sheet);
+  background: var(--ink);
+  border-color: var(--ink);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-page .neatline-nav .nav-external:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.cv-download-btn {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: auto;
+  cursor: pointer;
+}
+.cv-download-btn:hover { color: var(--accent); }
+
+/* ---------- sections ---------- */
+
+.block {
+  margin: 48px 0 42px 0;
+  scroll-margin-top: 20px;
+}
+.block:not(:last-child)::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--line);
+  margin: 42px 0 0;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink);
+}
+.section-label .tick { color: var(--symbol-accent); font-size: 14px; }
+
+.hint {
+  margin: -6px 0 16px;
+  font-size: 13.5px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+p#profile-text { max-width: 62ch; }
+
+/* ---------- legend (skills) ---------- */
+
+.legend { display: grid; gap: 14px; }
+.legend-row {
+  display: grid;
+  grid-template-columns: 46px 220px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.legend-symbol { width: 40px; height: 22px; }
+.legend-symbol svg { width: 100%; height: 100%; }
+.legend-symbol { color: var(--symbol-accent); }
+.legend-label {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+.legend-detail { font-size: 14.5px; color: var(--muted); }
+
+/* ---------- projects ---------- */
+
+.projects {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+}
+
+.project-card {
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.project-thumb {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  background: var(--paper);
+}
+.project-thumb-placeholder {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 14px;
+  background:
+    repeating-linear-gradient(45deg, var(--line-soft), var(--line-soft) 8px, transparent 8px, transparent 16px);
+  border-bottom: 1px dashed var(--line);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.03em;
+}
+.project-body { padding: 14px 16px 18px; }
+.project-title {
+  margin: 0 0 4px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 18px;
+}
+.project-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+.project-desc { margin: 0; font-size: 14px; color: var(--muted); }
+
+/* ---------- education / experience entries ---------- */
+
+.entry { margin-bottom: 18px; }
+.entry-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+.entry-role { font-weight: 700; font-size: 15.5px; }
+.entry-dates {
+  margin-left: auto;
+  padding-left: 10px;
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  white-space: nowrap;
+  text-align: right;
+}
+.entry-org { display: block; font-size: 15px; color: var(--muted); margin-bottom: 4px; }
+.entry ul { margin: 6px 0 0; padding-left: 20px; }
+.entry li { margin-bottom: 3px; font-size: 14.5px; }
+
+/* ---------- footer plate ---------- */
+
+.plate {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 2px solid var(--ink);
+}
+.plate-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.scale-bar { width: 160px; height: 20px; }
+.scale-bar line { stroke: var(--ink); stroke-width: 1.5; }
+.scale-fill { fill: var(--ink); }
+.plate-caption { display: block; margin-top: 6px; font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+
+.north-col { text-align: center; }
+.north-arrow { width: 26px; height: 40px; }
+.north-arrow path { fill: var(--ink); }
+.north-arrow text { font-family: var(--mono); font-size: 11px; fill: var(--ink); }
+
+.info-col { text-align: right; }
+.info-col p { margin: 0; font-size: 13.5px; color: var(--muted); max-width: 34ch; margin-left: auto; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 680px) {
+  .sheet { padding: 30px 20px 24px; margin: 0; border-width: 1px 0; }
+  .map-coords-left,
+  .map-coords-right {
+    display: none;
+  }
+  .map-coords-top,
+  .map-coords-bottom {
+    left: 8px;
+    right: 8px;
+    font-size: 9px;
+  }
+  h1#name { font-size: 36px; }
+  .titleblock { flex-direction: column; align-items: flex-start; }
+  .title-contact { text-align: left; }
+  .portfolio-page .neatline-nav .nav-external { margin-left: 0; }
+  .neatline-nav .nav-external .cv-label-desktop { display: none; }
+  .neatline-nav .nav-external .cv-label-mobile { display: inline; }
+  .legend-row { grid-template-columns: 32px 1fr; }
+  .legend-detail { grid-column: 2 / 3; }
+  .plate { grid-template-columns: 1fr; text-align: center; }
+  .info-col, .info-col p { text-align: center; margin: 0 auto; }
+  .cv-page .entry-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .cv-page .entry-dates {
+    margin-left: 0;
+    padding-left: 0;
+    text-align: left;
+    white-space: normal;
+  }
+  .cv-page .theme-toggle,
+  .cv-page #theme-toggle {
+    display: none;
+  }
+}
+
+/* ==================== PRINT / PDF OPTIMIZATION (Improved) ==================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 1.3cm 1.1cm;
+  }
+
+  body {
+    background: white !important;
+    margin: 0;
+    padding: 0;
+    font-size: 10.3pt;
+    line-height: 1.42;
+  }
+
+  .sheet {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0.35cm 0.45cm !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: white !important;
+  }
+
+  .cv-page .sheet::before {
+    display: none !important;
+    background-image: none !important;
+  }
+
+  /* Hide everything we don't want in print */
+  .theme-toggle,
+  .neatline-nav,
+  .corner,
+  .map-coords,
+  .plate,
+  .hint,
+  .project-thumb-placeholder,
+  .contour-hero,
+  .eyebrow,
+  #theme-toggle {
+    display: none !important;
+  }
+
+  .titleblock {
+    min-height: 0;
+    gap: 12pt;
+    padding-bottom: 8pt;
+  }
+
+  .title-contact {
+    font-size: 8.7pt;
+    line-height: 1.45;
+  }
+
+  .tagline {
+    margin-top: 2pt;
+    font-size: 8.8pt;
+  }
+
+  .citizenship {
+    margin: 6pt 0 0;
+    font-size: 8.7pt;
+  }
+
+  /* Better section separation.
+     Note: blocks are allowed to break across pages (break-inside: auto) —
+     forcing "avoid" here made whole sections (Education, Field Experience)
+     jump to the next page as a single unit whenever they didn't fully fit
+     in the remaining space, leaving large blank gaps at the bottom of the
+     previous page. Individual entries/cards still avoid breaking. */
+  .block {
+    break-inside: auto;
+    margin: 10pt 0 7pt 0;
+  }
+
+  .block:not(:last-child)::after {
+    display: none;
+  }
+
+  .section-label {
+    font-size: 13.5pt !important;
+    border-bottom: 1.5px solid #22303A;
+    padding-bottom: 4pt;
+    margin-top: 6pt;
+    margin-bottom: 6pt;
+    break-after: auto;
+    break-inside: auto;
+  }
+
+  .entry {
+    break-inside: auto;
+    margin-bottom: 8pt;
+  }
+
+  .entry-head {
+    margin-bottom: 1pt;
+  }
+
+  .entry-role {
+    font-size: 10.8pt;
+  }
+
+  .entry-dates {
+    font-size: 8.3pt;
+  }
+
+  .entry-org {
+    font-size: 9.6pt;
+    margin-bottom: 2pt;
+  }
+
+  .entry ul {
+    margin: 3pt 0 0;
+    padding-left: 16px;
+  }
+
+  .entry li {
+    margin-bottom: 1pt;
+    font-size: 9.4pt;
+  }
+
+  .projects {
+    break-inside: auto;
+  }
+
+  .project-card {
+    break-inside: avoid;
+    border: 1px solid #ddd;
+    margin-bottom: 14pt;
+    padding: 0;
+  }
+
+  /* Typography tweaks for print */
+  h1#name {
+    font-size: 22pt !important;
+    margin-bottom: 3pt;
+  }
+
+  /* Compact skills legend for print — the on-screen version (large icon
+     column, generous row padding/gaps) takes up too much vertical space
+     on a printed page, so tighten it up here. */
+  .legend {
+    gap: 1pt;
+  }
+
+  .legend-row {
+    grid-template-columns: 18pt 112pt 1fr;
+    gap: 6pt;
+    border-bottom: 1px solid #ddd;
+    padding: 2pt 0;
+    break-inside: avoid;
+  }
+
+  .legend-symbol {
+    width: 14pt;
+    height: 8pt;
+  }
+
+  .legend-label {
+    font-size: 8.2pt;
+    padding-top: 0;
+  }
+
+  .legend-detail {
+    font-size: 8.8pt;
+  }
+
+  p, li {
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* Ensure links are clean */
+  a {
+    color: #22303A !important;
+    text-decoration: underline;
+  }
+
+  /* Force clean black & white */
+  * {
+    color: #000 !important;
+    background: transparent !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+
+
+/* ==================== DARK MODE ==================== */
+/* ==================== IMPROVED DARK MODE ==================== */
+[data-theme="dark"] {
+  --paper:        #0f1218;     /* Deep charcoal */
+  --sheet:        #1a2028;     /* Rich dark slate */
+  --ink:          #e6e9ef;     /* Soft off-white */
+  --muted:        #9ba3b0;     /* Muted blue-grey */
+  --line:         #3a4555;     /* Subtle grid lines */
+  --line-soft:    #2c3747;
+  --contour-green:#7ab89e;     /* Soft teal-green */
+  --contour-brown:#c8a07d;     /* Warm earth tone */
+  --water:        #7ba4d1;     /* Cool blue */
+  --accent:       #f4a261;     /* Warm coral accent */
+  --symbol-accent:#d9b982;
+}
+
+[data-theme="dark"] .sheet {
+  border-color: #4a5668;
+  outline-color: #2c3747;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .portfolio-page .sheet {
+  box-shadow: none;
+}
+
+[data-theme="dark"] .project-card {
+  background: #212a37;
+  border-color: #3a4555;
+}
+
+[data-theme="dark"] .project-thumb-placeholder {
+  background: repeating-linear-gradient(45deg, #2c3747, #2c3747 8px, transparent 8px, transparent 16px);
+}
+
+/* Improve CV map coordinate label contrast in dark mode */
+[data-theme="dark"] .cv-page .map-coords {
+  color: #d7dee8;
+}
+
+[data-theme="dark"] .cv-page .map-coords-top::before,
+[data-theme="dark"] .cv-page .map-coords-top::after,
+[data-theme="dark"] .cv-page .map-coords-bottom::before,
+[data-theme="dark"] .cv-page .map-coords-bottom::after {
+  color: #d7dee8;
+}
+
+/* Better readability */
+[data-theme="dark"] .legend-detail,
+[data-theme="dark"] .project-desc {
+  color: #b0b8c5;
+}
+
+/* Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  color: var(--ink);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: rgba(26, 32, 40, 0.95);
+  border: 1px solid #4a5668;
+}
+
+/* ==================== SPACING IMPROVEMENTS ==================== */
+
+/* Extra space after profile */
+#profile {
+  margin-bottom: 56px;
+}
+
+/* Better separation for skills legend */
+#skills {
+  margin-bottom: 52px;
+}
+
+/* Project cards */
+.projects {
+  gap: 32px;
+}
+
+.project-card {
+  margin-bottom: 8px;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .block {
+  margin: 46px 0 40px 0;
+}
