@@ -21,7 +21,7 @@ const CV_DATA = {
     location: "Aachen, Germany",
     // phone: "",
     email: "ruby.claes@gmail.com",
-    linkedin: "https://www.linkedin.com/in/ruby-claes-395b59365",                    // fill this
+    linkedin: "https://www.linkedin.com/in/rubyclaes",                    // fill this
     emailLink: "mailto:ruby.claes@gmail.com"
   },
 
