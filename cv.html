@@ -95,8 +95,15 @@
   <p class="citizenship" id="citizenship"></p>
 
   <nav class="neatline-nav">
-    <a href="index.html">← Back to Portfolio</a>
-    <button type="button" id="download-cv-btn" class="cv-download-btn">⬇ Download CV (PDF)</button>
+    <a href="index.html" class="cv-back-btn">Back to Portfolio</a>
+    <button type="button" id="download-cv-btn" class="cv-download-btn" aria-label="Download CV PDF">
+      <span class="cv-download-icon" aria-hidden="true">
+        <svg viewBox="0 0 16 16" role="img" focusable="false">
+          <path d="M3.5 1h6l3 3v10.5a.5.5 0 0 1-.5.5h-8.5a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5zm5.5 1.2v2.8h2.8zM6 9h1.2l1 1.5 1-1.5h1.2l-1.6 2.2L10.5 14H9.3L8.2 12.3 7.1 14H5.9l1.7-2.8z" />
+        </svg>
+      </span>
+      <span>Download</span>
+    </button>
   </nav>
 
   <section class="block" id="profile-cv">
