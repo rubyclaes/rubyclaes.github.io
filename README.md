@@ -1,132 +1,99 @@
 # Ruby Claes Portfolio Site
 
-Static portfolio + CV website with a map-inspired visual style.
+A bilingual (English / German) portfolio and CV. The live site is [rubyclaes.github.io](https://rubyclaes.github.io/).
 
-## Current project structure
+To change text, projects, or photos in **VS Code**: **clone the repo → edit in the content studio → commit and push**. GitHub Pages then updates the live site.
+
+---
+
+## 1. First time: get a copy on your computer
+
+1. Install [Git](https://git-scm.com/download/win) (accept the defaults) and [Visual Studio Code](https://code.visualstudio.com/).
+2. In VS Code, sign in to GitHub (bottom-left accounts icon, or **Sign in to Sync Settings**).
+3. Open the Command Palette: `Ctrl+Shift+P`.
+4. Run **Git: Clone**.
+5. Paste `https://github.com/rubyclaes/rubyclaes.github.io.git` and press Enter.
+6. Choose a folder on your computer, then click **Open** when VS Code asks to open the cloned repository.
+
+You only do this once. After that, use **File → Open Folder…** and pick `rubyclaes.github.io`.
+
+---
+
+## 2. Edit the content
+
+1. Pull the latest site first (see step 3) so you are not editing an old copy.
+2. In VS Code’s file list, right-click `editor.html` → **Reveal in File Explorer**, then open that file in **Chrome or Edge**.  
+   (This page is a private editing tool. It is not linked from the public site.)
+
+![Content studio with English and German side by side, page tags, Preview, and Save](images/Editor.png)
+
+3. Edit English and German side by side. Coloured tags show whether a field appears on the **Portfolio**, the **CV**, or both.
+4. Click **Save**. The first time, the browser may ask which file to use — choose the `content.js` already in this folder.
+5. To check how it looks, open `index.html` the same way (double-click it) and refresh after you save.
+
+If Save offers a downloaded file instead, drag it into the project folder in VS Code and replace the existing `content.js`.
+
+To add a project photo: copy the file into `images/` in VS Code’s explorer, then set **Image path** on the project (for example `images/my-map.jpg`). Prefer a 4:3 image (e.g. 1200×900). Cards crop tall or wide photos.
+
+---
+
+## 3. Publish to the live site
+
+Always pull before you start, so you do not overwrite newer work on GitHub.
+
+In VS Code, open **Source Control** (the branch icon in the left sidebar, or `Ctrl+Shift+G`):
+
+1. Click **⋯** (More Actions) → **Pull**, so your copy matches GitHub.
+2. After you save, `content.js` (and any new images) should appear under **Changes**.
+3. Click **+** next to **Changes** to stage them.
+4. Type a short message, e.g. `Update portfolio profile`.
+5. Click **Commit**.
+6. Click **Sync Changes** (or **Push**) to send the update to GitHub.
+
+The live site updates in about 30–90 seconds: [https://rubyclaes.github.io/](https://rubyclaes.github.io/). If you still see the old version, hard-refresh with `Ctrl+F5`.
+
+---
+
+## Language
+
+The globe control switches **English** / **Deutsch** on the whole site, including the CV PDF.
+
+- English is Australian English; German is written for a DACH reader (not the Australia move story).
+- The visitor’s language and light/dark choice are remembered in the browser.
+- First visit: German if the browser or timezone looks German-speaking (Germany, Austria, Switzerland, Liechtenstein); otherwise English.
+
+---
+
+## CV PDF
+
+Open the CV page, pick English or Deutsch, then **Download**. That uses the browser print dialog to save a PDF of the language on screen.
+
+---
+
+## Project images
+
+- Folder: `images/`
+- Path in the editor: `images/your-file-name.jpg`
+- Ratio: 4:3. The card uses cover crop.
+- Names: lowercase with hyphens, e.g. `flood-risk-brisbane-2026.jpg`
+- Formats: `.jpg`, `.jpeg`, `.png`, `.webp`
+
+A wrong path shows an “Image not found” placeholder, not a broken layout. `images/Editor.png` is the content-studio screenshot in this README, not a project card.
+
+---
+
+## Reference (you can skip this)
 
 ```
 .
-|- index.html
-|- cv.html
-|- content.js
-|- script.js
-|- theme.js
-|- styles.css
-|- README.md
-|- icons/
-|  |- browserconfig.xml
-|  |- manifest.json
-|  |- *.png, favicon.ico
-|- images/
-|  |- (project images go here)
+|- index.html          Portfolio page
+|- cv.html             Full CV
+|- editor.html         Content studio (local only)
+|- content.js          All editable text — this is what Save updates
+|- symbols.js          Skill legend icons
+|- script.js / theme.js / styles.css
+|- images/             Project photos
+|- icons/              Favicons
 ```
 
-## How the site is wired
-
-- content.js: single source of editable content in CV_DATA (name, profile text, skills, projects, education, experience, languages, availability).
-- script.js: reads CV_DATA and renders both pages.
-	- Detects homepage vs CV page.
-	- Builds project cards.
-	- Shows placeholder if an image path is empty or missing.
-- theme.js: injects the light/dark mode toggle and stores the choice in localStorage.
-- styles.css: full styling for layout, responsive behavior, dark mode, and CV print/PDF mode.
-- index.html: portfolio landing page (profile, skills, projects).
-- cv.html: full CV page and PDF export trigger (window.print).
-- icons/: favicon and device icon assets used by both HTML files.
-- images/: project image files referenced from content.js.
-
-## What you usually edit
-
-Most updates happen in content.js.
-
-- Update text fields directly in CV_DATA.
-- Add list items (skills, projects, education, experience) by copying a full object block and editing values.
-- Keep quotes and commas valid so JavaScript parsing does not break.
-
-## Update an existing project image
-
-1. Put the replacement file in images/ (you can overwrite the old file name, or use a new file name).
-2. In content.js, find the project entry in CV_DATA.projects.
-3. Set image to the relative path, for example: image: "images/my-project.jpg".
-4. Refresh the page and verify the card image loads.
-
-If the path is wrong, the card shows an "Image not found" placeholder.
-
-## Add a new project image
-
-1. Add the image file to images/.
-2. Add or edit a project object in CV_DATA.projects in content.js.
-3. Set image to the file path from the repo root, for example:
-
-```js
-{
-	title: "Coastal Hazard Map",
-	tag: "Coursework - QGIS",
-	description: "Short summary of the question, data, workflow, and result.",
-	image: "images/coastal-hazard-map.jpg"
-}
-```
-
-4. Save and reload index.html.
-
-## Image guidelines
-
-- Preferred card ratio: 4:3 (CSS uses aspect-ratio: 4 / 3).
-- The card image uses object-fit: cover, so very tall/wide images will be cropped.
-- Use clear lowercase file names with hyphens, for example: flood-risk-brisbane-2026.jpg.
-- Common formats: .jpg, .jpeg, .png, .webp.
-
-## CV PDF export
-
-Open cv.html and click Download CV (PDF). The print stylesheet removes navigation/decorative UI and optimizes output for clean A4 export.
-
-## Run locally
-
-No build step is required.
-
-- Quick open: open index.html in a browser.
-- Local server option:
-
-```powershell
-npx serve .
-```
-
-## Git workflow and GitHub Pages update
-
-Use this flow to publish site updates to GitHub Pages.
-
-1. Clone the repository (first time only):
-
-```powershell
-git clone https://github.com/rubyclaes/rubyclaes.github.io.git
-cd rubyclaes.github.io
-git remote -v
-```
-
-2. Pull the latest changes before editing:
-
-```powershell
-git pull origin main
-```
-
-3. Make your edits (for example in content.js, images/, styles.css).
-
-4. Stage and commit your changes:
-
-```powershell
-git status
-git add .
-git commit -m "Update portfolio content"
-```
-
-5. Push to GitHub (this triggers GitHub Pages update):
-
-```powershell
-git push origin main
-```
-
-6. Verify the live site:
-
-- Open https://rubyclaes.github.io/
-- Wait about 30 to 90 seconds after push.
-- Hard refresh the browser (Ctrl+F5) if the old version is cached.
+You can still edit `content.js` by hand in VS Code. Translated fields look like `{ en: "English", de: "Deutsch" }`. Keep the quotes and commas valid.

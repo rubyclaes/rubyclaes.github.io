@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en-AU" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,7 +49,7 @@
 <meta name="msapplication-config" content="icons/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
 
-<link rel="stylesheet" href="styles.css?v=20260722f">
+<link rel="stylesheet" href="styles.css?v=20260814g">
 
 <!-- Umami Web Analytics -->
 <script defer src="https://analytics.kwokah.com/script.js" data-website-id="da9b9f51-0f4f-4b73-8ba0-0e90532a5e77"></script>
@@ -94,7 +94,7 @@
     </svg>
 
     <div class="title-main">
-      <p class="eyebrow">Full CV</p>
+      <p class="eyebrow" data-i18n="fullCvEyebrow">Full CV</p>
       <h1 id="name"></h1>
       <p class="tagline" id="tagline"></p>
     </div>
@@ -104,45 +104,45 @@
   <p class="citizenship" id="citizenship"></p>
 
   <nav class="neatline-nav">
-    <a href="index.html" class="cv-back-btn">Back to Portfolio</a>
-    <button type="button" id="download-cv-btn" class="cv-download-btn" aria-label="Download CV PDF">
+    <a href="index.html" class="cv-back-btn" data-i18n="backToPortfolio">Back to Portfolio</a>
+    <button type="button" id="download-cv-btn" class="cv-download-btn" data-i18n-aria="downloadAria">
       <span class="cv-download-icon" aria-hidden="true">
         <svg viewBox="0 0 16 16" role="img" focusable="false">
           <path d="M3.5 1h6l3 3v10.5a.5.5 0 0 1-.5.5h-8.5a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5zm5.5 1.2v2.8h2.8zM6 9h1.2l1 1.5 1-1.5h1.2l-1.6 2.2L10.5 14H9.3L8.2 12.3 7.1 14H5.9l1.7-2.8z" />
         </svg>
       </span>
-      <span>Download</span>
+      <span data-i18n="download">Download</span>
     </button>
   </nav>
 
   <section class="block" id="profile-cv">
-    <h2 class="section-label"><span class="tick">＋</span> Profile</h2>
+    <h2 class="section-label"><span class="tick">＋</span> <span data-i18n="profile">Profile</span></h2>
     <p id="full-profile-text"></p>
   </section>
 
   <section class="block" id="skills-cv">
-    <h2 class="section-label"><span class="tick">＋</span> Skills</h2>
+    <h2 class="section-label"><span class="tick">＋</span> <span data-i18n="skills">Skills</span></h2>
     <div class="legend" id="legend"></div>
   </section>
 
   <section class="block" id="education-cv">
-    <h2 class="section-label"><span class="tick">＋</span> Education</h2>
+    <h2 class="section-label"><span class="tick">＋</span> <span data-i18n="education">Education</span></h2>
     <div id="education"></div>
   </section>
 
   <section class="block" id="experience-cv">
-    <h2 class="section-label"><span class="tick">＋</span> Field Experience</h2>
+    <h2 class="section-label"><span class="tick">＋</span> <span data-i18n="experience">Field Experience</span></h2>
     <div id="experience"></div>
   </section>
 
   <section class="block" id="languages-cv">
-    <h2 class="section-label"><span class="tick">＋</span> Languages</h2>
+    <h2 class="section-label"><span class="tick">＋</span> <span data-i18n="languages">Languages</span></h2>
     <p id="languages"></p>
   </section>
 
   <footer class="plate">
     <div class="plate-col scale-col">
-      <span class="plate-label">Scale</span>
+      <span class="plate-label" data-i18n="scale">Scale</span>
       <svg class="scale-bar" viewBox="0 0 180 24" aria-hidden="true">
         <line x1="2" y1="12" x2="178" y2="12" />
         <line x1="2" y1="6" x2="2" y2="18" />
@@ -152,7 +152,7 @@
         <rect x="2" y="9" width="58" height="6" class="scale-fill" />
         <rect x="119" y="9" width="59" height="6" class="scale-fill" />
       </svg>
-      <span class="plate-caption">Entry-level → Field-ready</span>
+      <span class="plate-caption" data-i18n="scaleCaption">Entry-level → Field-ready</span>
     </div>
 
     <div class="plate-col north-col">
@@ -163,15 +163,16 @@
     </div>
 
     <div class="plate-col info-col">
-      <span class="plate-label">Availability</span>
+      <span class="plate-label" data-i18n="availabilityLabel">Availability</span>
       <p id="availability"></p>
     </div>
   </footer>
 </div>
 
-<script src="content.js?v=20260722e"></script>
-<script src="script.js?v=20260722e"></script>
-<script src="theme.js?v=20260722e"></script>
+<script src="content.js?v=20260814g"></script>
+<script src="symbols.js?v=20260814g"></script>
+<script src="theme.js?v=20260814g"></script>
+<script src="script.js?v=20260814g"></script>
 <script>
   (function () {
     var columnLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];

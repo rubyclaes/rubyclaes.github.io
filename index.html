@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en-AU" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +41,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260722f">
+<link rel="stylesheet" href="styles.css?v=20260814g">
 
 <!-- Umami Web Analytics -->
 <script defer src="https://analytics.kwokah.com/script.js" data-website-id="da9b9f51-0f4f-4b73-8ba0-0e90532a5e77"></script>
@@ -71,7 +71,7 @@
     </svg>
 
     <div class="title-main">
-      <p class="eyebrow">Portfolio</p>
+      <p class="eyebrow" data-i18n="portfolioEyebrow">Portfolio</p>
       <h1 id="name"></h1>
       <p class="tagline" id="tagline"></p>
     </div>
@@ -81,34 +81,34 @@
   <p class="citizenship" id="citizenship"></p>
 
   <nav class="neatline-nav">
-    <a href="#profile">Profile</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="cv.html" class="nav-external" aria-label="Open full CV page">
-      <span class="cv-label-desktop">Full CV</span>
-      <span class="cv-label-mobile">CV</span>
+    <a href="#profile" data-i18n="profile">Profile</a>
+    <a href="#skills" data-i18n="skills">Skills</a>
+    <a href="#projects" data-i18n="navProjects">Projects</a>
+    <a href="cv.html" class="nav-external" data-i18n-aria="fullCv">
+      <span class="cv-label-desktop" data-i18n="fullCv">Full CV</span>
+      <span class="cv-label-mobile" data-i18n="fullCvShort">CV</span>
     </a>
   </nav>
 
   <section class="block" id="profile">
-    <h2 class="section-label"><span class="tick">＋</span> Profile</h2>
+    <h2 class="section-label"><span class="tick">＋</span> <span data-i18n="profile">Profile</span></h2>
     <p id="profile-text"></p>
   </section>
 
   <section class="block" id="skills">
-    <h2 class="section-label"><span class="tick">＋</span> Skills</h2>
+    <h2 class="section-label"><span class="tick">＋</span> <span data-i18n="skills">Skills</span></h2>
     <div class="legend" id="legend"></div>
   </section>
 
   <section class="block" id="projects">
-    <h2 class="section-label"><span class="tick">＋</span> Mapped Projects</h2>
-    <p class="hint">Highlight reel. See <a href="cv.html">full CV</a> for more context.</p>
+    <h2 class="section-label"><span class="tick">＋</span> <span data-i18n="projects">Mapped Projects</span></h2>
+    <p class="hint" id="projects-hint">Highlight reel. See <a href="cv.html">full CV</a> for more context.</p>
     <div class="projects" id="projects-list"></div>
   </section>
 
   <footer class="plate">
     <div class="plate-col scale-col">
-      <span class="plate-label">Scale</span>
+      <span class="plate-label" data-i18n="scale">Scale</span>
       <svg class="scale-bar" viewBox="0 0 180 24" aria-hidden="true">
         <line x1="2" y1="12" x2="178" y2="12" />
         <line x1="2" y1="6" x2="2" y2="18" />
@@ -118,7 +118,7 @@
         <rect x="2" y="9" width="58" height="6" class="scale-fill" />
         <rect x="119" y="9" width="59" height="6" class="scale-fill" />
       </svg>
-      <span class="plate-caption">Entry-level → Field-ready</span>
+      <span class="plate-caption" data-i18n="scaleCaption">Entry-level → Field-ready</span>
     </div>
 
     <div class="plate-col north-col">
@@ -129,15 +129,16 @@
     </div>
 
     <div class="plate-col info-col">
-      <span class="plate-label">Availability</span>
+      <span class="plate-label" data-i18n="availabilityLabel">Availability</span>
       <p id="availability"></p>
     </div>
   </footer>
 </div>
 
-<script src="content.js?v=20260722e"></script>
-<script src="script.js?v=20260722e"></script>
-<script src="theme.js?v=20260722e"></script>
+<script src="content.js?v=20260814g"></script>
+<script src="symbols.js?v=20260814g"></script>
+<script src="theme.js?v=20260814g"></script>
+<script src="script.js?v=20260814g"></script>
 
 <!-- Swetrix Web Analytics -->
 <script src="https://swetrix.org/swetrix.js" defer></script>

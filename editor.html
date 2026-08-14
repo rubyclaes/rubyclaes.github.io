@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-AU" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content studio — Ruby Claes</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Local editor for portfolio and CV text (English + German).">
+<link rel="icon" href="icons/favicon.ico">
+<link rel="shortcut icon" href="icons/favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20260814h">
+<link rel="stylesheet" href="editor.css?v=20260814h">
+</head>
+<body class="editor-page">
+
+<header class="editor-bar">
+  <div class="editor-brand">
+    <p class="editor-kicker">Local tool — not linked from the public site</p>
+    <h1>Content studio</h1>
+    <p class="editor-lead">English and German sit side by side. Shared facts (name, email, photos) are edited once. Click <strong>Save</strong>, then <strong>Preview</strong>.</p>
+  </div>
+  <div class="editor-actions">
+    <p class="editor-status" id="editor-status" role="status"></p>
+    <div class="editor-tabs" role="tablist">
+      <button type="button" class="is-active" data-tab="edit" role="tab" aria-selected="true">Edit</button>
+      <button type="button" data-tab="overview" role="tab" aria-selected="false">Overview</button>
+    </div>
+    <a class="editor-btn" href="index.html" target="_blank" rel="noopener noreferrer">Preview</a>
+    <button type="button" class="editor-btn editor-btn-primary" id="save-content">Save</button>
+  </div>
+</header>
+
+<main id="edit-view" class="editor-main"></main>
+<main id="overview-view" class="editor-main" hidden></main>
+
+<script src="content.js?v=20260814h"></script>
+<script src="symbols.js?v=20260814h"></script>
+<script src="theme.js?v=20260814h"></script>
+<script src="editor.js?v=20260814h"></script>
+</body>
+</html>
