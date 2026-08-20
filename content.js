@@ -55,6 +55,12 @@ const UI = {
   linkedin: { en: "LinkedIn", de: "LinkedIn" },
   addImage: { en: "+ Add an image\n(see editor.html)", de: "+ Bild hinzufügen\n(siehe editor.html)" },
   imageNotFound: { en: "Image not found:", de: "Bild nicht gefunden:" },
+  viewImage: { en: "View larger image", de: "Bild vergrößern" },
+  closeImage: { en: "Close", de: "Schließen" },
+  zoomIn: { en: "Zoom in", de: "Vergrößern" },
+  zoomOut: { en: "Zoom out", de: "Verkleinern" },
+  zoomReset: { en: "Fit", de: "Anpassen" },
+  zoomHint: { en: "Scroll to zoom · drag to pan", de: "Scrollen zum Zoomen · Ziehen zum Verschieben" },
   themeToggle: { en: "Toggle dark mode", de: "Hell-/Dunkelmodus umschalten" },
   langSwitcher: { en: "Language", de: "Sprache" }
 };

@@ -235,14 +235,30 @@
 
       const media = document.createElement("div");
       if (project.image) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "project-media-btn";
+        btn.setAttribute("aria-label", `${t(UI.viewImage, lang)}: ${title}`);
+        const fill = document.createElement("img");
+        fill.className = "project-thumb-fill";
+        fill.src = project.image;
+        fill.alt = "";
+        fill.setAttribute("aria-hidden", "true");
+        fill.loading = "lazy";
+        fill.decoding = "async";
         const img = document.createElement("img");
         img.className = "project-thumb";
         img.src = project.image;
         img.alt = title;
+        img.loading = "lazy";
+        img.decoding = "async";
         img.onerror = function () {
           media.innerHTML = placeholderMarkup(project.image, lang);
         };
-        media.appendChild(img);
+        btn.appendChild(fill);
+        btn.appendChild(img);
+        btn.addEventListener("click", () => openLightbox(project.image, title));
+        media.appendChild(btn);
       } else {
         media.innerHTML = placeholderMarkup(null, lang);
       }
@@ -364,7 +380,173 @@
       switcher.setAttribute("aria-label", t(UI.langSwitcher, lang));
     }
 
+    updateLightboxUi(lang);
+    closeLightbox();
     render(lang);
+  }
+
+  let lightbox = null;
+  let lightboxState = { scale: 1, x: 0, y: 0, dragging: false, px: 0, py: 0 };
+
+  function mountLightbox() {
+    if (lightbox) return lightbox;
+    const box = document.createElement("div");
+    box.id = "image-lightbox";
+    box.className = "lightbox";
+    box.hidden = true;
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true");
+    box.innerHTML = `
+      <button type="button" class="lightbox-close" data-lightbox="close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="lightbox-stage">
+        <img class="lightbox-img" alt="">
+      </div>
+      <div class="lightbox-bar">
+        <p class="lightbox-caption"></p>
+        <div class="lightbox-tools">
+          <button type="button" class="lightbox-tool" data-lightbox="out" aria-label="Zoom out">−</button>
+          <button type="button" class="lightbox-tool" data-lightbox="reset" aria-label="Fit">100%</button>
+          <button type="button" class="lightbox-tool" data-lightbox="in" aria-label="Zoom in">+</button>
+        </div>
+        <p class="lightbox-hint"></p>
+      </div>
+    `;
+    document.body.appendChild(box);
+    lightbox = box;
+
+    const stage = box.querySelector(".lightbox-stage");
+    const img = box.querySelector(".lightbox-img");
+    const resetBtn = box.querySelector('[data-lightbox="reset"]');
+
+    function applyTransform() {
+      img.style.transform = `translate(${lightboxState.x}px, ${lightboxState.y}px) scale(${lightboxState.scale})`;
+      resetBtn.textContent = Math.round(lightboxState.scale * 100) + "%";
+      stage.style.cursor = lightboxState.scale > 1.01 ? "grab" : "zoom-in";
+    }
+
+    function setScale(next, originX, originY) {
+      const prev = lightboxState.scale;
+      const scale = Math.min(6, Math.max(1, next));
+      if (scale === 1) {
+        lightboxState.x = 0;
+        lightboxState.y = 0;
+      } else if (originX != null && prev > 0) {
+        const ratio = scale / prev;
+        lightboxState.x = originX - (originX - lightboxState.x) * ratio;
+        lightboxState.y = originY - (originY - lightboxState.y) * ratio;
+      }
+      lightboxState.scale = scale;
+      applyTransform();
+    }
+
+    box.addEventListener("click", (event) => {
+      const action = event.target.closest("[data-lightbox]");
+      if (action) {
+        const name = action.getAttribute("data-lightbox");
+        if (name === "close") closeLightbox();
+        if (name === "in") setScale(lightboxState.scale * 1.25);
+        if (name === "out") setScale(lightboxState.scale / 1.25);
+        if (name === "reset") setScale(1);
+        return;
+      }
+      if (event.target === box || event.target === stage) {
+        if (lightboxState.scale <= 1.01) closeLightbox();
+      }
+    });
+
+    img.addEventListener("dblclick", (event) => {
+      event.preventDefault();
+      if (lightboxState.scale > 1.01) setScale(1);
+      else setScale(2.5);
+    });
+
+    stage.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      const rect = stage.getBoundingClientRect();
+      const ox = event.clientX - rect.left - rect.width / 2;
+      const oy = event.clientY - rect.top - rect.height / 2;
+      const factor = event.deltaY > 0 ? 0.9 : 1.1;
+      setScale(lightboxState.scale * factor, ox, oy);
+    }, { passive: false });
+
+    stage.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0) return;
+      if (lightboxState.scale <= 1.01) return;
+      lightboxState.dragging = true;
+      lightboxState.px = event.clientX - lightboxState.x;
+      lightboxState.py = event.clientY - lightboxState.y;
+      stage.setPointerCapture(event.pointerId);
+      stage.style.cursor = "grabbing";
+    });
+
+    stage.addEventListener("pointermove", (event) => {
+      if (!lightboxState.dragging) return;
+      lightboxState.x = event.clientX - lightboxState.px;
+      lightboxState.y = event.clientY - lightboxState.py;
+      applyTransform();
+    });
+
+    function endDrag() {
+      lightboxState.dragging = false;
+      stage.style.cursor = lightboxState.scale > 1.01 ? "grab" : "zoom-in";
+    }
+    stage.addEventListener("pointerup", endDrag);
+    stage.addEventListener("pointercancel", endDrag);
+
+    document.addEventListener("keydown", (event) => {
+      if (box.hidden) return;
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "+" || event.key === "=") setScale(lightboxState.scale * 1.25);
+      if (event.key === "-" || event.key === "_") setScale(lightboxState.scale / 1.25);
+      if (event.key === "0") setScale(1);
+    });
+
+    box._applyTransform = applyTransform;
+    box._setScale = setScale;
+    return box;
+  }
+
+  function updateLightboxUi(lang) {
+    if (!lightbox) return;
+    const closeBtn = lightbox.querySelector('[data-lightbox="close"]');
+    const inBtn = lightbox.querySelector('[data-lightbox="in"]');
+    const outBtn = lightbox.querySelector('[data-lightbox="out"]');
+    const resetBtn = lightbox.querySelector('[data-lightbox="reset"]');
+    const hint = lightbox.querySelector(".lightbox-hint");
+    if (closeBtn) closeBtn.setAttribute("aria-label", t(UI.closeImage, lang));
+    if (inBtn) inBtn.setAttribute("aria-label", t(UI.zoomIn, lang));
+    if (outBtn) outBtn.setAttribute("aria-label", t(UI.zoomOut, lang));
+    if (resetBtn) resetBtn.setAttribute("aria-label", t(UI.zoomReset, lang));
+    if (hint) hint.textContent = t(UI.zoomHint, lang);
+  }
+
+  function openLightbox(src, caption) {
+    const box = mountLightbox();
+    updateLightboxUi(currentLang);
+    const img = box.querySelector(".lightbox-img");
+    const captionEl = box.querySelector(".lightbox-caption");
+    img.src = src;
+    img.alt = caption || "";
+    captionEl.textContent = caption || "";
+    lightboxState.scale = 1;
+    lightboxState.x = 0;
+    lightboxState.y = 0;
+    lightboxState.dragging = false;
+    img.style.transform = "";
+    box.hidden = false;
+    document.body.classList.add("lightbox-open");
+    box.querySelector('[data-lightbox="close"]').focus();
+    if (box._applyTransform) box._applyTransform();
+  }
+
+  function closeLightbox() {
+    if (!lightbox || lightbox.hidden) return;
+    lightbox.hidden = true;
+    document.body.classList.remove("lightbox-open");
+    const img = lightbox.querySelector(".lightbox-img");
+    if (img) img.src = "";
   }
 
   let currentLang = detectLang();

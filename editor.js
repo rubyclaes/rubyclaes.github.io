@@ -242,7 +242,7 @@
           ${pageTag("portfolio")}
         </div>
         <p class="editor-help">Shown as cards on the homepage only. Put files in the <code>images</code> folder, then set the path, e.g. <code>images/my-map.jpg</code>.</p>
-        <p class="editor-help">Aim for a <strong>4:3</strong> image (for example 1200×900). Cards crop with cover, so very tall or wide photos will be trimmed. JPG, PNG or WebP. Use lowercase names with hyphens.</p>
+        <p class="editor-help">Cards stay <strong>4:3</strong> on the homepage. Any size image sits fully inside that frame (nothing is stretched or cropped off). Click to open the full picture and zoom. Use a sharp file at least 1600px on the long side (JPG, PNG or WebP).</p>
         <div id="projects-list">${projects.map(renderProject).join("")}</div>
         <button type="button" class="ghost" data-action="add-project">+ Add project</button>
       </section>

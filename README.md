@@ -2,55 +2,163 @@
 
 A bilingual (English / German) portfolio and CV. The live site is [rubyclaes.github.io](https://rubyclaes.github.io/).
 
-To change text, projects, or photos in **VS Code**: **clone the repo → edit in the content studio → commit and push**. GitHub Pages then updates the live site.
+You do not need to write code. On Windows, the usual loop is:
+
+**install the tools → clone a copy → pull → edit in the content studio → check it in the browser → commit and push.** GitHub then updates the live site (about 30–90 seconds). There is no build step and no local server.
 
 ---
 
-## 1. First time: get a copy on your computer
+## 1. Install the tools (once)
 
-1. Install [Git](https://git-scm.com/download/win) (accept the defaults) and [Visual Studio Code](https://code.visualstudio.com/).
-2. In VS Code, sign in to GitHub (bottom-left accounts icon, or **Sign in to Sync Settings**).
-3. Open the Command Palette: `Ctrl+Shift+P`.
-4. Run **Git: Clone**.
-5. Paste `https://github.com/rubyclaes/rubyclaes.github.io.git` and press Enter.
-6. Choose a folder on your computer, then click **Open** when VS Code asks to open the cloned repository.
+You need two programs:
 
-You only do this once. After that, use **File → Open Folder…** and pick `rubyclaes.github.io`.
+1. **[Visual Studio Code](https://code.visualstudio.com/)** (often called VS Code) — where you open the project, add photos, and publish.
+2. **[GitHub Desktop](https://desktop.github.com/)** — the GitHub app for Windows. It includes **Git** (the tool VS Code uses to copy and publish the site). Sign in with the GitHub account that owns this website.
+
+Accept the install defaults. When both are installed, **quit and reopen VS Code** (or restart Windows) so VS Code can find Git.
+
+### If VS Code still says Git is missing
+
+GitHub Desktop includes Git for itself. VS Code sometimes still wants Git on Windows separately:
+
+1. Install [Git for Windows](https://git-scm.com/download/win).
+2. Click **Next** through the setup (defaults are fine).
+3. Close VS Code completely and open it again.
+
+### Sign in to GitHub inside VS Code
+
+Do this before you clone, or the first time you click **Clone Repository**:
+
+1. In VS Code, click the **Source Control** icon in the left sidebar (the Y-shaped branch).
+2. If a window says **The extension 'GitHub' wants to sign in using GitHub**, click **Allow** and finish in the browser.
+3. You can also click the **Accounts** icon (person silhouette, bottom-left) → **Sign in with GitHub**.
+
+You need this so **Clone**, **Pull**, and **Push** work without extra password prompts.
+
+![VS Code Source Control with Clone Repository, and a dialog asking to allow GitHub sign-in](./images/docs/github-account.png)
 
 ---
 
-## 2. Edit the content
+## 2. Clone the website (once)
 
-1. Pull the latest site first (see step 3) so you are not editing an old copy.
-2. In VS Code’s file list, right-click `editor.html` → **Reveal in File Explorer**, then open that file in **Chrome or Edge**.  
-   (This page is a private editing tool. It is not linked from the public site.)
+*Clone* means: download a full copy of the website onto your computer.
 
-![Content studio with English and German side by side, page tags, Preview, and Save](images/Editor.png)
+1. Click **Source Control** (branch icon) in the left sidebar.
+2. Click **Clone Repository**.
+3. In the box at the top, type `rubyclaes/rubyclaes.github.io` and select it.  
+   You can also paste the full address: `https://github.com/rubyclaes/rubyclaes.github.io.git`
+4. Choose a folder you can find again, for example **Documents**.
+5. When VS Code asks **Would you like to open the cloned repository?**, click **Open**.
 
-3. Edit English and German side by side. Coloured tags show whether a field appears on the **Portfolio**, the **CV**, or both.
-4. Click **Save**. The first time, the browser may ask which file to use — choose the `content.js` already in this folder.
-5. To check how it looks, open `index.html` the same way (double-click it) and refresh after you save.
+The folder on disk is named `rubyclaes.github.io`. You only clone once.
 
-If Save offers a downloaded file instead, drag it into the project folder in VS Code and replace the existing `content.js`.
+![VS Code clone search box listing GitHub repositories](./images/docs/github-repo-dropdown.png)
 
-To add a project photo: copy the file into `images/` in VS Code’s explorer, then set **Image path** on the project (for example `images/my-map.jpg`). Prefer a 4:3 image (e.g. 1200×900). Cards crop tall or wide photos.
+The search box looks like the screenshot. Use **`rubyclaes/rubyclaes.github.io`**, not another repository from the list.
+
+### Next time you sit down to edit
+
+**File → Open Folder…** and pick `rubyclaes.github.io`. You should see files like `index.html`, `editor.html`, `content.js`, and a folder called `images`.
 
 ---
 
-## 3. Publish to the live site
+## 3. Always pull before you edit
 
-Always pull before you start, so you do not overwrite newer work on GitHub.
+*Pull* means: download any newer changes from GitHub first, so you do not overwrite someone else’s work (or your own work from another computer).
 
-In VS Code, open **Source Control** (the branch icon in the left sidebar, or `Ctrl+Shift+G`):
+1. Click the **Source Control** icon in the left sidebar (or press **Ctrl+Shift+G**).
+2. Click **⋯** (More Actions) at the top of that panel.
+3. Click **Pull**.
 
-1. Click **⋯** (More Actions) → **Pull**, so your copy matches GitHub.
-2. After you save, `content.js` (and any new images) should appear under **Changes**.
-3. Click **+** next to **Changes** to stage them.
-4. Type a short message, e.g. `Update portfolio profile`.
-5. Click **Commit**.
-6. Click **Sync Changes** (or **Push**) to send the update to GitHub.
+If it says you are already up to date, that is fine — continue.
 
-The live site updates in about 30–90 seconds: [https://rubyclaes.github.io/](https://rubyclaes.github.io/). If you still see the old version, hard-refresh with `Ctrl+F5`.
+---
+
+## 4. View the site on your computer
+
+This is only a preview on your PC. Visitors still see the live site until you push (step 7).
+
+Use **Chrome** or **Edge** (not the VS Code preview tab).
+
+1. In VS Code’s file list on the left, right-click `index.html`.
+2. Click **Reveal in File Explorer**.
+3. Double-click `index.html` so it opens in Chrome or Edge.
+
+| File | What you see |
+| --- | --- |
+| `index.html` | Portfolio (home page) |
+| `cv.html` | Full CV |
+| `editor.html` | Private content studio (not on the public site) |
+
+After you save edits, go back to the browser tab and press **F5** to refresh. If the page looks stuck on an old version, press **Ctrl+F5**.
+
+You can also click **Preview** in the content studio. That opens the portfolio in a new tab.
+
+---
+
+## 5. Edit text (content studio)
+
+1. Pull first (step 3).
+2. Right-click `editor.html` → **Reveal in File Explorer** → open it in **Chrome or Edge**.
+3. Edit English and German side by side. Coloured tags show whether a field is on the **Portfolio**, the **CV**, both, or only site labels.
+4. Click **Save**. The first time, the browser asks which file to use — choose the `content.js` that is already in the `rubyclaes.github.io` folder. Allow the permission if Chrome/Edge asks.
+5. Click **Preview** (or refresh `index.html` / `cv.html`) to check the result.
+
+![Content studio with English and German side by side, page tags, Preview, and Save](./images/docs/content-editor.png)
+
+This page is a private editing tool. It is not linked from the public site.
+
+**If Save downloads a file instead of updating the project:** drag that file into the VS Code file list and replace the existing `content.js` (confirm overwrite).
+
+You can still edit `content.js` by hand in VS Code if you need to. Translated fields look like `{ en: "English", de: "Deutsch" }`. Keep the quotes and commas.
+
+---
+
+## 6. Where to put photos
+
+**Project pictures** (maps, portfolio cards) go in the **`images`** folder — in VS Code’s file list, next to `index.html`. Do not put them in `images/docs` (that folder is only for this guide).
+
+1. Copy your file into `images`. In VS Code you can drag it from File Explorer onto the `images` folder.
+2. Use a simple name: lowercase letters, hyphens, no spaces. Example: `flood-risk-brisbane-2026.jpg`.
+3. Allowed types: `.jpg`, `.jpeg`, `.png`, `.webp`.
+4. In the content studio, on that project, set **Image path** to `images/your-file-name.jpg` (same spelling as the file).
+
+Tips:
+
+- Prefer a sharp file at least **1600px on the long side** so zoom stays crisp.
+- Homepage cards stay **4:3**. Any size image sits fully inside that frame (nothing is stretched or cropped). A true 4:3 photo (for example 1600×1200) fills the card most neatly.
+- A wrong path shows an “Image not found” box, not a broken page.
+
+---
+
+## 7. Publish: commit and push in VS Code
+
+*Commit* means: snapshot your changes with a short note.  
+*Push* (also called **Sync Changes**) means: send that snapshot to GitHub. That is what updates [rubyclaes.github.io](https://rubyclaes.github.io/).
+
+1. Pull one more time (**⋯ → Pull**) if you have not just done it.
+2. Open **Source Control** (**Ctrl+Shift+G**).
+3. Under **Changes** you should see files you touched, often `content.js` and new files in `images`.
+4. Click **+** next to **Changes** (or next to each file) to **stage** them. Staged files are the ones included in this snapshot.
+5. At the top of the Source Control panel, type a short message, for example `Update portfolio profile`.
+6. Click **Commit**. (If VS Code asks you to confirm Git, follow the prompt.)
+7. Click **Sync Changes** (or **Push**) to send the update to GitHub.
+
+Wait about **30–90 seconds**, then open [https://rubyclaes.github.io/](https://rubyclaes.github.io/). If you still see the old version, press **Ctrl+F5**.
+
+---
+
+## If something goes wrong
+
+| What you see | What to try |
+| --- | --- |
+| “Git not found” in VS Code | Install [Git for Windows](https://git-scm.com/download/win), then fully quit and reopen VS Code. |
+| Clone or push asks you to log in | Sign in with GitHub (Allow the dialog, or the VS Code Accounts icon, or GitHub Desktop). |
+| **Push** is rejected / “pull first” | **⋯ → Pull**, then **Sync Changes** again. |
+| Save in the editor downloaded `content.js` | Drop that file onto the project in VS Code and replace the old `content.js`. |
+| Photo missing on the site | Check the file is inside `images/` (not `images/docs/`) and the path is exactly `images/filename.jpg`. |
+| Live site looks old | Wait a minute, then **Ctrl+F5**. Confirm you clicked **Sync Changes**, not only **Commit**. |
+| You edited on two computers | Always **Pull** before you start. |
 
 ---
 
@@ -66,23 +174,11 @@ The globe control switches **English** / **Deutsch** on the whole site, includin
 
 ## CV PDF
 
-Open the CV page, pick English or Deutsch, then **Download**. That uses the browser print dialog to save a PDF of the language on screen.
+Open `cv.html`, pick English or Deutsch, then **Download**. That uses the browser print dialog to save a PDF of the language on screen.
 
 ---
 
-## Project images
-
-- Folder: `images/`
-- Path in the editor: `images/your-file-name.jpg`
-- Ratio: 4:3. The card uses cover crop.
-- Names: lowercase with hyphens, e.g. `flood-risk-brisbane-2026.jpg`
-- Formats: `.jpg`, `.jpeg`, `.png`, `.webp`
-
-A wrong path shows an “Image not found” placeholder, not a broken layout. `images/Editor.png` is the content-studio screenshot in this README, not a project card.
-
----
-
-## Reference (you can skip this)
+## Files (you can skip this)
 
 ```
 .
@@ -93,7 +189,6 @@ A wrong path shows an “Image not found” placeholder, not a broken layout. `i
 |- symbols.js          Skill legend icons
 |- script.js / theme.js / styles.css
 |- images/             Project photos
+|- images/docs/        Screenshots for this README only
 |- icons/              Favicons
 ```
-
-You can still edit `content.js` by hand in VS Code. Translated fields look like `{ en: "English", de: "Deutsch" }`. Keep the quotes and commas valid.
