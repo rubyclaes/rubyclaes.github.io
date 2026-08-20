@@ -2,13 +2,17 @@
 
 A bilingual (English / German) portfolio and CV. The live site is [rubyclaes.github.io](https://rubyclaes.github.io/).
 
-You do not need to write code. On Windows, the usual loop is:
+You do not need to write code. There is no build step and no local server.
 
-**install the tools → clone a copy → pull → edit in the content studio → check it in the browser → commit and push.** GitHub then updates the live site (about 30–90 seconds). There is no build step and no local server.
+**First time:** install the tools and clone a copy (prerequisites below).
+
+**After that, the usual loop is:** **pull → edit in the content studio → check it in the browser → commit and push.** GitHub then updates the live site (about 30–90 seconds).
 
 ---
 
-## 1. Install the tools (once)
+## Prerequisites (once)
+
+### Install the tools
 
 You need two programs:
 
@@ -17,38 +21,22 @@ You need two programs:
 
 Accept the install defaults. When both are installed, **quit and reopen VS Code** (or restart Windows) so VS Code can find Git.
 
-### If VS Code still says Git is missing
+### Clone the website
 
-GitHub Desktop includes Git for itself. VS Code sometimes still wants Git on Windows separately:
-
-1. Install [Git for Windows](https://git-scm.com/download/win).
-2. Click **Next** through the setup (defaults are fine).
-3. Close VS Code completely and open it again.
-
-### Sign in to GitHub inside VS Code
-
-Do this before you clone, or the first time you click **Clone Repository**:
+*Clone* means: download a full copy of the website onto your computer. Sign in to GitHub in VS Code first (or when VS Code asks, during clone).
 
 1. In VS Code, click the **Source Control** icon in the left sidebar (the Y-shaped branch).
-2. If a window says **The extension 'GitHub' wants to sign in using GitHub**, click **Allow** and finish in the browser.
-3. You can also click the **Accounts** icon (person silhouette, bottom-left) → **Sign in with GitHub**.
+2. If a window says **The extension 'GitHub' wants to sign in using GitHub**, click **Allow** and finish in the browser.  
+   You can also click the **Accounts** icon (person silhouette, bottom-left) → **Sign in with GitHub**.
+3. Click **Clone Repository**.
+4. In the box at the top, type `rubyclaes/rubyclaes.github.io` and select it.  
+   You can also paste the full address: `https://github.com/rubyclaes/rubyclaes.github.io.git`
+5. Choose a folder you can find again, for example **Documents**.
+6. When VS Code asks **Would you like to open the cloned repository?**, click **Open**.
 
-You need this so **Clone**, **Pull**, and **Push** work without extra password prompts.
+You need the GitHub sign-in so **Clone**, **Pull**, and **Push** work without extra password prompts.
 
 ![VS Code Source Control with Clone Repository, and a dialog asking to allow GitHub sign-in](./images/docs/github-account.png)
-
----
-
-## 2. Clone the website (once)
-
-*Clone* means: download a full copy of the website onto your computer.
-
-1. Click **Source Control** (branch icon) in the left sidebar.
-2. Click **Clone Repository**.
-3. In the box at the top, type `rubyclaes/rubyclaes.github.io` and select it.  
-   You can also paste the full address: `https://github.com/rubyclaes/rubyclaes.github.io.git`
-4. Choose a folder you can find again, for example **Documents**.
-5. When VS Code asks **Would you like to open the cloned repository?**, click **Open**.
 
 The folder on disk is named `rubyclaes.github.io`. You only clone once.
 
@@ -62,7 +50,11 @@ The search box looks like the screenshot. Use **`rubyclaes/rubyclaes.github.io`*
 
 ---
 
-## 3. Always pull before you edit
+## Update the site
+
+Do these steps whenever you change text, projects, or photos.
+
+### 1. Always pull before you edit
 
 *Pull* means: download any newer changes from GitHub first, so you do not overwrite someone else’s work (or your own work from another computer).
 
@@ -72,11 +64,9 @@ The search box looks like the screenshot. Use **`rubyclaes/rubyclaes.github.io`*
 
 If it says you are already up to date, that is fine — continue.
 
----
+### 2. View the site on your computer
 
-## 4. View the site on your computer
-
-This is only a preview on your PC. Visitors still see the live site until you push (step 7).
+This is only a preview on your PC. Visitors still see the live site until you push (step 5).
 
 Use **Chrome** or **Edge** (not the VS Code preview tab).
 
@@ -94,11 +84,9 @@ After you save edits, go back to the browser tab and press **F5** to refresh. If
 
 You can also click **Preview** in the content studio. That opens the portfolio in a new tab.
 
----
+### 3. Edit text (content studio)
 
-## 5. Edit text (content studio)
-
-1. Pull first (step 3).
+1. Pull first (step 1).
 2. Right-click `editor.html` → **Reveal in File Explorer** → open it in **Chrome or Edge**.
 3. Edit English and German side by side. Coloured tags show whether a field is on the **Portfolio**, the **CV**, both, or only site labels.
 4. Click **Save**. The first time, the browser asks which file to use — choose the `content.js` that is already in the `rubyclaes.github.io` folder. Allow the permission if Chrome/Edge asks.
@@ -112,9 +100,7 @@ This page is a private editing tool. It is not linked from the public site.
 
 You can still edit `content.js` by hand in VS Code if you need to. Translated fields look like `{ en: "English", de: "Deutsch" }`. Keep the quotes and commas.
 
----
-
-## 6. Where to put photos
+### 4. Where to put photos
 
 **Project pictures** go in a numbered folder under **`images/portfolio/`**. Do not put them in `images/docs` (that folder is only for this guide).
 
@@ -131,9 +117,7 @@ Tips:
 - The site cannot see files sitting in the folder until you list them in the content studio.
 - A wrong path shows an “Image not found” box, not a broken page.
 
----
-
-## 7. Publish: commit and push in VS Code
+### 5. Publish: commit and push in VS Code
 
 *Commit* means: snapshot your changes with a short note.  
 *Push* (also called **Sync Changes**) means: send that snapshot to GitHub. That is what updates [rubyclaes.github.io](https://rubyclaes.github.io/).
@@ -152,9 +136,16 @@ Wait about **30–90 seconds**, then open [https://rubyclaes.github.io/](https:/
 
 ## If something goes wrong
 
+### VS Code still says Git is missing
+
+GitHub Desktop includes Git for itself. VS Code sometimes still wants Git on Windows separately:
+
+1. Install [Git for Windows](https://git-scm.com/download/win).
+2. Click **Next** through the setup (defaults are fine).
+3. Close VS Code completely and open it again.
+
 | What you see | What to try |
 | --- | --- |
-| “Git not found” in VS Code | Install [Git for Windows](https://git-scm.com/download/win), then fully quit and reopen VS Code. |
 | Clone or push asks you to log in | Sign in with GitHub (Allow the dialog, or the VS Code Accounts icon, or GitHub Desktop). |
 | **Push** is rejected / “pull first” | **⋯ → Pull**, then **Sync Changes** again. |
 | Save in the editor downloaded `content.js` | Drop that file onto the project in VS Code and replace the old `content.js`. |
