@@ -7,7 +7,8 @@
    - Keep quote marks around every piece of text.
    - Keep commas between entries.
    - Translated fields look like:  { en: "English", de: "Deutsch" }
-   - SHARED is language-independent (name, email, LinkedIn, image paths).
+   - SHARED is language-independent (name, email, LinkedIn).
+   - Project photos: images/portfolio/1/file.jpg (one numbered folder per project).
    - Leave de: "" if you have not translated yet — the site falls back to English.
    ========================================================================== */
 
@@ -56,11 +57,14 @@ const UI = {
   addImage: { en: "+ Add an image\n(see editor.html)", de: "+ Bild hinzufügen\n(siehe editor.html)" },
   imageNotFound: { en: "Image not found:", de: "Bild nicht gefunden:" },
   viewImage: { en: "View larger image", de: "Bild vergrößern" },
+  previousImage: { en: "Previous image", de: "Vorheriges Bild" },
+  nextImage: { en: "Next image", de: "Nächstes Bild" },
+  imageCount: { en: "{current} / {total}", de: "{current} / {total}" },
   closeImage: { en: "Close", de: "Schließen" },
   zoomIn: { en: "Zoom in", de: "Vergrößern" },
   zoomOut: { en: "Zoom out", de: "Verkleinern" },
   zoomReset: { en: "Fit", de: "Anpassen" },
-  zoomHint: { en: "Scroll to zoom · drag to pan", de: "Scrollen zum Zoomen · Ziehen zum Verschieben" },
+  zoomHint: { en: "Click or scroll to zoom · drag to pan", de: "Klicken oder scrollen zum Zoomen · Ziehen zum Verschieben" },
   themeToggle: { en: "Toggle dark mode", de: "Hell-/Dunkelmodus umschalten" },
   langSwitcher: { en: "Language", de: "Sprache" }
 };
@@ -124,7 +128,10 @@ const CONTENT = {
   ],
   projects: [
     {
-      image: "",
+      images: [
+        "images/portfolio/1/example1a.png",
+        "images/portfolio/1/example1b.png"
+      ],
       title: { en: "Add your first project", de: "Erstes Projekt eintragen" },
       tag: {
         en: "Project type, e.g. Coursework · QGIS",
@@ -136,7 +143,10 @@ const CONTENT = {
       }
     },
     {
-      image: "",
+      images: [
+        "images/portfolio/2/example2a.png",
+        "images/portfolio/2/example2b.png"
+      ],
       title: { en: "Add your second project", de: "Zweites Projekt eintragen" },
       tag: {
         en: "Project type, e.g. Fieldwork · Cartography",
@@ -148,7 +158,9 @@ const CONTENT = {
       }
     },
     {
-      image: "",
+      images: [
+        "images/portfolio/3/example3.png"
+      ],
       title: { en: "Bachelor thesis (in progress)", de: "Bachelorarbeit (in Arbeit)" },
       tag: { en: "RWTH Aachen · Geohazards", de: "RWTH Aachen · Georisiken" },
       description: {

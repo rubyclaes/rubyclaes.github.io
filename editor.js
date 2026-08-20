@@ -20,7 +20,8 @@
    - Keep quote marks around every piece of text.
    - Keep commas between entries.
    - Translated fields look like:  { en: "English", de: "Deutsch" }
-   - SHARED is language-independent (name, email, LinkedIn, image paths).
+   - SHARED is language-independent (name, email, LinkedIn).
+   - Project photos: images/portfolio/1/file.jpg (one numbered folder per project).
    - Leave de: "" if you have not translated yet — the site falls back to English.
    ========================================================================== */
 `;
@@ -35,6 +36,18 @@
     UI: clone(UI),
     CONTENT: clone(CONTENT)
   };
+
+  (state.CONTENT.projects || []).forEach((project) => {
+    const images = [];
+    if (Array.isArray(project.images)) {
+      project.images.forEach((src) => images.push(String(src || "")));
+    }
+    if (project.image && images.indexOf(project.image) === -1) {
+      images.unshift(String(project.image));
+    }
+    project.images = images.length ? images : [""];
+    delete project.image;
+  });
 
   let dirty = false;
   let fileHandle = null;
@@ -241,8 +254,8 @@
           <h2>Projects</h2>
           ${pageTag("portfolio")}
         </div>
-        <p class="editor-help">Shown as cards on the homepage only. Put files in the <code>images</code> folder, then set the path, e.g. <code>images/my-map.jpg</code>.</p>
-        <p class="editor-help">Cards stay <strong>4:3</strong> on the homepage. Any size image sits fully inside that frame (nothing is stretched or cropped off). Click to open the full picture and zoom. Use a sharp file at least 1600px on the long side (JPG, PNG or WebP).</p>
+        <p class="editor-help">Shown as cards on the homepage only. For <strong>Project N</strong>, put files in <code>images/portfolio/N/</code> (not <code>images/docs</code>), then list each path below. The first image is the card; extra images open in the gallery.</p>
+        <p class="editor-help">Cards stay <strong>4:3</strong> and zoom to fill that frame (edges of a very tall or wide photo may be cropped on the card). Click to see the full image in the gallery. Use a sharp file at least 1600px on the long side (JPG, PNG or WebP).</p>
         <div id="projects-list">${projects.map(renderProject).join("")}</div>
         <button type="button" class="ghost" data-action="add-project">+ Add project</button>
       </section>
@@ -276,6 +289,7 @@
         ${renderUiFields()}
       </section>
     `;
+    bindImagePreviews();
   }
 
   function renderSkill(skill, index) {
@@ -301,16 +315,81 @@
     </article>`;
   }
 
+  function projectImageList(project) {
+    const images = [];
+    if (Array.isArray(project.images)) {
+      project.images.forEach((src) => images.push(String(src || "")));
+    }
+    if (project.image && images.indexOf(project.image) === -1) {
+      images.unshift(String(project.image));
+    }
+    return images.length ? images : [""];
+  }
+
+  function syncImagePreview(box, src) {
+    if (!box) return;
+    const img = box.querySelector("img");
+    const label = box.querySelector(".editor-image-preview-label");
+    const value = String(src || "").trim();
+    box.classList.remove("is-empty", "is-error", "is-ok");
+    if (!img) return;
+    img.onload = function () {
+      box.classList.remove("is-empty", "is-error");
+      box.classList.add("is-ok");
+    };
+    img.onerror = function () {
+      box.classList.remove("is-ok", "is-empty");
+      box.classList.add("is-error");
+      if (label) label.textContent = "Not found";
+    };
+    if (!value) {
+      img.removeAttribute("src");
+      box.classList.add("is-empty");
+      if (label) label.textContent = "No path";
+      return;
+    }
+    if (label) label.textContent = "Not found";
+    img.src = value;
+  }
+
+  function bindImagePreviews() {
+    editView.querySelectorAll(".editor-image-row").forEach((row) => {
+      const input = row.querySelector("input[data-path]");
+      const box = row.querySelector("[data-image-preview]");
+      if (input && box) syncImagePreview(box, input.value);
+    });
+  }
+
   function renderProject(project, index) {
+    const folder = `images/portfolio/${index + 1}/`;
+    const images = projectImageList(project);
+    const imageRows = images
+      .map((src, imageIndex) => {
+        const cover = imageIndex === 0 ? " · cover" : "";
+        return `<div class="editor-image-row">
+          <div class="editor-image-preview is-empty" data-image-preview aria-hidden="true">
+            <img alt="">
+            <span class="editor-image-preview-label">No path</span>
+          </div>
+          <label class="field">
+            <span class="field-label">Image ${imageIndex + 1}${cover}</span>
+            <input type="text" data-path="CONTENT.projects.${index}.images.${imageIndex}" value="${esc(src)}" placeholder="${esc(folder + (index === 0 && imageIndex === 0 ? "example1a.png" : "example.jpg"))}">
+          </label>
+          ${binButton("remove-image", `data-index="${index}" data-image="${imageIndex}"`, "Remove image")}
+        </div>`;
+      })
+      .join("");
     return `<article class="editor-card" data-list="projects" data-index="${index}">
       <div class="editor-card-head">
         <strong>Project ${index + 1}</strong>
         ${binButton("remove-project", `data-index="${index}"`, "Remove project")}
       </div>
-      <label class="field">
-        <span class="field-label">Image path</span>
-        <input type="text" data-path="CONTENT.projects.${index}.image" value="${esc(project.image || "")}" placeholder="images/project.jpg">
-      </label>
+      <p class="editor-sub">Images</p>
+      <p class="editor-help">Put files in <code>${esc(folder)}</code>. First path is the homepage card.</p>
+      ${imageRows}
+      <div class="editor-row-actions">
+        <button type="button" class="ghost" data-action="add-image" data-index="${index}">+ Add image</button>
+      </div>
       ${locFields("CONTENT.projects." + index + ".title", project.title, { label: "Title" })}
       ${locFields("CONTENT.projects." + index + ".tag", project.tag, { label: "Tag" })}
       ${locFields("CONTENT.projects." + index + ".description", project.description, { label: "Description", multiline: true })}
@@ -459,12 +538,19 @@
   }
 
   function generateContentJs() {
+    const content = clone(state.CONTENT);
+    (content.projects || []).forEach((project) => {
+      project.images = (project.images || [])
+        .map((src) => String(src || "").trim())
+        .filter(Boolean);
+      delete project.image;
+    });
     return (
       HEADER +
       "\nconst SITE = " + toJs(state.SITE, 0) + ";\n\n" +
       "const SHARED = " + toJs(state.SHARED, 0) + ";\n\n" +
       "const UI = " + toJs(state.UI, 0) + ";\n\n" +
-      "const CONTENT = " + toJs(state.CONTENT, 0) + ";\n"
+      "const CONTENT = " + toJs(content, 0) + ";\n"
     );
   }
 
@@ -529,6 +615,10 @@
     const path = event.target.getAttribute("data-path");
     if (!path) return;
     assign(path, event.target.value);
+    if (/\.images\.\d+$/.test(path)) {
+      const row = event.target.closest(".editor-image-row");
+      if (row) syncImagePreview(row.querySelector("[data-image-preview]"), event.target.value);
+    }
     if (path === "SHARED.contact.email") {
       const linkPath = "SHARED.contact.emailLink";
       const currentLink = state.SHARED.contact.emailLink || "";
@@ -579,13 +669,24 @@
       state.CONTENT.skills.splice(index, 1);
     } else if (action === "add-project") {
       state.CONTENT.projects.push({
-        image: "",
+        images: [""],
         title: emptyLoc(),
         tag: emptyLoc(),
         description: emptyLoc()
       });
     } else if (action === "remove-project") {
       state.CONTENT.projects.splice(index, 1);
+    } else if (action === "add-image") {
+      const project = state.CONTENT.projects[index];
+      if (!project) return;
+      if (!Array.isArray(project.images)) project.images = [""];
+      project.images.push("");
+    } else if (action === "remove-image") {
+      const project = state.CONTENT.projects[index];
+      const imageIndex = Number(button.getAttribute("data-image"));
+      if (!project || !Array.isArray(project.images)) return;
+      project.images.splice(imageIndex, 1);
+      if (!project.images.length) project.images.push("");
     } else if (action === "add-education") {
       state.CONTENT.education.push(emptyEntry());
     } else if (action === "remove-education") {

@@ -116,17 +116,19 @@ You can still edit `content.js` by hand in VS Code if you need to. Translated fi
 
 ## 6. Where to put photos
 
-**Project pictures** (maps, portfolio cards) go in the **`images`** folder — in VS Code’s file list, next to `index.html`. Do not put them in `images/docs` (that folder is only for this guide).
+**Project pictures** go in a numbered folder under **`images/portfolio/`**. Do not put them in `images/docs` (that folder is only for this guide).
 
-1. Copy your file into `images`. In VS Code you can drag it from File Explorer onto the `images` folder.
-2. Use a simple name: lowercase letters, hyphens, no spaces. Example: `flood-risk-brisbane-2026.jpg`.
+1. For **Project 1**, copy files into `images/portfolio/1`. Project 2 uses `images/portfolio/2`, and so on. In VS Code you can drag files from File Explorer onto that folder.
+2. Use a simple name: lowercase letters, hyphens, no spaces. Example: `flood-risk-overview.jpg`.
 3. Allowed types: `.jpg`, `.jpeg`, `.png`, `.webp`.
-4. In the content studio, on that project, set **Image path** to `images/your-file-name.jpg` (same spelling as the file).
+4. In the content studio, on that project, add an **Image** row for each file. The path must match the file, e.g. `images/portfolio/1/flood-risk-overview.jpg`.
+5. The **first** image is the homepage card. Extra images open in the gallery (count badge on the card, then arrows / thumbnails).
 
 Tips:
 
 - Prefer a sharp file at least **1600px on the long side** so zoom stays crisp.
-- Homepage cards stay **4:3**. Any size image sits fully inside that frame (nothing is stretched or cropped). A true 4:3 photo (for example 1600×1200) fills the card most neatly.
+- Homepage cards stay **4:3** and zoom to fill that frame. A very tall or wide photo is cropped on the card; click to see the full picture in the gallery. A true 4:3 photo (for example 1600×1200) fills the card with nothing cut off.
+- The site cannot see files sitting in the folder until you list them in the content studio.
 - A wrong path shows an “Image not found” box, not a broken page.
 
 ---
@@ -138,7 +140,7 @@ Tips:
 
 1. Pull one more time (**⋯ → Pull**) if you have not just done it.
 2. Open **Source Control** (**Ctrl+Shift+G**).
-3. Under **Changes** you should see files you touched, often `content.js` and new files in `images`.
+3. Under **Changes** you should see files you touched, often `content.js` and new files in `images/portfolio`.
 4. Click **+** next to **Changes** (or next to each file) to **stage** them. Staged files are the ones included in this snapshot.
 5. At the top of the Source Control panel, type a short message, for example `Update portfolio profile`.
 6. Click **Commit**. (If VS Code asks you to confirm Git, follow the prompt.)
@@ -156,7 +158,7 @@ Wait about **30–90 seconds**, then open [https://rubyclaes.github.io/](https:/
 | Clone or push asks you to log in | Sign in with GitHub (Allow the dialog, or the VS Code Accounts icon, or GitHub Desktop). |
 | **Push** is rejected / “pull first” | **⋯ → Pull**, then **Sync Changes** again. |
 | Save in the editor downloaded `content.js` | Drop that file onto the project in VS Code and replace the old `content.js`. |
-| Photo missing on the site | Check the file is inside `images/` (not `images/docs/`) and the path is exactly `images/filename.jpg`. |
+| Photo missing on the site | Check the file is inside `images/portfolio/N/` (not `images/docs/`) and that the same path is listed in the content studio. |
 | Live site looks old | Wait a minute, then **Ctrl+F5**. Confirm you clicked **Sync Changes**, not only **Commit**. |
 | You edited on two computers | Always **Pull** before you start. |
 
@@ -188,7 +190,8 @@ Open `cv.html`, pick English or Deutsch, then **Download**. That uses the browse
 |- content.js          All editable text — this is what Save updates
 |- symbols.js          Skill legend icons
 |- script.js / theme.js / styles.css
-|- images/             Project photos
+|- images/             Site images
+|- images/portfolio/   One numbered folder per project (1, 2, 3, …)
 |- images/docs/        Screenshots for this README only
 |- icons/              Favicons
 ```
