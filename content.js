@@ -187,9 +187,10 @@ const CONTENT = {
   projects: [
     {
       images: [
-        "images/Poster_Claes_23.jpg",
-        "images/portfolio/1/example1a.png",
-        "images/portfolio/1/example1b.png"
+        "images/portfolio/1/Poster_Claes_23.jpg",
+        "images/portfolio/1/Rindhaltung.png",
+        "images/portfolio/1/Schutzmaßnahmen.png",
+        "images/portfolio/1/Hamburg.png"
       ],
       title: { en: "Add your first project", de: "Erstes Projekt eintragen" },
       tag: {
