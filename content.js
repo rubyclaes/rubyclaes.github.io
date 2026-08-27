@@ -15,8 +15,16 @@
 const SITE = {
   defaultLang: "en",
   languages: [
-    { code: "en", label: "English", locale: "en-AU" },
-    { code: "de", label: "Deutsch", locale: "de" }
+    {
+      code: "en",
+      label: "English",
+      locale: "en-AU"
+    },
+    {
+      code: "de",
+      label: "Deutsch",
+      locale: "de"
+    }
   ]
 };
 
@@ -31,12 +39,30 @@ const SHARED = {
 };
 
 const UI = {
-  portfolioEyebrow: { en: "Portfolio", de: "Portfolio" },
-  fullCvEyebrow: { en: "Full CV", de: "Lebenslauf" },
-  profile: { en: "Profile", de: "Profil" },
-  skills: { en: "Skills", de: "Kompetenzen" },
-  navProjects: { en: "Projects", de: "Projekte" },
-  projects: { en: "Mapped Projects", de: "Kartierte Projekte" },
+  portfolioEyebrow: {
+    en: "Portfolio",
+    de: "Portfolio"
+  },
+  fullCvEyebrow: {
+    en: "Full CV",
+    de: "Lebenslauf"
+  },
+  profile: {
+    en: "Profile",
+    de: "Profil"
+  },
+  skills: {
+    en: "Skills",
+    de: "Kompetenzen"
+  },
+  navProjects: {
+    en: "Projects",
+    de: "Projekte"
+  },
+  projects: {
+    en: "Mapped Projects",
+    de: "Kartierte Projekte"
+  },
   projectsHint: {
     en: "Highlight reel. See {cv} for more context.",
     de: "Auswahl aktueller Arbeiten. Mehr Kontext im {cv}."
@@ -83,17 +109,20 @@ const CONTENT = {
     de: "Essen, Deutschland"
   },
   shortProfile: {
-    en: "Final-year Applied Geography student (B.Sc., RWTH Aachen; expected late 2026), focused on GIS, cartography, and turning spatial data into clear, visually compelling maps. Dual Australian–Belgian citizen with full working rights in Australia. Seeking a graduate GIS/spatial role from early 2027, with particular interest in Brisbane and roles within commuting distance of the NSW Central Coast.",
-    de: "Studierende der Angewandten Geographie (B.Sc., RWTH Aachen) im Abschluss, mit Leidenschaft für GIS, Kartographie und die Umsetzung räumlicher Daten in klare, visuell überzeugende Karten. Voraussichtlicher Abschluss Ende 2026. Sucht ab Oktober 2026 ein Pflichtpraktikum im GIS- und Geodatenbereich, anschließend eine Einstiegsstelle."
+    en: "I am currently completing my Applied Geography degree in Germany and will be available for entry-level opportunities from late 2026 or early 2027, following the completion of my mandatory internship and Bachelor’s thesis. I am open to opportunities across Europe and Australia, with particular interest in Brisbane and roles within commuting distance of the NSW Central Coast.",
+    de: "Derzeit absolviere ich mein Studium der Angewandten Geographie in Deutschland und stehe nach Abschluss meines Pflichtpraktikums und meiner Bachelorarbeit ab Ende 2026 bzw. Anfang 2027 für den Berufseinstieg zur Verfügung. Ich bin flexibel hinsichtlich des Standorts und offen für Positionen in Europa und Australien, mit besonderem Interesse an Deutschland und dem deutschsprachigen Raum."
   },
   fullProfile: {
-    en: "Enthusiastic final-year Applied Geography student (B.Sc., RWTH Aachen University; expected late 2026) with a genuine passion for GIS and cartography, and a particular love of turning raw spatial data into maps that are both factual and visually compelling. Keen to bring hands-on GIS skills, an analytical mindset and cross-cultural experience to a graduate role in Australia's spatial industry, with particular interest in Brisbane and roles within commuting distance of the NSW Central Coast. Reliable, quick to pick up new tools, and excited to get started.",
-    de: "Studierende der Angewandten Geographie (B.Sc., RWTH Aachen) im Abschluss, mit echter Begeisterung für GIS und Kartographie — besonders dafür, aus räumlichen Rohdaten Karten zu machen, die sachlich und visuell überzeugend sind. Voraussichtlicher Abschluss Ende 2026. Bringt praktische GIS-Kenntnisse, analytisches Denken und interkulturelle Erfahrung mit und sucht ab Oktober 2026 ein Pflichtpraktikum, anschließend eine Einstiegsrolle in GIS, Kartographie oder räumlicher Analyse. Zuverlässig, lernbereit und motiviert, durchzustarten."
+    en: "Final-year B.Sc. Applied Geography student at RWTH Aachen University, expected to graduate in late 2026, with a broad academic background spanning GIS, spatial analysis, remote sensing, geoscience, geomorphology, geology, soil science and climatology. I have a strong particular interest in GIS and cartography, especially in transforming spatial data into clear, informative and visually compelling outputs.\n\nI am seeking an entry-level or graduate position in Europe or Australia where I can apply my geographical and analytical skills while continuing to develop professionally. GIS and spatial work are a particular area of interest, but I am also open to roles that draw on my broader background in geoscience, environmental applications and field-based geography. Through university projects, fieldwork and practical coursework, I have developed experience working with geospatial data, GIS software, remote sensing and geographical field methods.\n\nAs an Australian–Belgian dual citizen, I have full working rights in Australia and am open to relocating for the right opportunity. I am particularly interested in roles that allow me to combine technical GIS skills with broader geographical and environmental knowledge.\n",
+    de: "Geographiestudentin im letzten Bachelorjahr (B.Sc. Angewandte Geographie, RWTH Aachen University) mit voraussichtlichem Studienabschluss Ende 2026 und einem breit gefächerten fachlichen Hintergrund in GIS, Geodatenanalyse, Fernerkundung, Geowissenschaften, Geomorphologie, Geologie, Bodenkunde und Klimatologie. Mein besonderes Interesse gilt GIS und Kartografie, insbesondere der Aufbereitung räumlicher Daten zu aussagekräftigen, übersichtlichen und visuell ansprechenden Karten und Analysen.\n\nFür meinen Berufseinstieg suche ich eine Einstiegs- oder Graduate-Position in Europa, in der ich meine geographischen und analytischen Kenntnisse praktisch anwenden und weiterentwickeln kann. Dabei liegt mein Schwerpunkt auf GIS und räumlicher Datenanalyse, gleichzeitig bin ich offen für Tätigkeiten, die meine weiteren fachlichen Kenntnisse aus den Geowissenschaften, der Umweltplanung und der angewandten Geographie einbeziehen.\n\nDurch Studienprojekte, Geländepraktika und Exkursionen konnte ich praktische Erfahrungen im Umgang mit Geodaten, GIS-Software, Fernerkundung sowie verschiedenen geographischen und geowissenschaftlichen Feldmethoden sammeln. Ich arbeite mich schnell in neue Software und Methoden ein und möchte meine vielseitigen Kenntnisse gerne in einem praxisorientierten Arbeitsumfeld einsetzen."
   },
   skills: [
     {
-      symbol: "contour",
-      label: { en: "GIS & Spatial Tools", de: "GIS & Geodaten-Tools" },
+      symbol: "ring",
+      label: {
+        en: "GIS & Spatial Tools",
+        de: "GIS & Geodatenwerkzeuge "
+      },
       detail: {
         en: "QGIS, spatial data analysis, cartographic design",
         de: "QGIS, räumliche Datenanalyse, kartographische Gestaltung"
@@ -101,17 +130,32 @@ const CONTENT = {
     },
     {
       symbol: "grid",
-      label: { en: "Programming & Data", de: "Programmierung & Daten" },
-      detail: { en: "Python and R (basic)", de: "Python und R (Grundkenntnisse)" }
+      label: {
+        en: "Programming & Data",
+        de: "Programmierung & Daten"
+      },
+      detail: {
+        en: "Python and R (basic)",
+        de: "Python und R (Grundkenntnisse)"
+      }
     },
     {
       symbol: "dashed",
-      label: { en: "Environmental Modelling", de: "Umweltmodellierung" },
-      detail: { en: "ENVI-met (basic)", de: "ENVI-met (Grundkenntnisse)" }
+      label: {
+        en: "Climate Modelling",
+        de: "Klimamodellierung"
+      },
+      detail: {
+        en: "ENVI-met (basic)",
+        de: "ENVI-met (Grundkenntnisse)"
+      }
     },
     {
-      symbol: "leader",
-      label: { en: "Design & Visualisation", de: "Design & Visualisierung" },
+      symbol: "contour",
+      label: {
+        en: "Design & Visualisation",
+        de: "Design & Visualisierung"
+      },
       detail: {
         en: "Inkscape, map layout and cartographic representation",
         de: "Inkscape, Kartenlayout und kartographische Darstellung"
@@ -119,16 +163,31 @@ const CONTENT = {
     },
     {
       symbol: "hatch",
-      label: { en: "Productivity", de: "Produktivität" },
+      label: {
+        en: "Productivity",
+        de: "Produktivität"
+      },
       detail: {
         en: "Microsoft Office (Word, Excel, PowerPoint)",
         de: "Microsoft Office (Word, Excel, PowerPoint)"
+      }
+    },
+    {
+      symbol: "triangle",
+      label: {
+        en: "Laboratory experience",
+        de: "Laborerfahrung "
+      },
+      detail: {
+        en: "Sediment sample analysis ",
+        de: "Analyse von Sedimentproben"
       }
     }
   ],
   projects: [
     {
       images: [
+        "images/Poster_Claes_23.jpg",
         "images/portfolio/1/example1a.png",
         "images/portfolio/1/example1b.png"
       ],
@@ -153,8 +212,8 @@ const CONTENT = {
         de: "Projektart, z. B. Geländearbeit · Kartographie"
       },
       description: {
-        en: "Same idea here — one project per card. It's fine to start with just one or two and add more later.",
-        de: "Dasselbe hier — ein Projekt pro Karte. Ein oder zwei Einträge reichen zum Anfang; weitere können später dazukommen."
+        en: "",
+        de: ""
       }
     },
     {
@@ -164,19 +223,25 @@ const CONTENT = {
       title: { en: "Bachelor thesis (in progress)", de: "Bachelorarbeit (in Arbeit)" },
       tag: { en: "RWTH Aachen · Geohazards", de: "RWTH Aachen · Georisiken" },
       description: {
-        en: "Sedimentological Features of Palaeotsunamis in Greece. Update this once the thesis is finished — a key figure or map from it would make a strong final project card.",
-        de: "Sedimentological Features of Palaeotsunamis in Greece. Nach Abschluss der Arbeit aktualisieren — eine zentrale Abbildung oder Karte eignet sich gut als Projektkarte."
+        en: "Sedimentological features of unknown tsunami in Greece",
+        de: "Sedimentologische Merkmale von unbekannte Tsunamis in Griechenland"
       }
     }
   ],
   education: [
     {
-      role: { en: "B.Sc. Applied Geography", de: "B.Sc. Angewandte Geographie" },
+      role: {
+        en: "B.Sc. Applied Geography",
+        de: "B.Sc. Angewandte Geographie"
+      },
       org: {
         en: "RWTH Aachen University, Germany",
         de: "RWTH Aachen, Deutschland"
       },
-      dates: { en: "Oct 2023 – Present", de: "Okt. 2023 – heute" },
+      dates: {
+        en: "Oct 2023 – Present",
+        de: "Okt. 2023 – heute"
+      },
       bullets: [
         {
           en: "Expected completion: late 2026",
@@ -184,19 +249,15 @@ const CONTENT = {
         },
         {
           en: "Focus areas: GIS, geospatial analysis, human & physical geography, urban geography and spatial planning; minor in Geosciences with an elective focus on Geohazards",
-          de: "Schwerpunkte: GIS, Geodatenanalyse, Humangeographie und Physische Geographie, Stadtgeographie und Raumplanung; Nebenfach Geowissenschaften mit Wahlfokus Georisiken"
-        },
-        {
-          en: "Project work: urban development analysis using GIS software",
-          de: "Projektarbeit: städtebauliche Analyse mit GIS-Software"
+          de: "Schwerpunkte: GIS, Geodatenanalyse, Humangeographie und Physische Geographie, Stadtgeographie und Raumplanung; Nebenfach Geowissenschaften und Wahlpflichtfach in Georisiken"
         },
         {
           en: "Currently completing final exams, ahead of thesis and a mandatory industry internship from October 2026",
-          de: "Derzeit Abschlussprüfungen, danach Bachelorarbeit und Pflichtpraktikum in der Industrie ab Oktober 2026"
+          de: "Absolviere derzeit Abschlussprüfungen und Bachelorarbeit schreiben mit Pflichtpraktikum ab Oktober 2026"
         },
         {
-          en: "Bachelor thesis: Sedimentological Features of Palaeotsunamis in Greece",
-          de: "Bachelorarbeit: Sedimentological Features of Palaeotsunamis in Greece"
+          en: "Bachelor thesis: Sedimentological features of unknown tsunami in Greece",
+          de: "Bachelorarbeit: Sedimentologische Merkmale von unbekannte Tsunamis in Griechenland"
         }
       ]
     },
@@ -209,7 +270,10 @@ const CONTENT = {
         en: "Reinhard-und-Max-Mannesmann-Gymnasium, Duisburg, Germany",
         de: "Reinhard-und-Max-Mannesmann-Gymnasium, Duisburg"
       },
-      dates: { en: "Graduated 2022", de: "Abschluss 2022" },
+      dates: {
+        en: "Graduated 2022",
+        de: "Abschluss 2022"
+      },
       bullets: [
         {
           en: "Bilingual stream (German–English)",
@@ -228,59 +292,51 @@ const CONTENT = {
         en: "RWTH Aachen University Library",
         de: "Universitätsbibliothek der RWTH Aachen"
       },
-      dates: { en: "Dec 2025 – Present", de: "Dez. 2025 – heute" },
+      dates: {
+        en: "Dec 2025 – Present",
+        de: "Dez. 2025 – heute"
+      },
       bullets: [
         {
           en: "Assist students and staff with catalogue searches, resource requests and general enquiries",
           de: "Unterstützung von Studierenden und Mitarbeitenden bei Katalogrecherchen, Bestellungen und allgemeinen Anfragen"
-        },
-        {
-          en: "Manage shelving, stock organisation and returns processing to keep library systems running smoothly",
-          de: "Regalpflege, Bestandsordnung und Rückbuchungen, damit der Bibliotheksbetrieb reibungslos läuft"
-        },
-        {
-          en: "Provide front-of-house customer service in a busy academic environment",
-          de: "Service am Infoschalter in einem belebten wissenschaftlichen Umfeld"
         }
       ]
     },
     {
       role: {
-        en: "Retail Assistant (Seasonal)",
+        en: "Retail Worker (Seasonal)",
         de: "Aushilfe im Einzelhandel (saisonale Tätigkeit)"
       },
       org: {
         en: "Edeka Buchmühlen, Essen, Germany",
         de: "Edeka Buchmühlen, Essen"
       },
-      dates: { en: "Seasonal, 2023 – 2025", de: "Saisonweise, 2023 – 2025" },
+      dates: {
+        en: "Seasonal, 2023 – 2025",
+        de: "Saisonweise, 2023 – 2025"
+      },
       bullets: [
         {
           en: "Delivered customer service and point-of-sale support during peak seasonal periods",
           de: "Kundenberatung und Kassentätigkeit in stoßstarken Saisonzeiten"
-        },
-        {
-          en: "Restocked shelves and maintained store presentation standards",
-          de: "Regale aufgefüllt und die Warenpräsentation gepflegt"
-        },
-        {
-          en: "Worked efficiently within a team to meet daily operational targets",
-          de: "Im Team die täglichen Betriebsziele erreicht"
         }
       ]
     },
     {
-      role: { en: "Café Assistant", de: "Café-Aushilfe" },
+      role: {
+        en: "Café Worker",
+        de: "Café-Aushilfe"
+      },
       org: {
         en: "Lavendel im Brückencafé, Essen, Germany",
         de: "Lavendel im Brückencafé, Essen"
       },
-      dates: { en: "Mar–May 2023", de: "März–Mai 2023" },
+      dates: {
+        en: "Mar–May 2023",
+        de: "März–Mai 2023"
+      },
       bullets: [
-        {
-          en: "Prepared and served food and beverages in a busy café setting",
-          de: "Speisen und Getränke in einem belebten Café zubereitet und serviert"
-        },
         {
           en: "Handled customer orders, payments and day-to-day front-of-house duties",
           de: "Bestellungen, Zahlungen und den Servicebetrieb übernommen"
@@ -292,8 +348,14 @@ const CONTENT = {
         en: "Private Tutor (Self-Employed)",
         de: "Nachhilfelehrerin (selbstständig)"
       },
-      org: { en: "Essen, Germany", de: "Essen" },
-      dates: { en: "", de: "" },
+      org: {
+        en: "Essen, Germany",
+        de: "Essen"
+      },
+      dates: {
+        en: "",
+        de: ""
+      },
       bullets: [
         {
           en: "Delivered one-on-one tutoring sessions tailored to individual student needs",
@@ -307,7 +369,7 @@ const CONTENT = {
     de: "Englisch (Muttersprache)  ·  Deutsch (fließend, C1)  ·  Grundkenntnisse: Italienisch, Französisch, Spanisch, Flämisch, Koreanisch"
   },
   availability: {
-    en: "Dual Australian–Belgian citizen with full working rights in Australia. Currently completing studies in Germany; available to relocate for entry-level GIS/spatial roles following her mandatory internship and thesis submission (from late 2026 / early 2027). Flexible and open to opportunities across Australia, with particular interest in Brisbane and roles within commuting distance of the NSW Central Coast.",
-    de: "Schließt derzeit das Studium an der RWTH Aachen ab. Verfügbar für ein Pflichtpraktikum im GIS-/Geodatenbereich ab Oktober 2026 und für eine Einstiegsstelle nach Abgabe der Bachelorarbeit (ab Ende 2026 / Anfang 2027). Offen für Stationen in Deutschland und im deutschsprachigen Raum."
+    en: "",
+    de: ""
   }
 };
