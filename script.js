@@ -251,30 +251,9 @@
       const cover = images[0] || "";
 
       const media = document.createElement("div");
+      media.className = "project-media" + (images.length > 1 ? " has-gallery" : "");
       if (cover) {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "project-media-btn";
-        btn.setAttribute("aria-label", `${t(UI.viewImage, lang)}: ${title}`);
-        const img = document.createElement("img");
-        img.className = "project-thumb";
-        img.src = cover;
-        img.alt = title;
-        img.loading = "lazy";
-        img.decoding = "async";
-        img.onerror = function () {
-          media.innerHTML = placeholderMarkup(cover, lang);
-        };
-        btn.appendChild(img);
-        if (images.length > 1) {
-          const count = document.createElement("span");
-          count.className = "project-media-count";
-          count.textContent = String(images.length);
-          count.setAttribute("aria-hidden", "true");
-          btn.appendChild(count);
-        }
-        btn.addEventListener("click", () => openLightbox(images, 0, title));
-        media.appendChild(btn);
+        media.appendChild(buildProjectMedia(images, title, lang));
       } else {
         media.innerHTML = placeholderMarkup(null, lang);
       }
@@ -291,6 +270,128 @@
 
       projectsEl.appendChild(card);
     });
+  }
+
+  function fillCopy(template, vars) {
+    return String(template || "").replace(/\{(\w+)\}/g, (_, key) => (
+      vars[key] != null ? String(vars[key]) : ""
+    ));
+  }
+
+  function chevronSvg(dir) {
+    const d = dir === "prev" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7";
+    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+  }
+
+  function buildProjectMedia(images, title, lang) {
+    let current = 0;
+    const many = images.length > 1;
+    const wrap = document.createElement("div");
+    wrap.className = "project-media-frame";
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "project-media-btn";
+    const img = document.createElement("img");
+    img.className = "project-thumb";
+    img.alt = title;
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.onerror = function () {
+      wrap.innerHTML = placeholderMarkup(images[current], lang);
+    };
+    btn.appendChild(img);
+    btn.addEventListener("click", () => openLightbox(images, current, title));
+    wrap.appendChild(btn);
+
+    let cue = null;
+    let thumbs = [];
+
+    function setCurrent(index) {
+      current = ((index % images.length) + images.length) % images.length;
+      img.src = images[current];
+      if (many) {
+        const galleryLabel = fillCopy(t(UI.viewGallery, lang) || t(UI.viewImage, lang), {
+          count: images.length,
+          title: title
+        });
+        btn.setAttribute("aria-label", galleryLabel);
+        if (cue) cue.textContent = formatImageCount(lang, current + 1, images.length);
+        thumbs.forEach((thumb, i) => {
+          thumb.classList.toggle("is-active", i === current);
+          thumb.setAttribute("aria-current", i === current ? "true" : "false");
+        });
+      } else {
+        btn.setAttribute("aria-label", `${t(UI.viewImage, lang)}: ${title}`);
+      }
+    }
+
+    if (many) {
+      const prev = document.createElement("button");
+      prev.type = "button";
+      prev.className = "project-media-arrow prev";
+      prev.setAttribute("aria-label", t(UI.previousImage, lang));
+      prev.innerHTML = chevronSvg("prev");
+      prev.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setCurrent(current - 1);
+      });
+
+      const next = document.createElement("button");
+      next.type = "button";
+      next.className = "project-media-arrow next";
+      next.setAttribute("aria-label", t(UI.nextImage, lang));
+      next.innerHTML = chevronSvg("next");
+      next.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setCurrent(current + 1);
+      });
+
+      const bar = document.createElement("div");
+      bar.className = "project-media-bar";
+      cue = document.createElement("p");
+      cue.className = "project-media-cue";
+      const browse = document.createElement("span");
+      browse.className = "project-media-browse";
+      browse.textContent = fillCopy(t(UI.browsePhotos, lang) || "{count} photos", {
+        count: images.length
+      });
+      bar.appendChild(cue);
+      bar.appendChild(browse);
+
+      const strip = document.createElement("div");
+      strip.className = "project-media-strip";
+      strip.setAttribute("role", "tablist");
+      strip.setAttribute("aria-label", fillCopy(t(UI.browsePhotos, lang) || "{count} photos", {
+        count: images.length
+      }));
+      thumbs = images.map((src, index) => {
+        const thumb = document.createElement("button");
+        thumb.type = "button";
+        thumb.className = "project-media-thumb";
+        thumb.setAttribute("role", "tab");
+        thumb.setAttribute("aria-label", formatImageCount(lang, index + 1, images.length));
+        const thumbImg = document.createElement("img");
+        thumbImg.src = src;
+        thumbImg.alt = "";
+        thumb.appendChild(thumbImg);
+        thumb.addEventListener("click", (event) => {
+          event.stopPropagation();
+          setCurrent(index);
+          openLightbox(images, index, title);
+        });
+        strip.appendChild(thumb);
+        return thumb;
+      });
+
+      wrap.appendChild(prev);
+      wrap.appendChild(next);
+      wrap.appendChild(bar);
+      wrap.appendChild(strip);
+    }
+
+    setCurrent(0);
+    return wrap;
   }
 
   function placeholderMarkup(imagePath, lang) {

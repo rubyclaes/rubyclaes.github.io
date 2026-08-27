@@ -61,12 +61,14 @@
   justify-content: flex-end;
 }
 
-.editor-status {
-  margin: 0;
-  min-height: 1.2em;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--muted);
+.editor-status.is-ok {
+  color: var(--accent);
+}
+
+.editor-status.is-warn,
+.editor-status.is-error,
+.editor-not-studio .editor-kicker {
+  color: #c45c26;
 }
 
 .editor-tabs {

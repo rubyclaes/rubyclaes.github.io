@@ -2,11 +2,11 @@
 
 A bilingual (English / German) portfolio and CV. The live site is [rubyclaes.github.io](https://rubyclaes.github.io/).
 
-You do not need to write code. There is no build step and no local server.
+You do not need to write code. There is no build step.
 
 **First time:** install the tools and clone a copy (prerequisites below).
 
-**After that, the usual loop is:** **pull → edit in the content studio → check it in the browser → commit and push.** GitHub then updates the live site (about 30–90 seconds).
+**After that, the usual loop is:** **pull → start the content studio → edit and Save → Preview → commit and push.** GitHub then updates the live site (about 30–90 seconds).
 
 ---
 
@@ -46,7 +46,7 @@ The search box looks like the screenshot. Use **`rubyclaes/rubyclaes.github.io`*
 
 ### Next time you sit down to edit
 
-**File → Open Folder…** and pick `rubyclaes.github.io`. You should see files like `index.html`, `editor.html`, `content.js`, and a folder called `images`.
+**File → Open Folder…** and pick `rubyclaes.github.io`. You should see files like `index.html`, `start-editor.bat`, `content.js`, and a folder called `images`.
 
 ---
 
@@ -64,39 +64,41 @@ Do these steps whenever you change text, projects, or photos.
 
 If it says you are already up to date, that is fine — continue.
 
-### 2. View the site on your computer
+### 2. Start the content studio
 
-This is only a preview on your PC. Visitors still see the live site until you push (step 5).
+This is only a preview on your computer. Visitors still see the live site until you push (step 5).
 
-Use **Chrome** or **Edge** (not the VS Code preview tab).
+Keep the black terminal window open while you edit. Close it when you are finished.
 
-1. In VS Code’s file list on the left, right-click `index.html`.
+**Windows**
+
+1. In VS Code’s file list, right-click `start-editor.bat`.
 2. Click **Reveal in File Explorer**.
-3. Double-click `index.html` so it opens in Chrome or Edge.
+3. Double-click `start-editor.bat`.
+4. If Windows asks, allow it to run. Your browser should open the content studio.
 
-| File | What you see |
-| --- | --- |
-| `index.html` | Portfolio (home page) |
-| `cv.html` | Full CV |
-| `editor.html` | Private content studio (not on the public site) |
+You can also run **Terminal → Run Task… → Start content studio** in VS Code.
 
-After you save edits, go back to the browser tab and press **F5** to refresh. If the page looks stuck on an old version, press **Ctrl+F5**.
+**Mac or Linux**
 
-You can also click **Preview** in the content studio. That opens the portfolio in a new tab.
+1. In VS Code, open the Terminal (**Terminal → New Terminal**).
+2. Type `./start-editor.sh` and press Enter. The `./` at the front matters — do not type `. start-editor.sh`.
+3. Your browser should open the content studio.
 
-### 3. Edit text (content studio)
+Python 3 is already present on most Mac and Linux computers. If the script says it is missing, install Python from [python.org](https://www.python.org/downloads/).
 
-1. Pull first (step 1).
-2. Right-click `editor.html` → **Reveal in File Explorer** → open it in **Chrome or Edge**.
-3. Edit English and German side by side. Coloured tags show whether a field is on the **Portfolio**, the **CV**, both, or only site labels.
-4. Click **Save**. The first time, the browser asks which file to use — choose the `content.js` that is already in the `rubyclaes.github.io` folder. Allow the permission if Chrome/Edge asks.
-5. Click **Preview** (or refresh `index.html` / `cv.html`) to check the result.
+Do **not** double-click `editor.html` or `index.html`, and do not use the VS Code preview tab. Save only works in the window the starter opens (`http://127.0.0.1:…`).
+
+### 3. Edit text, then Preview
+
+1. Pull first (step 1) and start the studio (step 2).
+2. Edit English and German side by side. Coloured tags show whether a field is on the **Portfolio**, the **CV**, both, or only site labels.
+3. Click **Save**. That overwrites `content.js` in this project folder. You should see a short “Saved” note in the header.
+4. Click **Preview**. That opens the portfolio from the same local studio. Refresh with **F5** if the tab was already open.
 
 ![Content studio with English and German side by side, page tags, Preview, and Save](./images/docs/content-editor.png)
 
 This page is a private editing tool. It is not linked from the public site.
-
-**If Save downloads a file instead of updating the project:** drag that file into the VS Code file list and replace the existing `content.js` (confirm overwrite).
 
 You can still edit `content.js` by hand in VS Code if you need to. Translated fields look like `{ en: "English", de: "Deutsch" }`. Keep the quotes and commas.
 
@@ -124,7 +126,7 @@ Tips:
 
 1. Pull one more time (**⋯ → Pull**) if you have not just done it.
 2. Open **Source Control** (**Ctrl+Shift+G**).
-3. Under **Changes** you should see files you touched, often `content.js` and new files in `images/portfolio`.
+3. Under **Changes** you should see files you touched, often `content.js` (and sometimes `index.html` / `cv.html` after Save), plus new files in `images/portfolio`.
 4. Click **+** next to **Changes** (or next to each file) to **stage** them. Staged files are the ones included in this snapshot.
 5. At the top of the Source Control panel, type a short message, for example `Update portfolio profile`.
 6. Click **Commit**. (If VS Code asks you to confirm Git, follow the prompt.)
@@ -148,7 +150,8 @@ GitHub Desktop includes Git for itself. VS Code sometimes still wants Git on Win
 | --- | --- |
 | Clone or push asks you to log in | Sign in with GitHub (Allow the dialog, or the VS Code Accounts icon, or GitHub Desktop). |
 | **Push** is rejected / “pull first” | **⋯ → Pull**, then **Sync Changes** again. |
-| Save in the editor downloaded `content.js` | Drop that file onto the project in VS Code and replace the old `content.js`. |
+| The studio says it is “not the local studio” | Close that tab. Start `start-editor.bat` or `start-editor.sh` and use the window it opens. |
+| Double-clicking `start-editor.bat` does nothing | In VS Code: **Terminal → Run Task… → Start content studio**. Or install [Python](https://www.python.org/downloads/) (tick **Add python.exe to PATH**) and try the `.bat` again. |
 | Photo missing on the site | Check the file is inside `images/portfolio/N/` (not `images/docs/`) and that the same path is listed in the content studio. |
 | Live site looks old | Wait a minute, then **Ctrl+F5**. Confirm you clicked **Sync Changes**, not only **Commit**. |
 | You edited on two computers | Always **Pull** before you start. |
@@ -175,12 +178,15 @@ Open `cv.html`, pick English or Deutsch, then **Download**. That uses the browse
 
 ```
 .
+|- start-editor.bat    Windows: double-click to open the content studio
+|- start-editor.sh     Mac/Linux: run this in a terminal
 |- index.html          Portfolio page
 |- cv.html             Full CV
 |- editor.html         Content studio (local only)
 |- content.js          All editable text — this is what Save updates
 |- symbols.js          Skill legend icons
 |- script.js / theme.js / styles.css
+|- tools/              Helper that lets Save write content.js
 |- images/             Site images
 |- images/portfolio/   One numbered folder per project (1, 2, 3, …)
 |- images/docs/        Screenshots for this README only

@@ -1,7 +1,7 @@
 /* ==========================================================================
    Site content — English + German.
 
-   Easiest way to edit: open editor.html, then Save over this file.
+   Easiest way to edit: run start-editor, then Save. That writes this file.
 
    You can still edit this file directly. Rules:
    - Keep quote marks around every piece of text.
@@ -83,6 +83,8 @@ const UI = {
   addImage: { en: "+ Add an image\n(see editor.html)", de: "+ Bild hinzufügen\n(siehe editor.html)" },
   imageNotFound: { en: "Image not found:", de: "Bild nicht gefunden:" },
   viewImage: { en: "View larger image", de: "Bild vergrößern" },
+  viewGallery: { en: "Browse {count} photos: {title}", de: "{count} Fotos ansehen: {title}" },
+  browsePhotos: { en: "{count} photos", de: "{count} Fotos" },
   previousImage: { en: "Previous image", de: "Vorheriges Bild" },
   nextImage: { en: "Next image", de: "Nächstes Bild" },
   imageCount: { en: "{current} / {total}", de: "{current} / {total}" },
@@ -219,7 +221,8 @@ const CONTENT = {
     },
     {
       images: [
-        "images/portfolio/3/example3.png"
+        "images/portfolio/3/Karte_2_DEV_GIS_Claes.png",
+        "images/portfolio/3/Karte_5_Risikoananalyse_GIS_Claes.png"
       ],
       title: { en: "Bachelor thesis (in progress)", de: "Bachelorarbeit (in Arbeit)" },
       tag: { en: "RWTH Aachen · Geohazards", de: "RWTH Aachen · Georisiken" },

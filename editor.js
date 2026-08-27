@@ -14,7 +14,7 @@
   const HEADER = `/* ==========================================================================
    Site content — English + German.
 
-   Easiest way to edit: open editor.html, then Save over this file.
+   Easiest way to edit: run start-editor, then Save. That writes this file.
 
    You can still edit this file directly. Rules:
    - Keep quote marks around every piece of text.
@@ -50,7 +50,6 @@
   });
 
   let dirty = false;
-  let fileHandle = null;
   let activeTab = "edit";
 
   const editView = document.getElementById("edit-view");
@@ -95,8 +94,15 @@
     document.title = (dirty ? "• " : "") + "Content studio — Ruby Claes";
   }
 
-  function status(message) {
+  function isStudio() {
+    const host = location.hostname;
+    return location.protocol === "http:" && (host === "127.0.0.1" || host === "localhost");
+  }
+
+  function status(message, kind) {
     statusEl.textContent = message || "";
+    statusEl.classList.remove("is-ok", "is-warn", "is-error");
+    if (kind) statusEl.classList.add("is-" + kind);
   }
 
   function esc(value) {
@@ -554,45 +560,27 @@
     );
   }
 
-  function downloadFile() {
-    const text = generateContentJs();
-    const blob = new Blob([text], { type: "text/javascript;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "content.js";
-    link.click();
-    URL.revokeObjectURL(url);
-    setDirty(false);
-    status("Downloaded content.js. Put it in this project folder (replace the old file), then Preview.");
-  }
-
   async function saveFile() {
     const text = generateContentJs();
-    if (!window.showSaveFilePicker) {
-      downloadFile();
+    if (!isStudio()) {
+      status("Run start-editor, then Save in that window. This page cannot update the project.", "warn");
       return;
     }
+    status("Saving…");
     try {
-      if (!fileHandle) {
-        fileHandle = await window.showSaveFilePicker({
-          suggestedName: "content.js",
-          types: [
-            {
-              description: "JavaScript",
-              accept: { "text/javascript": [".js"], "text/plain": [".js"] }
-            }
-          ]
-        });
+      const response = await fetch("/save-content", {
+        method: "POST",
+        headers: { "Content-Type": "text/javascript;charset=utf-8" },
+        body: text
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload.error || response.statusText || "Save failed");
       }
-      const writable = await fileHandle.createWritable();
-      await writable.write(text);
-      await writable.close();
       setDirty(false);
-      status("Saved content.js. Refresh the portfolio to see changes.");
+      status("Saved content.js in this project. Click Preview, then commit and push when you are happy.", "ok");
     } catch (error) {
-      if (error && error.name === "AbortError") return;
-      downloadFile();
+      status("Could not save: " + (error && error.message ? error.message : "unknown error"), "error");
     }
   }
 
@@ -732,6 +720,16 @@
     event.preventDefault();
     event.returnValue = "";
   });
+
+  const kicker = document.getElementById("editor-kicker");
+  if (isStudio()) {
+    if (kicker) kicker.textContent = "Saving writes content.js in this project folder";
+    status("Ready. Save writes this project’s content.js.");
+  } else {
+    document.body.classList.add("editor-not-studio");
+    if (kicker) kicker.textContent = "Not the local studio";
+    status("Run start-editor.bat (Windows) or start-editor.sh (Mac/Linux), then work in the window it opens.", "warn");
+  }
 
   renderEdit();
 })();
