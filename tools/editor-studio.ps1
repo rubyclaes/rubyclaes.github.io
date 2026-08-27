@@ -3,6 +3,8 @@ $ErrorActionPreference = "Stop"
 
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $MaxBody = 2 * 1024 * 1024
+$MaxImage = 15 * 1024 * 1024
+$ImageExts = @(".jpg", ".jpeg", ".png", ".webp")
 $StartPort = 4173
 
 if (-not (Test-Path (Join-Path $Root "editor.html")) -or -not (Test-Path (Join-Path $Root "content.js"))) {
@@ -64,9 +66,62 @@ function Update-ContentCache {
     return $stamp
 }
 
+function Get-SafeImageName {
+    param([string]$Name)
+    $base = [System.IO.Path]::GetFileName($Name)
+    $ext = [System.IO.Path]::GetExtension($base).ToLowerInvariant()
+    if ($ImageExts -notcontains $ext) { return $null }
+    $stem = [System.IO.Path]::GetFileNameWithoutExtension($base)
+    $stem = [regex]::Replace($stem, "[^\w.\-]+", "-").Trim(".-")
+    if (-not $stem) { $stem = "image" }
+    return $stem + $ext
+}
+
+function Get-UniqueImagePath {
+    param([string]$Folder, [string]$FileName)
+    $dest = Join-Path $Folder $FileName
+    if (-not (Test-Path -LiteralPath $dest)) { return $dest }
+    $stem = [System.IO.Path]::GetFileNameWithoutExtension($FileName)
+    $ext = [System.IO.Path]::GetExtension($FileName)
+    $i = 2
+    while ($true) {
+        $candidate = Join-Path $Folder ($stem + "-" + $i + $ext)
+        if (-not (Test-Path -LiteralPath $candidate)) { return $candidate }
+        $i++
+    }
+}
+
+function Get-PortfolioImages {
+    $map = [ordered]@{}
+    $root = Join-Path $Root "images\portfolio"
+    if (-not (Test-Path -LiteralPath $root)) { return $map }
+    Get-ChildItem -LiteralPath $root -Directory | Where-Object { $_.Name -match "^\d+$" } | ForEach-Object {
+        $n = $_.Name
+        $files = @(Get-ChildItem -LiteralPath $_.FullName -File | Where-Object {
+            $ImageExts -contains $_.Extension.ToLowerInvariant()
+        } | Sort-Object Name | ForEach-Object { "images/portfolio/$n/$($_.Name)" })
+        $map[$n] = @($files)
+    }
+    return $map
+}
+
+function Read-RequestBytes {
+    param($Request)
+    $len = [int]$Request.ContentLength64
+    if ($len -le 0) { return [byte[]]@() }
+    $buffer = New-Object byte[] $len
+    $read = 0
+    while ($read -lt $len) {
+        $n = $Request.InputStream.Read($buffer, $read, $len - $read)
+        if ($n -le 0) { break }
+        $read += $n
+    }
+    return $buffer
+}
+
 function Send-Json {
     param($Response, [int]$Status, $Payload)
-    $bytes = [System.Text.Encoding]::UTF8.GetBytes(($Payload | ConvertTo-Json -Compress))
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes(($Payload | ConvertTo-Json -Compress -Depth 8))
     $Response.StatusCode = $Status
     $Response.ContentType = "application/json; charset=utf-8"
     $Response.ContentLength64 = $bytes.Length
@@ -133,6 +188,41 @@ try {
                         Write-Host "Saved content.js (cache $stamp)"
                         Send-Json $response 200 @{ ok = $true; version = $stamp }
                     }
+                }
+            } elseif ($request.HttpMethod -eq "GET" -and $path -eq "/studio/images") {
+                Send-Json $response 200 @{ ok = $true; projects = Get-PortfolioImages }
+            } elseif ($request.HttpMethod -eq "POST" -and $path -eq "/studio/image") {
+                $n = 0
+                [int]::TryParse($request.QueryString["project"], [ref]$n) | Out-Null
+                $fileName = Get-SafeImageName $request.QueryString["name"]
+                if ($n -lt 1 -or $n -gt 99 -or -not $fileName) {
+                    Send-Json $response 400 @{ ok = $false; error = "Use a JPG, PNG or WebP photo." }
+                } elseif ($request.ContentLength64 -le 0 -or $request.ContentLength64 -gt $MaxImage) {
+                    Send-Json $response 400 @{ ok = $false; error = "That photo was empty or too large (15 MB max)." }
+                } else {
+                    $folder = Join-Path $Root "images\portfolio\$n"
+                    New-Item -ItemType Directory -Force -Path $folder | Out-Null
+                    $dest = Get-UniqueImagePath $folder $fileName
+                    [System.IO.File]::WriteAllBytes($dest, (Read-RequestBytes $request))
+                    $rel = "images/portfolio/$n/" + [System.IO.Path]::GetFileName($dest)
+                    Write-Host "Added $rel"
+                    Send-Json $response 200 @{ ok = $true; path = $rel }
+                }
+            } elseif ($request.HttpMethod -eq "DELETE" -and $path -eq "/studio/image") {
+                $n = 0
+                [int]::TryParse($request.QueryString["project"], [ref]$n) | Out-Null
+                $name = [System.IO.Path]::GetFileName($request.QueryString["name"])
+                $ext = [System.IO.Path]::GetExtension($name).ToLowerInvariant()
+                $folder = Join-Path $Root "images\portfolio\$n"
+                $dest = Join-Path $folder $name
+                $full = [System.IO.Path]::GetFullPath($dest)
+                $rootPrefix = ([System.IO.Path]::GetFullPath($folder)).TrimEnd("\") + "\"
+                if ($n -lt 1 -or $ImageExts -notcontains $ext -or -not $full.StartsWith($rootPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+                    Send-Json $response 400 @{ ok = $false; error = "That photo could not be found." }
+                } else {
+                    if (Test-Path -LiteralPath $full -PathType Leaf) { Remove-Item -LiteralPath $full }
+                    Write-Host "Removed images/portfolio/$n/$name"
+                    Send-Json $response 200 @{ ok = $true }
                 }
             } elseif ($request.HttpMethod -notin @("GET", "HEAD")) {
                 $response.StatusCode = 405

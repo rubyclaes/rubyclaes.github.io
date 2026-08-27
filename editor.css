@@ -287,16 +287,69 @@
   margin-top: 8px;
 }
 
-.editor-image-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  margin-bottom: 8px;
+.editor-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 12px;
+  margin: 8px 0 4px;
+  padding: 10px;
+  border: 1px dashed transparent;
+  border-radius: 8px;
 }
 
-.editor-image-row .field {
-  flex: 1;
-  margin-bottom: 0;
+.editor-image-grid.is-drop {
+  border-color: var(--accent);
+  background: rgba(244, 162, 97, 0.12);
+}
+
+.editor-image-tile {
+  margin: 0;
+}
+
+.editor-image-tile .editor-image-preview {
+  width: 100%;
+  flex: none;
+}
+
+.editor-image-tile figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+  min-width: 0;
+}
+
+.editor-image-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editor-image-tile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.editor-image-add {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.editor-image-add input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
 }
 
 .editor-image-preview {

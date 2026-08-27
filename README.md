@@ -102,22 +102,20 @@ This page is a private editing tool. It is not linked from the public site.
 
 You can still edit `content.js` by hand in VS Code if you need to. Translated fields look like `{ en: "English", de: "Deutsch" }`. Keep the quotes and commas.
 
-### 4. Where to put photos
+### 4. Photos
 
-**Project pictures** go in a numbered folder under **`images/portfolio/`**. Do not put them in `images/docs` (that folder is only for this guide).
+Each project has its own folder: **Project 1** uses `images/portfolio/1`, **Project 2** uses `images/portfolio/2`, and so on. Do not put project photos in `images/docs`.
 
-1. For **Project 1**, copy files into `images/portfolio/1`. Project 2 uses `images/portfolio/2`, and so on. In VS Code you can drag files from File Explorer onto that folder.
-2. Use a simple name: lowercase letters, hyphens, no spaces. Example: `flood-risk-overview.jpg`.
-3. Allowed types: `.jpg`, `.jpeg`, `.png`, `.webp`.
-4. In the content studio, on that project, add an **Image** row for each file. The path must match the file, e.g. `images/portfolio/1/flood-risk-overview.jpg`.
-5. The **first** image is the homepage card. Extra images open in the gallery (count badge on the card, then arrows / thumbnails).
+In the content studio, on that project:
 
-Tips:
+1. Click **Add photos** (or drop files onto the photo area). The studio copies them into the right folder.
+2. The **cover** is the homepage card. Click **Use as cover** on another photo to change it.
+3. **Remove** deletes that file from the folder.
+4. If you copied files in with File Explorer or VS Code, click **Scan folder**.
 
-- Prefer a sharp file at least **1600px on the long side** so zoom stays crisp.
-- Homepage cards stay **4:3** and zoom to fill that frame. A very tall or wide photo is cropped on the card; click to see the full picture in the gallery. A true 4:3 photo (for example 1600×1200) fills the card with nothing cut off.
-- The site cannot see files sitting in the folder until you list them in the content studio.
-- A wrong path shows an “Image not found” box, not a broken page.
+Allowed types: `.jpg`, `.jpeg`, `.png`, `.webp`. Prefer a sharp file at least **1600px on the long side**. Homepage cards stay **4:3** and zoom to fill that frame.
+
+Then click **Save**, then **Preview**. Git will show the new files under `images/portfolio` plus `content.js`.
 
 ### 5. Publish: commit and push in VS Code
 
@@ -152,7 +150,7 @@ GitHub Desktop includes Git for itself. VS Code sometimes still wants Git on Win
 | **Push** is rejected / “pull first” | **⋯ → Pull**, then **Sync Changes** again. |
 | The studio says it is “not the local studio” | Close that tab. Start `start-editor.bat` or `start-editor.sh` and use the window it opens. |
 | Double-clicking `start-editor.bat` does nothing | In VS Code: **Terminal → Run Task… → Start content studio**. Or install [Python](https://www.python.org/downloads/) (tick **Add python.exe to PATH**) and try the `.bat` again. |
-| Photo missing on the site | Check the file is inside `images/portfolio/N/` (not `images/docs/`) and that the same path is listed in the content studio. |
+| Photo missing on the site | In the studio, open that project and click **Scan folder**, or **Add photos**. Confirm the file is in `images/portfolio/N/` (not `images/docs`). |
 | Live site looks old | Wait a minute, then **Ctrl+F5**. Confirm you clicked **Sync Changes**, not only **Commit**. |
 | You edited on two computers | Always **Pull** before you start. |
 

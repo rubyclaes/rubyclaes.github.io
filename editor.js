@@ -21,7 +21,7 @@
    - Keep commas between entries.
    - Translated fields look like:  { en: "English", de: "Deutsch" }
    - SHARED is language-independent (name, email, LinkedIn).
-   - Project photos: images/portfolio/1/file.jpg (one numbered folder per project).
+   - Project photos live in images/portfolio/N/. The studio lists them; Save stores the order.
    - Leave de: "" if you have not translated yet — the site falls back to English.
    ========================================================================== */
 `;
@@ -260,7 +260,7 @@
           <h2>Projects</h2>
           ${pageTag("portfolio")}
         </div>
-        <p class="editor-help">Shown as cards on the homepage only. For <strong>Project N</strong>, put files in <code>images/portfolio/N/</code> (not <code>images/docs</code>), then list each path below. The first image is the card; extra images open in the gallery.</p>
+        <p class="editor-help">Shown as cards on the homepage only. Project 1 uses photos in <code>images/portfolio/1/</code>, project 2 in <code>2/</code>, and so on. Add photos here (or drop them on a project). The first one is the homepage card; the rest open in the gallery.</p>
         <p class="editor-help">Cards stay <strong>4:3</strong> and zoom to fill that frame (edges of a very tall or wide photo may be cropped on the card). Click to see the full image in the gallery. Use a sharp file at least 1600px on the long side (JPG, PNG or WebP).</p>
         <div id="projects-list">${projects.map(renderProject).join("")}</div>
         <button type="button" class="ghost" data-action="add-project">+ Add project</button>
@@ -324,12 +324,81 @@
   function projectImageList(project) {
     const images = [];
     if (Array.isArray(project.images)) {
-      project.images.forEach((src) => images.push(String(src || "")));
+      project.images.forEach((src) => {
+        const value = String(src || "").trim();
+        if (value) images.push(value);
+      });
     }
-    if (project.image && images.indexOf(project.image) === -1) {
-      images.unshift(String(project.image));
+    if (project.image) {
+      const value = String(project.image).trim();
+      if (value && images.indexOf(value) === -1) images.unshift(value);
     }
-    return images.length ? images : [""];
+    return images;
+  }
+
+  function asImageList(value) {
+    if (Array.isArray(value)) return value.filter(Boolean).map(String);
+    if (value) return [String(value)];
+    return [];
+  }
+
+  function fileName(src) {
+    const parts = String(src || "").split("/");
+    return parts[parts.length - 1] || String(src || "");
+  }
+
+  function mergeImages(saved, discovered) {
+    const remaining = {};
+    discovered.forEach((src) => {
+      remaining[src] = true;
+    });
+    const ordered = [];
+    saved.forEach((src) => {
+      if (src && remaining[src]) {
+        ordered.push(src);
+        delete remaining[src];
+      }
+    });
+    discovered.forEach((src) => {
+      if (remaining[src]) ordered.push(src);
+    });
+    return ordered;
+  }
+
+  function listsEqual(a, b) {
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i += 1) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
+
+  async function syncFolderImages(options) {
+    const opts = options || {};
+    if (!isStudio()) return false;
+    try {
+      const response = await fetch("/studio/images");
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) return false;
+      const map = payload.projects || {};
+      let changed = false;
+      (state.CONTENT.projects || []).forEach((project, index) => {
+        const disk = asImageList(map[String(index + 1)]);
+        const next = mergeImages(projectImageList(project), disk);
+        if (!listsEqual(next, projectImageList(project))) {
+          project.images = next;
+          changed = true;
+        }
+      });
+      if (changed && !opts.quiet) {
+        setDirty(true);
+        status("Updated photos from the project folders. Save to keep the list.", "ok");
+      }
+      return changed;
+    } catch (error) {
+      if (!opts.quiet) status("Could not read project photo folders.", "error");
+      return false;
+    }
   }
 
   function syncImagePreview(box, src) {
@@ -346,56 +415,137 @@
     img.onerror = function () {
       box.classList.remove("is-ok", "is-empty");
       box.classList.add("is-error");
-      if (label) label.textContent = "Not found";
+      if (label) label.textContent = "Missing";
     };
     if (!value) {
       img.removeAttribute("src");
       box.classList.add("is-empty");
-      if (label) label.textContent = "No path";
+      if (label) label.textContent = "No photo";
       return;
     }
-    if (label) label.textContent = "Not found";
+    if (label) label.textContent = "Missing";
     img.src = value;
   }
 
   function bindImagePreviews() {
-    editView.querySelectorAll(".editor-image-row").forEach((row) => {
-      const input = row.querySelector("input[data-path]");
-      const box = row.querySelector("[data-image-preview]");
-      if (input && box) syncImagePreview(box, input.value);
+    editView.querySelectorAll(".editor-image-tile").forEach((tile) => {
+      const src = tile.getAttribute("data-src");
+      const box = tile.querySelector("[data-image-preview]");
+      if (box) syncImagePreview(box, src);
     });
   }
 
-  function renderProject(project, index) {
+  function renderProjectImages(project, index) {
     const folder = `images/portfolio/${index + 1}/`;
     const images = projectImageList(project);
-    const imageRows = images
+    const tiles = images
       .map((src, imageIndex) => {
-        const cover = imageIndex === 0 ? " · cover" : "";
-        return `<div class="editor-image-row">
+        const cover = imageIndex === 0
+          ? `<span class="page-tag page-tag-portfolio">Cover</span>`
+          : "";
+        const coverBtn = imageIndex === 0
+          ? ""
+          : `<button type="button" class="ghost" data-action="cover-image" data-index="${index}" data-image="${imageIndex}">Use as cover</button>`;
+        return `<figure class="editor-image-tile" data-src="${esc(src)}">
           <div class="editor-image-preview is-empty" data-image-preview aria-hidden="true">
             <img alt="">
-            <span class="editor-image-preview-label">No path</span>
+            <span class="editor-image-preview-label">Missing</span>
           </div>
-          <label class="field">
-            <span class="field-label">Image ${imageIndex + 1}${cover}</span>
-            <input type="text" data-path="CONTENT.projects.${index}.images.${imageIndex}" value="${esc(src)}" placeholder="${esc(folder + (index === 0 && imageIndex === 0 ? "example1a.png" : "example.jpg"))}">
-          </label>
-          ${binButton("remove-image", `data-index="${index}" data-image="${imageIndex}"`, "Remove image")}
-        </div>`;
+          <figcaption>
+            ${cover}
+            <span class="editor-image-name" title="${esc(src)}">${esc(fileName(src))}</span>
+          </figcaption>
+          <div class="editor-image-tile-actions">
+            ${coverBtn}
+            ${binButton("remove-image", `data-index="${index}" data-image="${imageIndex}"`, "Remove photo")}
+          </div>
+        </figure>`;
       })
       .join("");
+    const empty = images.length
+      ? ""
+      : `<p class="editor-help">No photos yet. Add JPG, PNG or WebP files for this project.</p>`;
+    const studioTools = isStudio()
+      ? `<div class="editor-row-actions">
+          <label class="ghost editor-image-add">
+            <input type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple data-action="pick-images" data-index="${index}">
+            + Add photos
+          </label>
+          <button type="button" class="ghost" data-action="scan-images" data-index="${index}">Scan folder</button>
+        </div>`
+      : `<p class="editor-help">Start the content studio to add or remove photos.</p>`;
+    return `<p class="editor-sub">Photos</p>
+      <p class="editor-help">These files live in <code>${esc(folder)}</code>. The cover is the homepage card.</p>
+      <div class="editor-image-grid" data-image-drop="${index}">
+        ${empty}${tiles}
+      </div>
+      ${studioTools}`;
+  }
+
+  async function uploadImages(projectIndex, fileList) {
+    const files = Array.prototype.slice.call(fileList || []);
+    if (!files.length || !isStudio()) return;
+    const project = state.CONTENT.projects[projectIndex];
+    if (!project) return;
+    status("Adding photos…");
+    try {
+      for (let i = 0; i < files.length; i += 1) {
+        const file = files[i];
+        const response = await fetch(
+          "/studio/image?project=" +
+            encodeURIComponent(String(projectIndex + 1)) +
+            "&name=" +
+            encodeURIComponent(file.name),
+          { method: "POST", body: file }
+        );
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.error || "Could not add that photo.");
+        if (!Array.isArray(project.images)) project.images = [];
+        if (payload.path && project.images.indexOf(payload.path) === -1) {
+          project.images.push(payload.path);
+        }
+      }
+      await syncFolderImages({ quiet: true });
+      setDirty(true);
+      status("Photos added. Save to keep them on the site.", "ok");
+      restoreScroll(renderEdit);
+    } catch (error) {
+      status("Could not add photo: " + (error && error.message ? error.message : "unknown error"), "error");
+    }
+  }
+
+  async function removeProjectImage(projectIndex, imageIndex) {
+    const project = state.CONTENT.projects[projectIndex];
+    const src = projectImageList(project)[imageIndex];
+    if (!src) return;
+    if (!window.confirm("Remove " + fileName(src) + " from this project folder?")) return;
+    if (isStudio()) {
+      const response = await fetch(
+        "/studio/image?project=" +
+          encodeURIComponent(String(projectIndex + 1)) +
+          "&name=" +
+          encodeURIComponent(fileName(src)),
+        { method: "DELETE" }
+      );
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        status("Could not remove photo: " + (payload.error || response.statusText), "error");
+        return;
+      }
+    }
+    project.images = projectImageList(project).filter((_, i) => i !== imageIndex);
+    setDirty(true);
+    status("Unsaved changes");
+    restoreScroll(renderEdit);
+  }
+
+  function renderProject(project, index) {
     return `<article class="editor-card" data-list="projects" data-index="${index}">
       <div class="editor-card-head">
         <strong>Project ${index + 1}</strong>
         ${binButton("remove-project", `data-index="${index}"`, "Remove project")}
       </div>
-      <p class="editor-sub">Images</p>
-      <p class="editor-help">Put files in <code>${esc(folder)}</code>. First path is the homepage card.</p>
-      ${imageRows}
-      <div class="editor-row-actions">
-        <button type="button" class="ghost" data-action="add-image" data-index="${index}">+ Add image</button>
-      </div>
+      ${renderProjectImages(project, index)}
       ${locFields("CONTENT.projects." + index + ".title", project.title, { label: "Title" })}
       ${locFields("CONTENT.projects." + index + ".tag", project.tag, { label: "Tag" })}
       ${locFields("CONTENT.projects." + index + ".description", project.description, { label: "Description", multiline: true })}
@@ -603,10 +753,6 @@
     const path = event.target.getAttribute("data-path");
     if (!path) return;
     assign(path, event.target.value);
-    if (/\.images\.\d+$/.test(path)) {
-      const row = event.target.closest(".editor-image-row");
-      if (row) syncImagePreview(row.querySelector("[data-image-preview]"), event.target.value);
-    }
     if (path === "SHARED.contact.email") {
       const linkPath = "SHARED.contact.emailLink";
       const currentLink = state.SHARED.contact.emailLink || "";
@@ -622,6 +768,13 @@
   });
 
   editView.addEventListener("change", (event) => {
+    if (event.target.getAttribute("data-action") === "pick-images") {
+      const index = Number(event.target.getAttribute("data-index"));
+      const files = event.target.files;
+      event.target.value = "";
+      uploadImages(index, files);
+      return;
+    }
     const path = event.target.getAttribute("data-path");
     if (!path || event.target.tagName !== "SELECT") return;
     assign(path, event.target.value);
@@ -657,24 +810,32 @@
       state.CONTENT.skills.splice(index, 1);
     } else if (action === "add-project") {
       state.CONTENT.projects.push({
-        images: [""],
+        images: [],
         title: emptyLoc(),
         tag: emptyLoc(),
         description: emptyLoc()
       });
     } else if (action === "remove-project") {
       state.CONTENT.projects.splice(index, 1);
-    } else if (action === "add-image") {
-      const project = state.CONTENT.projects[index];
-      if (!project) return;
-      if (!Array.isArray(project.images)) project.images = [""];
-      project.images.push("");
-    } else if (action === "remove-image") {
+    } else if (action === "cover-image") {
       const project = state.CONTENT.projects[index];
       const imageIndex = Number(button.getAttribute("data-image"));
-      if (!project || !Array.isArray(project.images)) return;
-      project.images.splice(imageIndex, 1);
-      if (!project.images.length) project.images.push("");
+      if (!project || imageIndex <= 0) return;
+      const images = projectImageList(project);
+      const [item] = images.splice(imageIndex, 1);
+      images.unshift(item);
+      project.images = images;
+    } else if (action === "scan-images") {
+      syncFolderImages().then((changed) => {
+        if (changed) restoreScroll(renderEdit);
+        else status("No new photos in that folder.");
+      });
+      return;
+    } else if (action === "remove-image") {
+      removeProjectImage(index, Number(button.getAttribute("data-image")));
+      return;
+    } else if (action === "pick-images") {
+      return;
     } else if (action === "add-education") {
       state.CONTENT.education.push(emptyEntry());
     } else if (action === "remove-education") {
@@ -695,6 +856,28 @@
     setDirty(true);
     status("Unsaved changes");
     restoreScroll(renderEdit);
+  });
+
+  editView.addEventListener("dragover", (event) => {
+    const drop = event.target.closest("[data-image-drop]");
+    if (!drop || !isStudio()) return;
+    event.preventDefault();
+    drop.classList.add("is-drop");
+  });
+
+  editView.addEventListener("dragleave", (event) => {
+    const drop = event.target.closest("[data-image-drop]");
+    if (!drop) return;
+    if (drop.contains(event.relatedTarget)) return;
+    drop.classList.remove("is-drop");
+  });
+
+  editView.addEventListener("drop", (event) => {
+    const drop = event.target.closest("[data-image-drop]");
+    if (!drop || !isStudio()) return;
+    event.preventDefault();
+    drop.classList.remove("is-drop");
+    uploadImages(Number(drop.getAttribute("data-image-drop")), event.dataTransfer.files);
   });
 
   document.querySelectorAll("[data-tab]").forEach((button) => {
@@ -725,11 +908,11 @@
   if (isStudio()) {
     if (kicker) kicker.textContent = "Saving writes content.js in this project folder";
     status("Ready. Save writes this project’s content.js.");
+    syncFolderImages({ quiet: true }).then(() => renderEdit());
   } else {
     document.body.classList.add("editor-not-studio");
     if (kicker) kicker.textContent = "Not the local studio";
     status("Run start-editor.bat (Windows) or start-editor.sh (Mac/Linux), then work in the window it opens.", "warn");
+    renderEdit();
   }
-
-  renderEdit();
 })();
