@@ -8,7 +8,7 @@
    - Keep commas between entries.
    - Translated fields look like:  { en: "English", de: "Deutsch" }
    - SHARED is language-independent (name, email, LinkedIn).
-   - Project photos: images/portfolio/1/file.jpg (one numbered folder per project).
+   - Project photos live in images/portfolio/N/. The studio lists them; Save stores the order.
    - Leave de: "" if you have not translated yet — the site falls back to English.
    ========================================================================== */
 
@@ -67,34 +67,118 @@ const UI = {
     en: "Highlight reel. See {cv} for more context.",
     de: "Auswahl aktueller Arbeiten. Mehr Kontext im {cv}."
   },
-  cvLink: { en: "full CV", de: "Lebenslauf" },
-  fullCv: { en: "Full CV", de: "Lebenslauf" },
-  fullCvShort: { en: "CV", de: "CV" },
-  backToPortfolio: { en: "Back to Portfolio", de: "Zurück zum Portfolio" },
-  download: { en: "Download", de: "Herunterladen" },
-  downloadAria: { en: "Download CV PDF", de: "Lebenslauf als PDF herunterladen" },
-  education: { en: "Education", de: "Ausbildung" },
-  experience: { en: "Field Experience", de: "Berufserfahrung" },
-  languages: { en: "Languages", de: "Sprachen" },
-  scale: { en: "Scale", de: "Maßstab" },
-  scaleCaption: { en: "Entry-level → Field-ready", de: "Einstieg → praxistauglich" },
-  availabilityLabel: { en: "Availability", de: "Verfügbarkeit" },
-  linkedin: { en: "LinkedIn", de: "LinkedIn" },
-  addImage: { en: "+ Add an image\n(see editor.html)", de: "+ Bild hinzufügen\n(siehe editor.html)" },
-  imageNotFound: { en: "Image not found:", de: "Bild nicht gefunden:" },
-  viewImage: { en: "View larger image", de: "Bild vergrößern" },
-  viewGallery: { en: "Browse {count} photos: {title}", de: "{count} Fotos ansehen: {title}" },
-  browsePhotos: { en: "{count} photos", de: "{count} Fotos" },
-  previousImage: { en: "Previous image", de: "Vorheriges Bild" },
-  nextImage: { en: "Next image", de: "Nächstes Bild" },
-  imageCount: { en: "{current} / {total}", de: "{current} / {total}" },
-  closeImage: { en: "Close", de: "Schließen" },
-  zoomIn: { en: "Zoom in", de: "Vergrößern" },
-  zoomOut: { en: "Zoom out", de: "Verkleinern" },
-  zoomReset: { en: "Fit", de: "Anpassen" },
-  zoomHint: { en: "Click or scroll to zoom · drag to pan", de: "Klicken oder scrollen zum Zoomen · Ziehen zum Verschieben" },
-  themeToggle: { en: "Toggle dark mode", de: "Hell-/Dunkelmodus umschalten" },
-  langSwitcher: { en: "Language", de: "Sprache" }
+  cvLink: {
+    en: "full CV",
+    de: "Lebenslauf"
+  },
+  fullCv: {
+    en: "Full CV",
+    de: "Lebenslauf"
+  },
+  fullCvShort: {
+    en: "CV",
+    de: "CV"
+  },
+  backToPortfolio: {
+    en: "Back to Portfolio",
+    de: "Zurück zum Portfolio"
+  },
+  download: {
+    en: "Download",
+    de: "Herunterladen"
+  },
+  downloadAria: {
+    en: "Download CV PDF",
+    de: "Lebenslauf als PDF herunterladen"
+  },
+  education: {
+    en: "Education",
+    de: "Ausbildung"
+  },
+  experience: {
+    en: "Field Experience",
+    de: "Berufserfahrung"
+  },
+  languages: {
+    en: "Languages",
+    de: "Sprachen"
+  },
+  scale: {
+    en: "Scale",
+    de: "Maßstab"
+  },
+  scaleCaption: {
+    en: "Entry-level → Field-ready",
+    de: "Einstieg → praxistauglich"
+  },
+  availabilityLabel: {
+    en: "Availability",
+    de: "Verfügbarkeit"
+  },
+  linkedin: {
+    en: "LinkedIn",
+    de: "LinkedIn"
+  },
+  addImage: {
+    en: "+ Add an image\n(see editor.html)",
+    de: "+ Bild hinzufügen\n(siehe editor.html)"
+  },
+  imageNotFound: {
+    en: "Image not found:",
+    de: "Bild nicht gefunden:"
+  },
+  viewImage: {
+    en: "View larger image",
+    de: "Bild vergrößern"
+  },
+  viewGallery: {
+    en: "Browse {count} photos: {title}",
+    de: "{count} Fotos ansehen: {title}"
+  },
+  browsePhotos: {
+    en: "{count} photos",
+    de: "{count} Fotos"
+  },
+  previousImage: {
+    en: "Previous image",
+    de: "Vorheriges Bild"
+  },
+  nextImage: {
+    en: "Next image",
+    de: "Nächstes Bild"
+  },
+  imageCount: {
+    en: "{current} / {total}",
+    de: "{current} / {total}"
+  },
+  closeImage: {
+    en: "Close",
+    de: "Schließen"
+  },
+  zoomIn: {
+    en: "Zoom in",
+    de: "Vergrößern"
+  },
+  zoomOut: {
+    en: "Zoom out",
+    de: "Verkleinern"
+  },
+  zoomReset: {
+    en: "Fit",
+    de: "Anpassen"
+  },
+  zoomHint: {
+    en: "Click or scroll to zoom · drag to pan",
+    de: "Klicken oder scrollen zum Zoomen · Ziehen zum Verschieben"
+  },
+  themeToggle: {
+    en: "Toggle dark mode",
+    de: "Hell-/Dunkelmodus umschalten"
+  },
+  langSwitcher: {
+    en: "Language",
+    de: "Sprache"
+  }
 };
 
 const CONTENT = {
@@ -194,9 +278,12 @@ const CONTENT = {
         "images/portfolio/1/Schutzmaßnahmen.png",
         "images/portfolio/1/Hamburg.png"
       ],
-      title: { en: "Add your first project", de: "Erstes Projekt eintragen" },
+      title: {
+        en: "The German North Sea Coast ",
+        de: "Die deutsche Nordseeküste "
+      },
       tag: {
-        en: "Project type, e.g. Coursework · QGIS",
+        en: "Poster Assignment: Geovisualisation · QGIS",
         de: "Projektart, z. B. Lehrveranstaltung · QGIS"
       },
       description: {
@@ -209,7 +296,10 @@ const CONTENT = {
         "images/portfolio/2/NDVI_AMS_Fixed.png",
         "images/portfolio/2/LST_Amsterdam_Done.png"
       ],
-      title: { en: "Add your second project", de: "Zweites Projekt eintragen" },
+      title: {
+        en: "Add your second project",
+        de: "Zweites Projekt eintragen"
+      },
       tag: {
         en: "Project type, e.g. Fieldwork · Cartography",
         de: "Projektart, z. B. Geländearbeit · Kartographie"
@@ -224,8 +314,14 @@ const CONTENT = {
         "images/portfolio/3/Karte_2_DEV_GIS_Claes.png",
         "images/portfolio/3/Karte_5_Risikoananalyse_GIS_Claes.png"
       ],
-      title: { en: "Bachelor thesis (in progress)", de: "Bachelorarbeit (in Arbeit)" },
-      tag: { en: "RWTH Aachen · Geohazards", de: "RWTH Aachen · Georisiken" },
+      title: {
+        en: "Bachelor thesis (in progress)",
+        de: "Bachelorarbeit (in Arbeit)"
+      },
+      tag: {
+        en: "RWTH Aachen · Geohazards",
+        de: "RWTH Aachen · Georisiken"
+      },
       description: {
         en: "Sedimentological features of unknown tsunami in Greece",
         de: "Sedimentologische Merkmale von unbekannte Tsunamis in Griechenland"
