@@ -204,8 +204,8 @@ const CONTENT = {
     },
     {
       images: [
-        "images/portfolio/2/example2a.png",
-        "images/portfolio/2/example2b.png"
+        "images/portfolio/2/NDVI_AMS_Fixed.png",
+        "images/portfolio/2/LST_Amsterdam_Done.png"
       ],
       title: { en: "Add your second project", de: "Zweites Projekt eintragen" },
       tag: {
