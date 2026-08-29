@@ -272,17 +272,14 @@ const CONTENT = {
   ],
   projects: [
     {
-      images: [
-        "images/portfolio/1/LST_Amsterdam_Done.png",
-        "images/portfolio/1/NDVI_AMS_Fixed.png"
-      ],
+      images: [],
       title: {
         en: "Bachelor thesis (in progress)",
         de: "Bachelorarbeit (in Arbeit)"
       },
       tag: {
-        en: "RWTH Aachen · Geohazards",
-        de: "RWTH Aachen · Georisiken"
+        en: "RWTH Aachen ",
+        de: "RWTH Aachen "
       },
       description: {
         en: "Sedimentological features of unknown tsunami in Greece",
@@ -291,54 +288,75 @@ const CONTENT = {
     },
     {
       images: [
-        "images/portfolio/2/GOT map.png"
+        "images/portfolio/2/NDVI_AMS_Fixed.png",
+        "images/portfolio/2/LST_Amsterdam_Done.png"
       ],
       title: {
-        en: "Amsterdam - NDVI and LST",
-        de: "Amsterdam - NDVI und LST"
+        en: "Quantifying Urban Park Cooling in Amsterdam: A Remote Sensing  Assessment of Nature-based Solutions",
+        de: "Quantifizierung des Kühleffekts städtischer Parks in Amsterdam: Eine fernerkundungsbasierte Bewertung naturbasierter Lösungen"
       },
       tag: {
-        en: "Remote Sensing · Spectral Analysis",
-        de: "Fernerkundung · Spektralanalyse"
+        en: "Research Paper: NDVI & LST Calculation",
+        de: "Forschungsarbeit: NDVI & LST Berechnung"
       },
       description: {
-        en: "",
-        de: ""
+        en: "Research Paper Assignment on a topic within Nature-based Solutions . Maps were created with open source SENTINEL satellite imagery and analysed via QGIS global statistics and MS Excel ",
+        de: "Aufgabenstellung für eine Forschungsarbeit zu einem Thema aus dem Bereich naturbasierter Lösungen. Die Karten wurden mithilfe von Open-Source-Satellitenbildern der Sentinel-Mission erstellt und mittels QGIS (globale Statistiken) sowie MS Excel analysiert."
       }
     },
     {
       images: [
-        "images/portfolio/3/Hamburg.png",
-        "images/portfolio/3/Poster_Claes_23.jpg",
-        "images/portfolio/3/Rindhaltung.png",
-        "images/portfolio/3/Schutzmaßnahmen.png"
+        "images/portfolio/3/GOT map.png"
+      ],
+      title: {
+        en: "Game of Thrones Filming locations in Northern Ireland",
+        de: "Drehorte für Game of Thrones in Nordirland"
+      },
+      tag: {
+        en: "Essay: The Filming Industry in Ireland and Northern Ireland",
+        de: "Hausarbeit: Die Filmindustrie in Irland und Nordirland"
+      },
+      description: {
+        en: "Popular filming locations for the Game of Thrones show in Northern Ireland categorized by natural landscapes \nGraded: 1,7",
+        de: "Beliebte Drehorte der Serie Game of Thrones in Nordirland, kategorisiert nach natürlichen Landschaften\nBenotet: 1,7 "
+      }
+    },
+    {
+      images: [
+        "images/portfolio/4/Poster_Claes_23.jpg",
+        "images/portfolio/4/Hamburg.png",
+        "images/portfolio/4/Rindhaltung.png",
+        "images/portfolio/4/Schutzmaßnahmen.png"
       ],
       title: {
         en: "The German North Sea Coast ",
         de: "Die deutsche Nordseeküste "
       },
       tag: {
-        en: "Poster Assignment: Geovisualisation · QGIS",
-        de: ""
+        en: "Poster Assignment: Geovisualisation & QGIS",
+        de: "Posterabgabe: Geovisualisierung & QGIS"
       },
       description: {
-        en: "",
-        de: ""
+        en: "Image 2: Flood risk of Hamburg under 3 scenarios  \nImage 3: Cattle farming in Germany in NUTS 3 categories \nImage 4: Flood protection methods in Lower Saxony \nGraded: 1,0 ",
+        de: "Abbildung 2: Hochwasserrisiko in Hamburg unter drei Szenarien\nAbbildung 3: Rinderhaltung in Deutschland nach NUTS-3-Kategorien\nAbbildung 4: Hochwasserschutzmaßnahmen in Niedersachsen\nBenotet: 1,0 "
       }
     },
     {
-      images: [],
+      images: [
+        "images/portfolio/5/Karte_2_DEV_GIS_Claes.png",
+        "images/portfolio/5/Karte_5_Risikoananalyse_GIS_Claes.png"
+      ],
       title: {
-        en: "",
-        de: ""
+        en: "Flood Risk Analysis of the Erft Region ",
+        de: "Überflutungsrisiko Analyse der Erft Region "
       },
       tag: {
-        en: "",
-        de: ""
+        en: "Geovisualisation & QGIS ",
+        de: "Geovisualisierung & QGIS"
       },
       description: {
-        en: "",
-        de: ""
+        en: "Image 1: DEV Analysis of the Erft Region\nImage 2: Flood Risk Analysis of the Erft Region ",
+        de: "Abbildung 1: DEV-Analyse der Erft-Region\nAbbildung 2: Hochwasserrisikoanalyse der Erft-Region"
       }
     }
   ],
