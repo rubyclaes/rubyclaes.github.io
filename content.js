@@ -273,8 +273,8 @@ const CONTENT = {
   projects: [
     {
       images: [
-        "images/portfolio/3/Karte_2_DEV_GIS_Claes.png",
-        "images/portfolio/3/Karte_5_Risikoananalyse_GIS_Claes.png"
+        "images/portfolio/1/LST_Amsterdam_Done.png",
+        "images/portfolio/1/NDVI_AMS_Fixed.png"
       ],
       title: {
         en: "Bachelor thesis (in progress)",
@@ -291,8 +291,7 @@ const CONTENT = {
     },
     {
       images: [
-        "images/portfolio/2/NDVI_AMS_Fixed.png",
-        "images/portfolio/2/LST_Amsterdam_Done.png"
+        "images/portfolio/2/GOT map.png"
       ],
       title: {
         en: "Amsterdam - NDVI and LST",
@@ -309,10 +308,10 @@ const CONTENT = {
     },
     {
       images: [
-        "images/portfolio/1/Poster_Claes_23.jpg",
-        "images/portfolio/1/Rindhaltung.png",
-        "images/portfolio/1/Schutzmaßnahmen.png",
-        "images/portfolio/1/Hamburg.png"
+        "images/portfolio/3/Hamburg.png",
+        "images/portfolio/3/Poster_Claes_23.jpg",
+        "images/portfolio/3/Rindhaltung.png",
+        "images/portfolio/3/Schutzmaßnahmen.png"
       ],
       title: {
         en: "The German North Sea Coast ",
@@ -320,11 +319,26 @@ const CONTENT = {
       },
       tag: {
         en: "Poster Assignment: Geovisualisation · QGIS",
-        de: "Projektart, z. B. Lehrveranstaltung · QGIS"
+        de: ""
       },
       description: {
-        en: "Replace this text with a couple of sentences: what was the question, what data or tools did you use, and what did the final map show?",
-        de: "Diesen Text durch ein paar Sätze ersetzen: Was war die Fragestellung, welche Daten oder Werkzeuge wurden genutzt, und was hat die fertige Karte gezeigt?"
+        en: "",
+        de: ""
+      }
+    },
+    {
+      images: [],
+      title: {
+        en: "",
+        de: ""
+      },
+      tag: {
+        en: "",
+        de: ""
+      },
+      description: {
+        en: "",
+        de: ""
       }
     }
   ],
