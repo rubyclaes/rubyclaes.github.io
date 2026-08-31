@@ -405,7 +405,7 @@
           ${pageTag("portfolio")}
         </div>
         <p class="editor-help">Shown as cards on the homepage only. Each project keeps a folder such as <code>images/portfolio/4/</code> even if you move the card. Use <strong>Move up / Move down</strong> to change homepage order.</p>
-        <p class="editor-help">Write a short summary (question → method → what the map shows). Add tools and legend skills. Photos: <code>name.en.jpg</code> and <code>name.de.jpg</code> for language pairs; a file with no <code>.en</code>/<code>.de</code> is used in both languages. Cards stay 4:3 and show the whole sheet (nothing cropped). Click to zoom.</p>
+        <p class="editor-help">Write a short summary (question → method → what the map shows). Add tools. Photos: <code>name.en.jpg</code> and <code>name.de.jpg</code> for language pairs; a file with no <code>.en</code>/<code>.de</code> is used in both languages. If only one file exists, both languages show it. Cards stay 4:3 and show the whole sheet (nothing cropped). Click to zoom.</p>
         <div id="projects-list">${projects.map(renderProject).join("")}</div>
         <button type="button" class="ghost" data-action="add-project">+ Add project</button>
       </section>
@@ -733,24 +733,6 @@
       </div>`;
   }
 
-  function renderProjectSkills(project, index) {
-    const selected = project.skills || [];
-    const picker = (state.CONTENT.skills || [])
-      .map((skill) => {
-        const name = skill.symbol || "dashed";
-        const pressed = selected.indexOf(name) !== -1 ? "true" : "false";
-        const label = (skill.label && (skill.label.en || skill.label.de)) || name;
-        const svg = (typeof legendSymbolSvg === "function" ? legendSymbolSvg(name) : "") || "";
-        return `<button type="button" class="symbol-option" data-action="toggle-project-skill" data-index="${index}" data-symbol="${esc(name)}" aria-pressed="${pressed}" aria-label="${esc(label)}" title="${esc(label)}">
-          <span class="legend-symbol">${svg}</span>
-        </button>`;
-      })
-      .join("");
-    return `<p class="editor-sub">Skills on this project</p>
-      <p class="editor-help">Optional legend marks, matching the skills list above.</p>
-      <div class="symbol-picker" role="group" aria-label="Skills shown on this project">${picker}</div>`;
-  }
-
   function renderProject(project, index) {
     const total = (state.CONTENT.projects || []).length;
     const folderId = String(project.folder || "");
@@ -769,7 +751,6 @@
       ${locFields("CONTENT.projects." + index + ".title", project.title, { label: "Title" })}
       ${locFields("CONTENT.projects." + index + ".tag", project.tag, { label: "Tag / context" })}
       ${renderProjectTools(project, index)}
-      ${renderProjectSkills(project, index)}
       ${locFields("CONTENT.projects." + index + ".description", project.description, { label: "Summary (question → method → result)", multiline: true, tall: true })}
     </article>`;
   }
@@ -1072,14 +1053,6 @@
       const toolIndex = Number(button.getAttribute("data-tool"));
       if (!project || !Array.isArray(project.tools)) return;
       project.tools.splice(toolIndex, 1);
-    } else if (action === "toggle-project-skill") {
-      const project = state.CONTENT.projects[index];
-      const symbol = button.getAttribute("data-symbol");
-      if (!project || !symbol) return;
-      if (!Array.isArray(project.skills)) project.skills = [];
-      const at = project.skills.indexOf(symbol);
-      if (at === -1) project.skills.push(symbol);
-      else project.skills.splice(at, 1);
     } else if (action === "cover-image") {
       const project = state.CONTENT.projects[index];
       const imageIndex = Number(button.getAttribute("data-image"));

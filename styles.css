@@ -707,20 +707,6 @@ p#profile-text { max-width: 62ch; }
   letter-spacing: 0.02em;
   color: var(--ink);
 }
-.project-skill-marks {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  margin-left: 2px;
-}
-.project-skill {
-  display: inline-flex;
-  color: var(--symbol-accent);
-}
-.project-skill .legend-symbol {
-  width: 28px;
-  height: 16px;
-}
 .project-figure-caption {
   margin: 0;
   padding: 8px 16px 0;

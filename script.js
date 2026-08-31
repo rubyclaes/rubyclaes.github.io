@@ -280,10 +280,6 @@
       .filter((figure) => figure.src);
   }
 
-  function skillBySymbol(name) {
-    return (CONTENT.skills || []).find((skill) => skill.symbol === name) || null;
-  }
-
   function renderProjects(lang) {
     const projectsEl = $("projects-list") || $("projects");
     if (!projectsEl) return;
@@ -308,24 +304,12 @@
       const body = document.createElement("div");
       body.className = "project-body";
       const tools = (project.tools || []).map((name) => String(name || "").trim()).filter(Boolean);
-      const skills = (project.skills || []).filter(Boolean);
       let extras = "";
-      if (tools.length || skills.length) {
+      if (tools.length) {
         const chips = tools
           .map((name) => `<span class="project-chip">${escapeHtml(name)}</span>`)
           .join("");
-        const marks = skills
-          .map((name) => {
-            const skill = skillBySymbol(name);
-            const label = skill ? t(skill.label, lang) : name;
-            const svg = typeof legendSymbolSvg === "function" ? legendSymbolSvg(name) : "";
-            return `<span class="project-skill" title="${escapeHtml(label)}"><span class="legend-symbol">${svg}</span></span>`;
-          })
-          .join("");
-        const toolsLabel = tools.length
-          ? `<span class="project-tools-label">${escapeHtml(t(UI.tools, lang))}</span>${chips}`
-          : "";
-        extras = `<div class="project-tools">${toolsLabel}${marks ? `<span class="project-skill-marks">${marks}</span>` : ""}</div>`;
+        extras = `<div class="project-tools"><span class="project-tools-label">${escapeHtml(t(UI.tools, lang))}</span>${chips}</div>`;
       }
       body.innerHTML = `
         <h3 class="project-title">${escapeHtml(title)}</h3>
