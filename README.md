@@ -102,18 +102,22 @@ This page is a private editing tool. It is not linked from the public site.
 
 You can still edit `content.js` by hand in VS Code if you need to. Translated fields look like `{ en: "English", de: "Deutsch" }`. Keep the quotes and commas.
 
-### 4. Photos
+### 4. Projects and photos
 
-Each project has its own folder: **Project 1** uses `images/portfolio/1`, **Project 2** uses `images/portfolio/2`, and so on. Do not put project photos in `images/docs`.
+Homepage order is the project list in the studio. Use **Move up** / **Move down** to change it. Each project keeps a numbered folder such as `images/portfolio/4/` even if that card is first on the page. Do not rename folders to reorder cards. Do not put project photos in `images/docs`.
+
+Write a short **summary** in three beats: the question, the method, what the map shows.
 
 In the content studio, on that project:
 
-1. Click **Add photos** (or drop files onto the photo area). The studio copies them into the right folder.
-2. The **cover** is the homepage card. Click **Use as cover** on another photo to change it.
-3. **Remove** deletes that file from the folder.
+1. Click **Add photos** (or drop files onto the photo area). The studio copies them into that project’s folder.
+2. Gallery order is top to bottom. **Move up** / **Move down** swap a figure with its neighbour. The first figure is the homepage card; **Use as cover** jumps any figure to first.
+3. **Remove** deletes that figure (both language files, if you have a pair).
 4. If you copied files in with File Explorer or VS Code, click **Scan folder**.
 
-Allowed types: `.jpg`, `.jpeg`, `.png`, `.webp`. Prefer a sharp file at least **1600px on the long side**. Homepage cards stay **4:3** and zoom to fill that frame.
+**English and German maps:** put both in the same folder. `coast.en.jpg` and `coast.de.jpg` are one figure (the site picks the language). A file with no `.en` / `.de` in the name is used in both languages until you add a twin. Add a caption under each figure.
+
+Allowed types: `.jpg`, `.jpeg`, `.png`, `.webp`. Prefer a sharp file at least **1600px on the long side**. Homepage cards stay **4:3** and show the **whole sheet** (nothing cropped). Click a card to zoom.
 
 Then click **Save**, then **Preview**. Git will show the new files under `images/portfolio` plus `content.js`.
 
@@ -150,7 +154,7 @@ GitHub Desktop includes Git for itself. VS Code sometimes still wants Git on Win
 | **Push** is rejected / “pull first” | **⋯ → Pull**, then **Sync Changes** again. |
 | The studio says it is “not the local studio” | Close that tab. Start `start-editor.bat` or `start-editor.sh` and use the window it opens. |
 | Double-clicking `start-editor.bat` does nothing | In VS Code: **Terminal → Run Task… → Start content studio**. Or install [Python](https://www.python.org/downloads/) (tick **Add python.exe to PATH**) and try the `.bat` again. |
-| Photo missing on the site | In the studio, open that project and click **Scan folder**, or **Add photos**. Confirm the file is in `images/portfolio/N/` (not `images/docs`). |
+| Photo missing on the site | In the studio, open that project and click **Scan folder**, or **Add photos**. Confirm the file is in that project’s folder (`images/portfolio/4/` stays `4` even if the card moved). |
 | Live site looks old | Wait a minute, then **Ctrl+F5**. Confirm you clicked **Sync Changes**, not only **Commit**. |
 | You edited on two computers | Always **Pull** before you start. |
 
@@ -186,7 +190,7 @@ Open `cv.html`, pick English or Deutsch, then **Download**. That uses the browse
 |- script.js / theme.js / styles.css
 |- tools/              Helper that lets Save write content.js
 |- images/             Site images
-|- images/portfolio/   One numbered folder per project (1, 2, 3, …)
+|- images/portfolio/   One numbered folder per project (1, 2, 3, …). Numbers stay put if you reorder cards.
 |- images/docs/        Screenshots for this README only
 |- icons/              Favicons
 ```

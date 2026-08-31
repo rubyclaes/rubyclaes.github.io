@@ -37,6 +37,11 @@ def portfolio_dir(number):
 
 
 def list_project_images(number):
+    """Return every image in images/portfolio/{number}/.
+
+    Folder numbers are stable drawers (project 4 stays in 4/ if the card
+    is moved). The editor pairs name.en.jpg with name.de.jpg by stem.
+    """
     folder = portfolio_dir(number)
     if not folder.is_dir():
         return []

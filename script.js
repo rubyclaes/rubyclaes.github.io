@@ -223,19 +223,55 @@
     });
   }
 
-  function projectImages(project) {
-    const list = [];
+  function asImagePair(item) {
+    if (!item) return { en: "", de: "", caption: { en: "", de: "" } };
+    if (typeof item === "string") {
+      return { en: item.trim(), de: "", caption: { en: "", de: "" } };
+    }
+    const caption = item.caption && typeof item.caption === "object" ? item.caption : {};
+    return {
+      en: String(item.en || "").trim(),
+      de: String(item.de || "").trim(),
+      caption: {
+        en: caption.en != null ? String(caption.en) : "",
+        de: caption.de != null ? String(caption.de) : ""
+      }
+    };
+  }
+
+  function srcForLang(pair, lang) {
+    const item = asImagePair(pair);
+    if (lang === "de") return item.de || item.en || "";
+    return item.en || item.de || "";
+  }
+
+  function projectFigures(project, lang) {
+    const raw = [];
     if (Array.isArray(project.images)) {
-      project.images.forEach((src) => {
-        const value = String(src || "").trim();
-        if (value) list.push(value);
+      project.images.forEach((item) => {
+        if (typeof item === "string") {
+          if (item.trim()) raw.push(asImagePair(item));
+        } else if (item && (item.en || item.de)) {
+          raw.push(asImagePair(item));
+        }
       });
     }
     if (project.image) {
-      const value = String(project.image).trim();
-      if (value && list.indexOf(value) === -1) list.unshift(value);
+      const src = String(project.image).trim();
+      if (src && !raw.some((pair) => pair.en === src || pair.de === src)) {
+        raw.unshift(asImagePair(src));
+      }
     }
-    return list;
+    return raw
+      .map((pair) => ({
+        src: srcForLang(pair, lang),
+        caption: t(pair.caption, lang).trim()
+      }))
+      .filter((figure) => figure.src);
+  }
+
+  function skillBySymbol(name) {
+    return (CONTENT.skills || []).find((skill) => skill.symbol === name) || null;
   }
 
   function renderProjects(lang) {
@@ -247,13 +283,13 @@
       const card = document.createElement("article");
       card.className = "project-card";
       const title = t(project.title, lang);
-      const images = projectImages(project);
-      const cover = images[0] || "";
+      const figures = projectFigures(project, lang);
+      const cover = figures[0];
 
       const media = document.createElement("div");
-      media.className = "project-media" + (images.length > 1 ? " has-gallery" : "");
+      media.className = "project-media" + (figures.length > 1 ? " has-gallery" : "");
       if (cover) {
-        media.appendChild(buildProjectMedia(images, title, lang));
+        media.appendChild(buildProjectMedia(figures, title, lang));
       } else {
         media.innerHTML = placeholderMarkup(null, lang);
       }
@@ -261,9 +297,30 @@
 
       const body = document.createElement("div");
       body.className = "project-body";
+      const tools = (project.tools || []).map((name) => String(name || "").trim()).filter(Boolean);
+      const skills = (project.skills || []).filter(Boolean);
+      let extras = "";
+      if (tools.length || skills.length) {
+        const chips = tools
+          .map((name) => `<span class="project-chip">${escapeHtml(name)}</span>`)
+          .join("");
+        const marks = skills
+          .map((name) => {
+            const skill = skillBySymbol(name);
+            const label = skill ? t(skill.label, lang) : name;
+            const svg = typeof legendSymbolSvg === "function" ? legendSymbolSvg(name) : "";
+            return `<span class="project-skill" title="${escapeHtml(label)}"><span class="legend-symbol">${svg}</span></span>`;
+          })
+          .join("");
+        const toolsLabel = tools.length
+          ? `<span class="project-tools-label">${escapeHtml(t(UI.tools, lang))}</span>${chips}`
+          : "";
+        extras = `<div class="project-tools">${toolsLabel}${marks ? `<span class="project-skill-marks">${marks}</span>` : ""}</div>`;
+      }
       body.innerHTML = `
         <h3 class="project-title">${escapeHtml(title)}</h3>
         <p class="project-meta">${escapeHtml(t(project.tag, lang))}</p>
+        ${extras}
         <p class="project-desc">${escapeHtml(t(project.description, lang))}</p>
       `;
       card.appendChild(body);
@@ -283,9 +340,9 @@
     return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
   }
 
-  function buildProjectMedia(images, title, lang) {
+  function buildProjectMedia(figures, title, lang) {
     let current = 0;
-    const many = images.length > 1;
+    const many = figures.length > 1;
     const wrap = document.createElement("div");
     wrap.className = "project-media-frame";
 
@@ -298,25 +355,42 @@
     img.loading = "lazy";
     img.decoding = "async";
     img.onerror = function () {
-      wrap.innerHTML = placeholderMarkup(images[current], lang);
+      wrap.innerHTML = placeholderMarkup(figures[current] && figures[current].src, lang);
     };
     btn.appendChild(img);
-    btn.addEventListener("click", () => openLightbox(images, current, title));
+    btn.addEventListener("click", () => openLightbox(figures, current, title));
     wrap.appendChild(btn);
+
+    const bundle = document.createElement("div");
+    bundle.className = "project-media-bundle";
+    bundle.appendChild(wrap);
+
+    const captionEl = document.createElement("p");
+    captionEl.className = "project-figure-caption";
+    bundle.appendChild(captionEl);
 
     let cue = null;
     let thumbs = [];
 
     function setCurrent(index) {
-      current = ((index % images.length) + images.length) % images.length;
-      img.src = images[current];
+      current = ((index % figures.length) + figures.length) % figures.length;
+      const figure = figures[current];
+      img.src = figure.src;
+      img.alt = figure.caption || title;
+      if (figure.caption) {
+        captionEl.hidden = false;
+        captionEl.textContent = figure.caption;
+      } else {
+        captionEl.hidden = true;
+        captionEl.textContent = "";
+      }
       if (many) {
         const galleryLabel = fillCopy(t(UI.viewGallery, lang) || t(UI.viewImage, lang), {
-          count: images.length,
+          count: figures.length,
           title: title
         });
         btn.setAttribute("aria-label", galleryLabel);
-        if (cue) cue.textContent = formatImageCount(lang, current + 1, images.length);
+        if (cue) cue.textContent = formatImageCount(lang, current + 1, figures.length);
         thumbs.forEach((thumb, i) => {
           thumb.classList.toggle("is-active", i === current);
           thumb.setAttribute("aria-current", i === current ? "true" : "false");
@@ -354,7 +428,7 @@
       const browse = document.createElement("span");
       browse.className = "project-media-browse";
       browse.textContent = fillCopy(t(UI.browsePhotos, lang) || "{count} photos", {
-        count: images.length
+        count: figures.length
       });
       bar.appendChild(cue);
       bar.appendChild(browse);
@@ -363,22 +437,22 @@
       strip.className = "project-media-strip";
       strip.setAttribute("role", "tablist");
       strip.setAttribute("aria-label", fillCopy(t(UI.browsePhotos, lang) || "{count} photos", {
-        count: images.length
+        count: figures.length
       }));
-      thumbs = images.map((src, index) => {
+      thumbs = figures.map((figure, index) => {
         const thumb = document.createElement("button");
         thumb.type = "button";
         thumb.className = "project-media-thumb";
         thumb.setAttribute("role", "tab");
-        thumb.setAttribute("aria-label", formatImageCount(lang, index + 1, images.length));
+        thumb.setAttribute("aria-label", figure.caption || formatImageCount(lang, index + 1, figures.length));
         const thumbImg = document.createElement("img");
-        thumbImg.src = src;
+        thumbImg.src = figure.src;
         thumbImg.alt = "";
         thumb.appendChild(thumbImg);
         thumb.addEventListener("click", (event) => {
           event.stopPropagation();
           setCurrent(index);
-          openLightbox(images, index, title);
+          openLightbox(figures, index, title);
         });
         strip.appendChild(thumb);
         return thumb;
@@ -391,7 +465,7 @@
     }
 
     setCurrent(0);
-    return wrap;
+    return bundle;
   }
 
   function placeholderMarkup(imagePath, lang) {
@@ -512,6 +586,7 @@
     px: 0,
     py: 0,
     items: [],
+    captions: [],
     index: 0,
     caption: ""
   };
@@ -736,11 +811,14 @@
     const img = lightbox.querySelector(".lightbox-img");
     const captionEl = lightbox.querySelector(".lightbox-caption");
     const title = lightboxState.caption || "";
+    const figureCap = (lightboxState.captions || [])[next] || "";
     img.src = items[next];
-    img.alt = title;
-    captionEl.textContent = items.length > 1
-      ? `${formatImageCount(currentLang, next + 1, items.length)} · ${title}`
-      : title;
+    img.alt = figureCap || title;
+    const parts = [];
+    if (items.length > 1) parts.push(formatImageCount(currentLang, next + 1, items.length));
+    if (figureCap) parts.push(figureCap);
+    else if (title) parts.push(title);
+    captionEl.textContent = parts.join(" · ");
     const prevBtn = lightbox.querySelector('[data-lightbox="prev"]');
     const nextBtn = lightbox.querySelector('[data-lightbox="next"]');
     const many = items.length > 1;
@@ -755,13 +833,14 @@
     showLightboxImage(lightboxState.index + delta);
   }
 
-  function openLightbox(images, startIndex, caption) {
-    const items = (images || []).filter(Boolean);
-    if (!items.length) return;
+  function openLightbox(figures, startIndex, title) {
+    const list = (figures || []).filter((figure) => figure && figure.src);
+    if (!list.length) return;
     const box = mountLightbox();
     updateLightboxUi(currentLang);
-    lightboxState.items = items;
-    lightboxState.caption = caption || "";
+    lightboxState.items = list.map((figure) => figure.src);
+    lightboxState.captions = list.map((figure) => figure.caption || "");
+    lightboxState.caption = title || "";
     box.hidden = false;
     document.body.classList.add("lightbox-open");
     showLightboxImage(startIndex || 0);
@@ -773,6 +852,7 @@
     lightbox.hidden = true;
     document.body.classList.remove("lightbox-open");
     lightboxState.items = [];
+    lightboxState.captions = [];
     lightboxState.index = 0;
     lightboxState.caption = "";
     const img = lightbox.querySelector(".lightbox-img");

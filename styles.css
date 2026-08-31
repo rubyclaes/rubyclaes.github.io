@@ -549,8 +549,9 @@ p#profile-text { max-width: 62ch; }
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
+  background: var(--sheet);
 }
 .project-media-arrow {
   position: absolute;
@@ -636,7 +637,8 @@ p#profile-text { max-width: 62ch; }
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+  background: #111;
 }
 .project-media-thumb:hover,
 .project-media-thumb:focus-visible {
@@ -679,6 +681,55 @@ p#profile-text { max-width: 62ch; }
   text-transform: uppercase;
   color: var(--accent);
   margin: 0 0 8px;
+}
+.project-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+}
+.project-tools-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 2px;
+}
+.project-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.project-skill-marks {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 2px;
+}
+.project-skill {
+  display: inline-flex;
+  color: var(--symbol-accent);
+}
+.project-skill .legend-symbol {
+  width: 28px;
+  height: 16px;
+}
+.project-figure-caption {
+  margin: 0;
+  padding: 8px 16px 0;
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+}
+.project-figure-caption[hidden] {
+  display: none;
 }
 .project-desc { margin: 0; font-size: 14px; color: var(--muted); }
 
@@ -1282,7 +1333,7 @@ body.lightbox-open {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   pointer-events: none;
 }
 .lightbox-thumb:hover,

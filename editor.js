@@ -21,7 +21,9 @@
    - Keep commas between entries.
    - Translated fields look like:  { en: "English", de: "Deutsch" }
    - SHARED is language-independent (name, email, LinkedIn).
-   - Project photos live in images/portfolio/N/. The studio lists them; Save stores the order.
+   - Project photos live in images/portfolio/{folder}/. Folder numbers stay put when you reorder cards.
+   - Language pairs: name.en.jpg + name.de.jpg. A file with no .en/.de is used in both languages.
+   - Homepage order is this projects array. Move up / Move down in the studio; do not rename folders.
    - Leave de: "" if you have not translated yet — the site falls back to English.
    ========================================================================== */
 `;
@@ -37,17 +39,158 @@
     CONTENT: clone(CONTENT)
   };
 
-  (state.CONTENT.projects || []).forEach((project) => {
-    const images = [];
+  const TOOL_SUGGESTIONS = ["QGIS", "Sentinel-2", "Excel", "Python", "R", "Inkscape", "ENVI-met", "ArcGIS"];
+
+  function fileName(src) {
+    const parts = String(src || "").replace(/\\/g, "/").split("/");
+    return parts[parts.length - 1] || "";
+  }
+
+  function imageDir(src) {
+    const value = String(src || "").replace(/\\/g, "/");
+    const i = value.lastIndexOf("/");
+    return i === -1 ? "" : value.slice(0, i);
+  }
+
+  function imageLangKey(src) {
+    const name = fileName(src);
+    const dot = name.lastIndexOf(".");
+    const stem = dot === -1 ? name : name.slice(0, dot);
+    const match = stem.match(/^(.*)\.(en|de)$/i);
+    const dir = imageDir(src);
+    const prefix = dir ? dir + "/" : "";
+    if (match) {
+      return { key: prefix + match[1].toLowerCase(), lang: match[2].toLowerCase() };
+    }
+    return { key: prefix + stem.toLowerCase(), lang: "both" };
+  }
+
+  function emptyCaption() {
+    return { en: "", de: "" };
+  }
+
+  function asImagePair(item) {
+    if (!item) return { en: "", de: "", caption: emptyCaption() };
+    if (typeof item === "string") {
+      const src = item.trim();
+      return { en: src, de: "", caption: emptyCaption() };
+    }
+    const caption = item.caption && typeof item.caption === "object" ? item.caption : {};
+    return {
+      en: String(item.en || "").trim(),
+      de: String(item.de || "").trim(),
+      caption: {
+        en: caption.en != null ? String(caption.en) : "",
+        de: caption.de != null ? String(caption.de) : ""
+      }
+    };
+  }
+
+  function pairFromPaths(paths, previous, options) {
+    const prune = Boolean(options && options.prune);
+    const groups = [];
+    const indexOf = {};
+    function ensure(key) {
+      if (indexOf[key] == null) {
+        indexOf[key] = groups.length;
+        groups.push({ key: key, en: "", de: "", caption: emptyCaption() });
+      }
+      return groups[indexOf[key]];
+    }
+    (previous || []).forEach((raw) => {
+      const pair = asImagePair(raw);
+      const sample = pair.en || pair.de;
+      if (!sample) return;
+      const group = ensure(imageLangKey(sample).key);
+      if (!prune) {
+        group.en = pair.en;
+        group.de = pair.de;
+      }
+      group.caption = pair.caption;
+    });
+    (paths || []).forEach((src) => {
+      const value = String(src || "").trim();
+      if (!value) return;
+      const parsed = imageLangKey(value);
+      const group = ensure(parsed.key);
+      if (parsed.lang === "en") group.en = value;
+      else if (parsed.lang === "de") group.de = value;
+      else if (!group.en) group.en = value;
+    });
+    return groups
+      .map((group) => {
+        const en = group.en || "";
+        let de = group.de || "";
+        if (en && de && en === de) de = "";
+        return { en: en, de: de, caption: group.caption || emptyCaption() };
+      })
+      .filter((pair) => pair.en || pair.de);
+  }
+
+  function projectImagePairs(project) {
+    const raw = [];
     if (Array.isArray(project.images)) {
-      project.images.forEach((src) => images.push(String(src || "")));
+      project.images.forEach((item) => {
+        if (typeof item === "string") {
+          if (item.trim()) raw.push(item.trim());
+        } else if (item && (item.en || item.de)) {
+          raw.push(item);
+        }
+      });
     }
-    if (project.image && images.indexOf(project.image) === -1) {
-      images.unshift(String(project.image));
+    if (project.image) raw.unshift(String(project.image).trim());
+    if (raw.length && raw.every((item) => typeof item === "string")) {
+      return pairFromPaths(raw, []);
     }
-    project.images = images.length ? images : [""];
-    delete project.image;
-  });
+    return pairFromPaths(
+      raw.flatMap((item) => (typeof item === "string" ? [item] : [item.en, item.de].filter(Boolean))),
+      raw.filter((item) => item && typeof item === "object")
+    );
+  }
+
+  function pairPaths(pair) {
+    const item = asImagePair(pair);
+    const list = [];
+    if (item.en) list.push(item.en);
+    if (item.de && item.de !== item.en) list.push(item.de);
+    return list;
+  }
+
+  function inferFolder(project) {
+    if (project.folder) return String(project.folder);
+    const sample = pairPaths((project.images || [])[0] || {})[0] || "";
+    const match = String(sample).match(/images\/portfolio\/(\d+)\//);
+    return match ? match[1] : "";
+  }
+
+  function nextFolder() {
+    let max = 0;
+    (state.CONTENT.projects || []).forEach((project) => {
+      const n = Number(project.folder);
+      if (n > max) max = n;
+    });
+    return String(max + 1);
+  }
+
+  function normalizeProjects() {
+    const used = {};
+    (state.CONTENT.projects || []).forEach((project) => {
+      let folder = inferFolder(project);
+      if (!folder || used[folder]) folder = nextFolder();
+      used[folder] = true;
+      project.folder = folder;
+      project.tools = Array.isArray(project.tools)
+        ? project.tools.map((name) => String(name || "").trim()).filter(Boolean)
+        : [];
+      project.skills = Array.isArray(project.skills)
+        ? project.skills.filter(Boolean)
+        : [];
+      project.images = projectImagePairs(project);
+      delete project.image;
+    });
+  }
+
+  normalizeProjects();
 
   let dirty = false;
   let activeTab = "edit";
@@ -167,7 +310,8 @@
     const loc = ensureLoc(value);
     const areaClass = opts.tall ? " tall" : "";
     const tag = opts.page ? `<div class="field-page">${pageTag(opts.page)}</div>` : "";
-    return `${tag}<div class="lang-grid">${langs()
+    const gridClass = opts.gridClass || "lang-grid";
+    return `${tag}<div class="${gridClass}">${langs()
       .map((code) => {
         const fieldPath = `${path}.${code}`;
         const label = `${langLabel(code)}${opts.label ? " · " + opts.label : ""}`;
@@ -260,8 +404,8 @@
           <h2>Projects</h2>
           ${pageTag("portfolio")}
         </div>
-        <p class="editor-help">Shown as cards on the homepage only. Project 1 uses photos in <code>images/portfolio/1/</code>, project 2 in <code>2/</code>, and so on. Add photos here (or drop them on a project). The first one is the homepage card; the rest open in the gallery.</p>
-        <p class="editor-help">Cards stay <strong>4:3</strong> and zoom to fill that frame (edges of a very tall or wide photo may be cropped on the card). Click to see the full image in the gallery. Use a sharp file at least 1600px on the long side (JPG, PNG or WebP).</p>
+        <p class="editor-help">Shown as cards on the homepage only. Each project keeps a folder such as <code>images/portfolio/4/</code> even if you move the card. Use <strong>Move up / Move down</strong> to change homepage order.</p>
+        <p class="editor-help">Write a short summary (question → method → what the map shows). Add tools and legend skills. Photos: <code>name.en.jpg</code> and <code>name.de.jpg</code> for language pairs; a file with no <code>.en</code>/<code>.de</code> is used in both languages. Cards stay 4:3 and show the whole sheet (nothing cropped). Click to zoom.</p>
         <div id="projects-list">${projects.map(renderProject).join("")}</div>
         <button type="button" class="ghost" data-action="add-project">+ Add project</button>
       </section>
@@ -321,54 +465,21 @@
     </article>`;
   }
 
-  function projectImageList(project) {
-    const images = [];
-    if (Array.isArray(project.images)) {
-      project.images.forEach((src) => {
-        const value = String(src || "").trim();
-        if (value) images.push(value);
+  function asImageList(value) {
+    if (Array.isArray(value)) {
+      return value.flatMap((item) => {
+        if (typeof item === "string") return item.trim() ? [item.trim()] : [];
+        return pairPaths(asImagePair(item));
       });
     }
-    if (project.image) {
-      const value = String(project.image).trim();
-      if (value && images.indexOf(value) === -1) images.unshift(value);
-    }
-    return images;
-  }
-
-  function asImageList(value) {
-    if (Array.isArray(value)) return value.filter(Boolean).map(String);
     if (value) return [String(value)];
     return [];
   }
 
-  function fileName(src) {
-    const parts = String(src || "").split("/");
-    return parts[parts.length - 1] || String(src || "");
-  }
-
-  function mergeImages(saved, discovered) {
-    const remaining = {};
-    discovered.forEach((src) => {
-      remaining[src] = true;
-    });
-    const ordered = [];
-    saved.forEach((src) => {
-      if (src && remaining[src]) {
-        ordered.push(src);
-        delete remaining[src];
-      }
-    });
-    discovered.forEach((src) => {
-      if (remaining[src]) ordered.push(src);
-    });
-    return ordered;
-  }
-
-  function listsEqual(a, b) {
+  function pairsEqual(a, b) {
     if (a.length !== b.length) return false;
     for (let i = 0; i < a.length; i += 1) {
-      if (a[i] !== b[i]) return false;
+      if (a[i].en !== b[i].en || a[i].de !== b[i].de) return false;
     }
     return true;
   }
@@ -382,10 +493,10 @@
       if (!response.ok) return false;
       const map = payload.projects || {};
       let changed = false;
-      (state.CONTENT.projects || []).forEach((project, index) => {
-        const disk = asImageList(map[String(index + 1)]);
-        const next = mergeImages(projectImageList(project), disk);
-        if (!listsEqual(next, projectImageList(project))) {
+      (state.CONTENT.projects || []).forEach((project) => {
+        const disk = asImageList(map[String(project.folder)]);
+        const next = pairFromPaths(disk, projectImagePairs(project), { prune: true });
+        if (!pairsEqual(next, projectImagePairs(project))) {
           project.images = next;
           changed = true;
         }
@@ -428,37 +539,59 @@
   }
 
   function bindImagePreviews() {
-    editView.querySelectorAll(".editor-image-tile").forEach((tile) => {
-      const src = tile.getAttribute("data-src");
-      const box = tile.querySelector("[data-image-preview]");
-      if (box) syncImagePreview(box, src);
+    editView.querySelectorAll("[data-image-preview]").forEach((box) => {
+      syncImagePreview(box, box.getAttribute("data-src") || "");
     });
   }
 
+  function previewTile(src, langLabel, emptyHint) {
+    const value = String(src || "").trim();
+    const name = value ? fileName(value) : "—";
+    const hint = !value && emptyHint
+      ? `<span class="editor-pair-hint">${esc(emptyHint)}</span>`
+      : "";
+    return `<div class="editor-pair-lang">
+      <span class="field-label">${esc(langLabel)}</span>
+      <div class="editor-image-preview is-empty" data-image-preview data-src="${esc(value)}" aria-hidden="true">
+        <img alt="">
+        <span class="editor-image-preview-label">${value ? "Missing" : "No photo"}</span>
+      </div>
+      <span class="editor-image-name" title="${esc(value || name)}">${esc(name)}</span>
+      ${hint}
+    </div>`;
+  }
+
   function renderProjectImages(project, index) {
-    const folder = `images/portfolio/${index + 1}/`;
-    const images = projectImageList(project);
+    const folderId = String(project.folder || nextFolder());
+    const folder = `images/portfolio/${folderId}/`;
+    const images = projectImagePairs(project);
     const tiles = images
-      .map((src, imageIndex) => {
+      .map((pair, imageIndex) => {
+        const item = asImagePair(pair);
         const cover = imageIndex === 0
           ? `<span class="page-tag page-tag-portfolio">Cover</span>`
           : "";
         const coverBtn = imageIndex === 0
           ? ""
           : `<button type="button" class="ghost" data-action="cover-image" data-index="${index}" data-image="${imageIndex}">Use as cover</button>`;
-        return `<figure class="editor-image-tile" data-src="${esc(src)}">
-          <div class="editor-image-preview is-empty" data-image-preview aria-hidden="true">
-            <img alt="">
-            <span class="editor-image-preview-label">Missing</span>
+        const deHint = item.en ? "Uses English until you add a .de file" : "";
+        const upDisabled = imageIndex === 0 ? " disabled" : "";
+        const downDisabled = imageIndex === images.length - 1 ? " disabled" : "";
+        return `<figure class="editor-image-tile editor-pair-tile">
+          <div class="editor-pair-head">
+            ${cover || `<span class="editor-pair-index">Figure ${imageIndex + 1}</span>`}
+            <div class="editor-image-tile-actions">
+              <button type="button" class="ghost" data-action="move-image" data-index="${index}" data-image="${imageIndex}" data-delta="-1"${upDisabled}>Move up</button>
+              <button type="button" class="ghost" data-action="move-image" data-index="${index}" data-image="${imageIndex}" data-delta="1"${downDisabled}>Move down</button>
+              ${coverBtn}
+              ${binButton("remove-image", `data-index="${index}" data-image="${imageIndex}"`, "Remove photo pair")}
+            </div>
           </div>
-          <figcaption>
-            ${cover}
-            <span class="editor-image-name" title="${esc(src)}">${esc(fileName(src))}</span>
-          </figcaption>
-          <div class="editor-image-tile-actions">
-            ${coverBtn}
-            ${binButton("remove-image", `data-index="${index}" data-image="${imageIndex}"`, "Remove photo")}
+          <div class="editor-pair-langs">
+            ${previewTile(item.en, "English", "")}
+            ${previewTile(item.de, "German", deHint)}
           </div>
+          ${locFields("CONTENT.projects." + index + ".images." + imageIndex + ".caption", item.caption, { label: "Caption", multiline: true, gridClass: "editor-pair-captions" })}
         </figure>`;
       })
       .join("");
@@ -466,7 +599,7 @@
       ? ""
       : `<p class="editor-help">No photos yet. Add JPG, PNG or WebP files for this project.</p>`;
     const studioTools = isStudio()
-      ? `<div class="editor-row-actions">
+      ? `<div class="editor-row-actions editor-image-actions">
           <label class="ghost editor-image-add">
             <input type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple data-action="pick-images" data-index="${index}">
             + Add photos
@@ -475,11 +608,15 @@
         </div>`
       : `<p class="editor-help">Start the content studio to add or remove photos.</p>`;
     return `<p class="editor-sub">Photos</p>
-      <p class="editor-help">These files live in <code>${esc(folder)}</code>. The cover is the homepage card.</p>
+      <p class="editor-help">These files live in <code>${esc(folder)}</code> (folder ${esc(folderId)} stays put if you move the card). Cover is the homepage card. Use <strong>Move up / Move down</strong> for gallery order, or <strong>Use as cover</strong> to jump a figure to first. Pair languages with <code>name.en.jpg</code> and <code>name.de.jpg</code>.</p>
       <div class="editor-image-grid" data-image-drop="${index}">
         ${empty}${tiles}
       </div>
       ${studioTools}`;
+  }
+
+  function studioProjectParam(project) {
+    return encodeURIComponent(String(project.folder || ""));
   }
 
   async function uploadImages(projectIndex, fileList) {
@@ -487,23 +624,20 @@
     if (!files.length || !isStudio()) return;
     const project = state.CONTENT.projects[projectIndex];
     if (!project) return;
+    if (!project.folder) project.folder = nextFolder();
     status("Adding photos…");
     try {
       for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
         const response = await fetch(
           "/studio/image?project=" +
-            encodeURIComponent(String(projectIndex + 1)) +
+            studioProjectParam(project) +
             "&name=" +
             encodeURIComponent(file.name),
           { method: "POST", body: file }
         );
         const payload = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(payload.error || "Could not add that photo.");
-        if (!Array.isArray(project.images)) project.images = [];
-        if (payload.path && project.images.indexOf(payload.path) === -1) {
-          project.images.push(payload.path);
-        }
       }
       await syncFolderImages({ quiet: true });
       setDirty(true);
@@ -514,41 +648,127 @@
     }
   }
 
+  async function removeStudioFile(project, src) {
+    const name = fileName(src);
+    if (!name) return true;
+    const response = await fetch(
+      "/studio/image?project=" +
+        studioProjectParam(project) +
+        "&name=" +
+        encodeURIComponent(name),
+      { method: "DELETE" }
+    );
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      status("Could not remove photo: " + (payload.error || response.statusText), "error");
+      return false;
+    }
+    return true;
+  }
+
   async function removeProjectImage(projectIndex, imageIndex) {
     const project = state.CONTENT.projects[projectIndex];
-    const src = projectImageList(project)[imageIndex];
-    if (!src) return;
-    if (!window.confirm("Remove " + fileName(src) + " from this project folder?")) return;
+    const pair = projectImagePairs(project)[imageIndex];
+    if (!pair) return;
+    const files = pairPaths(pair);
+    const label = files.map(fileName).join(" and ") || "this photo";
+    if (!window.confirm("Remove " + label + " from this project folder?")) return;
     if (isStudio()) {
-      const response = await fetch(
-        "/studio/image?project=" +
-          encodeURIComponent(String(projectIndex + 1)) +
-          "&name=" +
-          encodeURIComponent(fileName(src)),
-        { method: "DELETE" }
-      );
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        status("Could not remove photo: " + (payload.error || response.statusText), "error");
-        return;
+      for (let i = 0; i < files.length; i += 1) {
+        const ok = await removeStudioFile(project, files[i]);
+        if (!ok) return;
       }
     }
-    project.images = projectImageList(project).filter((_, i) => i !== imageIndex);
+    const images = projectImagePairs(project);
+    images.splice(imageIndex, 1);
+    project.images = images;
     setDirty(true);
     status("Unsaved changes");
     restoreScroll(renderEdit);
   }
 
+  function addProjectTool(index, name) {
+    const project = state.CONTENT.projects[index];
+    const value = String(name || "").trim();
+    if (!project || !value) return false;
+    if (!Array.isArray(project.tools)) project.tools = [];
+    if (project.tools.indexOf(value) !== -1) return false;
+    project.tools.push(value);
+    return true;
+  }
+
+  function renderProjectTools(project, index) {
+    const tools = project.tools || [];
+    const chips = tools
+      .map((name, toolIndex) => {
+        return `<button type="button" class="editor-chip" data-action="remove-tool" data-index="${index}" data-tool="${toolIndex}">
+          ${esc(name)} <span aria-hidden="true">×</span>
+        </button>`;
+      })
+      .join("");
+    const used = {};
+    tools.forEach((name) => {
+      used[name] = true;
+    });
+    const suggestions = TOOL_SUGGESTIONS.filter((name) => !used[name])
+      .map((name) => {
+        return `<button type="button" class="ghost" data-action="add-tool" data-index="${index}" data-name="${esc(name)}">${esc(name)}</button>`;
+      })
+      .join("");
+    return `<p class="editor-sub">Tools</p>
+      <p class="editor-help">Shown as chips on the homepage. Same in every language. Click a selected chip to remove it.</p>
+      <div class="editor-chip-row">${chips || `<span class="editor-help">No tools yet.</span>`}</div>
+      <p class="field-label">Add a tool</p>
+      <div class="editor-row-actions editor-tool-suggestions">
+        ${suggestions}
+      </div>
+      <div class="editor-tool-custom">
+        <span class="field-label">Or type a name</span>
+        <div class="editor-tool-custom-row">
+          <input type="text" data-tool-input="${index}" placeholder="e.g. GRASS GIS" aria-label="Tool name">
+          <button type="button" class="ghost" data-action="add-tool-custom" data-index="${index}">Add tool</button>
+        </div>
+      </div>`;
+  }
+
+  function renderProjectSkills(project, index) {
+    const selected = project.skills || [];
+    const picker = (state.CONTENT.skills || [])
+      .map((skill) => {
+        const name = skill.symbol || "dashed";
+        const pressed = selected.indexOf(name) !== -1 ? "true" : "false";
+        const label = (skill.label && (skill.label.en || skill.label.de)) || name;
+        const svg = (typeof legendSymbolSvg === "function" ? legendSymbolSvg(name) : "") || "";
+        return `<button type="button" class="symbol-option" data-action="toggle-project-skill" data-index="${index}" data-symbol="${esc(name)}" aria-pressed="${pressed}" aria-label="${esc(label)}" title="${esc(label)}">
+          <span class="legend-symbol">${svg}</span>
+        </button>`;
+      })
+      .join("");
+    return `<p class="editor-sub">Skills on this project</p>
+      <p class="editor-help">Optional legend marks, matching the skills list above.</p>
+      <div class="symbol-picker" role="group" aria-label="Skills shown on this project">${picker}</div>`;
+  }
+
   function renderProject(project, index) {
+    const total = (state.CONTENT.projects || []).length;
+    const folderId = String(project.folder || "");
+    const upDisabled = index === 0 ? " disabled" : "";
+    const downDisabled = index === total - 1 ? " disabled" : "";
     return `<article class="editor-card" data-list="projects" data-index="${index}">
       <div class="editor-card-head">
-        <strong>Project ${index + 1}</strong>
-        ${binButton("remove-project", `data-index="${index}"`, "Remove project")}
+        <strong>Project ${index + 1} <span class="editor-folder-id">folder ${esc(folderId)}</span></strong>
+        <div class="editor-card-head-actions">
+          <button type="button" class="ghost" data-action="move-project" data-index="${index}" data-delta="-1"${upDisabled}>Move up</button>
+          <button type="button" class="ghost" data-action="move-project" data-index="${index}" data-delta="1"${downDisabled}>Move down</button>
+          ${binButton("remove-project", `data-index="${index}"`, "Remove project")}
+        </div>
       </div>
       ${renderProjectImages(project, index)}
       ${locFields("CONTENT.projects." + index + ".title", project.title, { label: "Title" })}
-      ${locFields("CONTENT.projects." + index + ".tag", project.tag, { label: "Tag" })}
-      ${locFields("CONTENT.projects." + index + ".description", project.description, { label: "Description", multiline: true })}
+      ${locFields("CONTENT.projects." + index + ".tag", project.tag, { label: "Tag / context" })}
+      ${renderProjectTools(project, index)}
+      ${renderProjectSkills(project, index)}
+      ${locFields("CONTENT.projects." + index + ".description", project.description, { label: "Summary (question → method → result)", multiline: true, tall: true })}
     </article>`;
   }
 
@@ -696,9 +916,10 @@
   function generateContentJs() {
     const content = clone(state.CONTENT);
     (content.projects || []).forEach((project) => {
-      project.images = (project.images || [])
-        .map((src) => String(src || "").trim())
-        .filter(Boolean);
+      project.folder = String(project.folder || "");
+      project.tools = (project.tools || []).map((name) => String(name || "").trim()).filter(Boolean);
+      project.skills = (project.skills || []).filter(Boolean);
+      project.images = (project.images || []).map(asImagePair).filter((pair) => pair.en || pair.de);
       delete project.image;
     });
     return (
@@ -782,6 +1003,18 @@
     status("Unsaved changes");
   });
 
+  editView.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    const input = event.target.closest("[data-tool-input]");
+    if (!input) return;
+    event.preventDefault();
+    const index = Number(input.getAttribute("data-tool-input"));
+    if (!addProjectTool(index, input.value)) return;
+    setDirty(true);
+    status("Unsaved changes");
+    restoreScroll(renderEdit);
+  });
+
   editView.addEventListener("click", (event) => {
     const button = event.target.closest("[data-action]");
     if (!button) return;
@@ -810,6 +1043,9 @@
       state.CONTENT.skills.splice(index, 1);
     } else if (action === "add-project") {
       state.CONTENT.projects.push({
+        folder: nextFolder(),
+        tools: [],
+        skills: [],
         images: [],
         title: emptyLoc(),
         tag: emptyLoc(),
@@ -817,13 +1053,49 @@
       });
     } else if (action === "remove-project") {
       state.CONTENT.projects.splice(index, 1);
+    } else if (action === "move-project") {
+      const delta = Number(button.getAttribute("data-delta"));
+      const list = state.CONTENT.projects;
+      const next = index + delta;
+      if (next < 0 || next >= list.length) return;
+      const [item] = list.splice(index, 1);
+      list.splice(next, 0, item);
+    } else if (action === "add-tool") {
+      if (!addProjectTool(index, button.getAttribute("data-name"))) return;
+    } else if (action === "add-tool-custom") {
+      const input = editView.querySelector('[data-tool-input="' + index + '"]');
+      if (!addProjectTool(index, input && input.value)) return;
+    } else if (action === "remove-tool") {
+      const project = state.CONTENT.projects[index];
+      const toolIndex = Number(button.getAttribute("data-tool"));
+      if (!project || !Array.isArray(project.tools)) return;
+      project.tools.splice(toolIndex, 1);
+    } else if (action === "toggle-project-skill") {
+      const project = state.CONTENT.projects[index];
+      const symbol = button.getAttribute("data-symbol");
+      if (!project || !symbol) return;
+      if (!Array.isArray(project.skills)) project.skills = [];
+      const at = project.skills.indexOf(symbol);
+      if (at === -1) project.skills.push(symbol);
+      else project.skills.splice(at, 1);
     } else if (action === "cover-image") {
       const project = state.CONTENT.projects[index];
       const imageIndex = Number(button.getAttribute("data-image"));
       if (!project || imageIndex <= 0) return;
-      const images = projectImageList(project);
+      const images = projectImagePairs(project);
       const [item] = images.splice(imageIndex, 1);
       images.unshift(item);
+      project.images = images;
+    } else if (action === "move-image") {
+      const project = state.CONTENT.projects[index];
+      const imageIndex = Number(button.getAttribute("data-image"));
+      const delta = Number(button.getAttribute("data-delta"));
+      if (!project) return;
+      const images = projectImagePairs(project);
+      const next = imageIndex + delta;
+      if (next < 0 || next >= images.length) return;
+      const [item] = images.splice(imageIndex, 1);
+      images.splice(next, 0, item);
       project.images = images;
     } else if (action === "scan-images") {
       syncFolderImages().then((changed) => {

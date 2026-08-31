@@ -8,7 +8,9 @@
    - Keep commas between entries.
    - Translated fields look like:  { en: "English", de: "Deutsch" }
    - SHARED is language-independent (name, email, LinkedIn).
-   - Project photos live in images/portfolio/N/. The studio lists them; Save stores the order.
+   - Project photos live in images/portfolio/{folder}/. Folder numbers stay put when you reorder cards.
+   - Language pairs: name.en.jpg + name.de.jpg. A file with no .en/.de is used in both languages.
+   - Homepage order is this projects array. Move up / Move down in the studio; do not rename folders.
    - Leave de: "" if you have not translated yet — the site falls back to English.
    ========================================================================== */
 
@@ -178,6 +180,10 @@ const UI = {
   langSwitcher: {
     en: "Language",
     de: "Sprache"
+  },
+  tools: {
+    en: "Tools",
+    de: "Werkzeuge"
   }
 };
 
@@ -272,91 +278,169 @@ const CONTENT = {
   ],
   projects: [
     {
+      folder: "1",
+      tools: [],
+      skills: [],
       images: [],
       title: {
         en: "Bachelor thesis (in progress)",
         de: "Bachelorarbeit (in Arbeit)"
       },
       tag: {
-        en: "RWTH Aachen ",
-        de: "RWTH Aachen "
+        en: "RWTH Aachen",
+        de: "RWTH Aachen"
       },
       description: {
-        en: "Sedimentological features of unknown tsunami in Greece",
-        de: "Sedimentologische Merkmale von unbekannte Tsunamis in Griechenland"
+        en: "Sedimentological features of palaeotsunamis in Greece. A key figure or map will go here when the thesis is finished.",
+        de: "Sedimentologische Merkmale von Paläotsunamis in Griechenland. Eine zentrale Abbildung oder Karte folgt nach Abschluss der Arbeit."
       }
     },
     {
+      folder: "2",
+      tools: ["QGIS", "Sentinel-2", "Excel"],
+      skills: ["ring", "grid"],
       images: [
-        "images/portfolio/2/NDVI_AMS_Fixed.png",
-        "images/portfolio/2/LST_Amsterdam_Done.png"
+        {
+          en: "images/portfolio/2/NDVI_AMS_Fixed.png",
+          de: "",
+          caption: {
+            en: "NDVI of Amsterdam parks from Sentinel-2",
+            de: "NDVI der Amsterdamer Parks aus Sentinel-2"
+          }
+        },
+        {
+          en: "images/portfolio/2/LST_Amsterdam_Done.png",
+          de: "",
+          caption: {
+            en: "Land surface temperature, Amsterdam",
+            de: "Landoberflächentemperatur, Amsterdam"
+          }
+        }
       ],
       title: {
-        en: "Quantifying Urban Park Cooling in Amsterdam: A Remote Sensing  Assessment of Nature-based Solutions",
+        en: "Quantifying Urban Park Cooling in Amsterdam: A Remote Sensing Assessment of Nature-based Solutions",
         de: "Quantifizierung des Kühleffekts städtischer Parks in Amsterdam: Eine fernerkundungsbasierte Bewertung naturbasierter Lösungen"
       },
       tag: {
-        en: "Research Paper: NDVI & LST Calculation",
-        de: "Forschungsarbeit: NDVI & LST Berechnung"
+        en: "Research paper · NDVI & LST",
+        de: "Forschungsarbeit · NDVI & LST"
       },
       description: {
-        en: "Research Paper Assignment on a topic within Nature-based Solutions . Maps were created with open source SENTINEL satellite imagery and analysed via QGIS global statistics and MS Excel ",
-        de: "Aufgabenstellung für eine Forschungsarbeit zu einem Thema aus dem Bereich naturbasierter Lösungen. Die Karten wurden mithilfe von Open-Source-Satellitenbildern der Sentinel-Mission erstellt und mittels QGIS (globale Statistiken) sowie MS Excel analysiert."
+        en: "How much do Amsterdam’s parks cool the city? Open Sentinel-2 imagery was classified and summarised in QGIS, then compared in Excel. The maps show vegetation (NDVI) against land surface temperature as a nature-based cooling signal.",
+        de: "Wie stark kühlen Amsterdams Parks die Stadt? Offene Sentinel-2-Bilder wurden in QGIS klassifiziert und zusammengefasst, danach in Excel verglichen. Die Karten zeigen Vegetation (NDVI) gegenüber der Landoberflächentemperatur als naturbasiertes Kühlsignal."
       }
     },
     {
+      folder: "3",
+      tools: ["QGIS"],
+      skills: ["ring", "contour"],
       images: [
-        "images/portfolio/3/GOT map.png"
+        {
+          en: "images/portfolio/3/GOT map.png",
+          de: "",
+          caption: {
+            en: "Game of Thrones filming locations by landscape type",
+            de: "Game-of-Thrones-Drehorte nach Landschaftstyp"
+          }
+        }
       ],
       title: {
-        en: "Game of Thrones Filming locations in Northern Ireland",
+        en: "Game of Thrones filming locations in Northern Ireland",
         de: "Drehorte für Game of Thrones in Nordirland"
       },
       tag: {
-        en: "Essay: The Filming Industry in Ireland and Northern Ireland",
-        de: "Hausarbeit: Die Filmindustrie in Irland und Nordirland"
+        en: "Essay · filming industry",
+        de: "Hausarbeit · Filmindustrie"
       },
       description: {
-        en: "Popular filming locations for the Game of Thrones show in Northern Ireland categorized by natural landscapes \nGraded: 1,7",
-        de: "Beliebte Drehorte der Serie Game of Thrones in Nordirland, kategorisiert nach natürlichen Landschaften\nBenotet: 1,7 "
+        en: "Where was Game of Thrones filmed in Northern Ireland, and in which landscapes? Locations were mapped and grouped by natural setting. Graded 1,7.",
+        de: "Wo wurde Game of Thrones in Nordirland gedreht, und in welchen Landschaften? Drehorte wurden kartiert und nach natürlicher Umgebung gruppiert. Note 1,7."
       }
     },
     {
+      folder: "4",
+      tools: ["QGIS"],
+      skills: ["ring", "contour"],
       images: [
-        "images/portfolio/4/Poster_Claes_23.jpg",
-        "images/portfolio/4/Hamburg.png",
-        "images/portfolio/4/Rindhaltung.png",
-        "images/portfolio/4/Schutzmaßnahmen.png"
+        {
+          en: "images/portfolio/4/Poster_Claes_23.jpg",
+          de: "",
+          caption: {
+            en: "Poster: the German North Sea coast",
+            de: "Poster: die deutsche Nordseeküste"
+          }
+        },
+        {
+          en: "images/portfolio/4/Hamburg.png",
+          de: "",
+          caption: {
+            en: "Flood risk in Hamburg under three scenarios",
+            de: "Hochwasserrisiko in Hamburg unter drei Szenarien"
+          }
+        },
+        {
+          en: "images/portfolio/4/Rindhaltung.png",
+          de: "",
+          caption: {
+            en: "Cattle farming in Germany (NUTS 3)",
+            de: "Rinderhaltung in Deutschland (NUTS 3)"
+          }
+        },
+        {
+          en: "images/portfolio/4/Schutzmaßnahmen.png",
+          de: "",
+          caption: {
+            en: "Flood protection methods in Lower Saxony",
+            de: "Hochwasserschutzmaßnahmen in Niedersachsen"
+          }
+        }
       ],
       title: {
-        en: "The German North Sea Coast ",
-        de: "Die deutsche Nordseeküste "
+        en: "The German North Sea coast",
+        de: "Die deutsche Nordseeküste"
       },
       tag: {
-        en: "Poster Assignment: Geovisualisation & QGIS",
-        de: "Posterabgabe: Geovisualisierung & QGIS"
+        en: "Poster · geovisualisation",
+        de: "Poster · Geovisualisierung"
       },
       description: {
-        en: "Image 2: Flood risk of Hamburg under 3 scenarios  \nImage 3: Cattle farming in Germany in NUTS 3 categories \nImage 4: Flood protection methods in Lower Saxony \nGraded: 1,0 ",
-        de: "Abbildung 2: Hochwasserrisiko in Hamburg unter drei Szenarien\nAbbildung 3: Rinderhaltung in Deutschland nach NUTS-3-Kategorien\nAbbildung 4: Hochwasserschutzmaßnahmen in Niedersachsen\nBenotet: 1,0 "
+        en: "A poster on the German North Sea coast, with supporting maps of Hamburg flood scenarios, cattle farming at NUTS 3, and flood protection in Lower Saxony. Graded 1,0.",
+        de: "Ein Poster zur deutschen Nordseeküste, ergänzt durch Karten zu Hamburger Hochwasserszenarien, Rinderhaltung auf NUTS-3-Ebene und Hochwasserschutz in Niedersachsen. Note 1,0."
       }
     },
     {
+      folder: "5",
+      tools: ["QGIS"],
+      skills: ["ring"],
       images: [
-        "images/portfolio/5/Karte_2_DEV_GIS_Claes.png",
-        "images/portfolio/5/Karte_5_Risikoananalyse_GIS_Claes.png"
+        {
+          en: "images/portfolio/5/Karte_2_DEV_GIS_Claes.png",
+          de: "",
+          caption: {
+            en: "DEV analysis of the Erft region",
+            de: "DEV-Analyse der Erft-Region"
+          }
+        },
+        {
+          en: "images/portfolio/5/Karte_5_Risikoananalyse_GIS_Claes.png",
+          de: "",
+          caption: {
+            en: "Flood risk analysis of the Erft region",
+            de: "Hochwasserrisikoanalyse der Erft-Region"
+          }
+        }
       ],
       title: {
-        en: "Flood Risk Analysis of the Erft Region ",
-        de: "Überflutungsrisiko Analyse der Erft Region "
+        en: "Flood risk analysis of the Erft region",
+        de: "Überflutungsrisikoanalyse der Erft-Region"
       },
       tag: {
-        en: "Geovisualisation & QGIS ",
-        de: "Geovisualisierung & QGIS"
+        en: "Geovisualisation · QGIS",
+        de: "Geovisualisierung · QGIS"
       },
       description: {
-        en: "Image 1: DEV Analysis of the Erft Region\nImage 2: Flood Risk Analysis of the Erft Region ",
-        de: "Abbildung 1: DEV-Analyse der Erft-Region\nAbbildung 2: Hochwasserrisikoanalyse der Erft-Region"
+        en: "What is the flood risk along the Erft? Terrain and exposure were mapped in QGIS. The sheets show a DEV analysis and a flood-risk map of the region.",
+        de: "Wie hoch ist das Hochwasserrisiko an der Erft? Gelände und Exposition wurden in QGIS kartiert. Die Blätter zeigen eine DEV-Analyse und eine Risikokarte der Region."
       }
     }
   ],

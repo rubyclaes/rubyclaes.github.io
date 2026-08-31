@@ -287,12 +287,106 @@
   margin-top: 8px;
 }
 
+.editor-image-actions {
+  margin: 10px 0 28px;
+}
+
+.editor-card-head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.editor-folder-id {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ghost[disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.editor-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  min-height: 28px;
+}
+
+.editor-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--sheet);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.editor-chip:hover,
+.editor-chip:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.editor-tool-suggestions {
+  margin: 0 0 14px;
+}
+
+.editor-tool-custom {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 360px;
+  margin: 0 0 8px;
+}
+
+.editor-tool-custom-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.editor-tool-custom-row input {
+  flex: 1 1 160px;
+  min-width: 0;
+  width: auto;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--sheet);
+  color: var(--ink);
+  font: inherit;
+}
+
 .editor-image-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
   margin: 8px 0 4px;
-  padding: 10px;
+  padding: 4px;
   border: 1px dashed transparent;
   border-radius: 8px;
 }
@@ -306,17 +400,81 @@
   margin: 0;
 }
 
+.editor-pair-tile {
+  display: grid;
+  grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+  grid-template-areas:
+    "head head"
+    "thumbs captions";
+  gap: 10px 20px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+.editor-pair-head {
+  grid-area: head;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 34px;
+  margin: 0;
+}
+
+.editor-pair-index {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.editor-pair-langs {
+  grid-area: thumbs;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-content: start;
+  min-width: 0;
+}
+
+.editor-pair-lang {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.editor-pair-captions {
+  grid-area: captions;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  margin: 0;
+  min-width: 0;
+  align-content: start;
+}
+
+.editor-pair-captions textarea {
+  min-height: 72px;
+}
+
+.editor-pair-captions .field {
+  min-width: 0;
+}
+
+.editor-pair-hint {
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
 .editor-image-tile .editor-image-preview {
   width: 100%;
   flex: none;
-}
-
-.editor-image-tile figcaption {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 6px;
-  min-width: 0;
 }
 
 .editor-image-name {
@@ -332,7 +490,21 @@
   flex-wrap: wrap;
   gap: 4px;
   align-items: center;
-  margin-top: 6px;
+  margin: 0;
+}
+
+@media (max-width: 800px) {
+  .editor-pair-tile {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "head"
+      "thumbs"
+      "captions";
+  }
+
+  .editor-pair-captions {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .editor-image-add {
@@ -551,9 +723,17 @@
 [data-theme="dark"] .field input,
 [data-theme="dark"] .field textarea,
 [data-theme="dark"] .field select,
+[data-theme="dark"] .editor-inline-add input,
+[data-theme="dark"] .editor-tool-custom-row input,
 [data-theme="dark"] .symbol-option {
   background: #222a34;
   border-color: #4a5668;
+  color: #e8edf4;
+}
+
+[data-theme="dark"] .editor-chip {
+  background: #2c3747;
+  border-color: #6a7788;
   color: #e8edf4;
 }
 
