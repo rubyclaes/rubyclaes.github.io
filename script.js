@@ -241,8 +241,18 @@
 
   function srcForLang(pair, lang) {
     const item = asImagePair(pair);
-    if (lang === "de") return item.de || item.en || "";
-    return item.en || item.de || "";
+    const en = item.en;
+    const de = item.de;
+    if (lang === "de") return de || en || "";
+    return en || de || "";
+  }
+
+  function captionForLang(pair, lang) {
+    const cap = asImagePair(pair).caption;
+    const en = String(cap.en || "").trim();
+    const de = String(cap.de || "").trim();
+    if (lang === "de") return de || en;
+    return en || de;
   }
 
   function projectFigures(project, lang) {
@@ -265,7 +275,7 @@
     return raw
       .map((pair) => ({
         src: srcForLang(pair, lang),
-        caption: t(pair.caption, lang).trim()
+        caption: captionForLang(pair, lang)
       }))
       .filter((figure) => figure.src);
   }

@@ -115,7 +115,7 @@ In the content studio, on that project:
 3. **Remove** deletes that figure (both language files, if you have a pair).
 4. If you copied files in with File Explorer or VS Code, click **Scan folder**.
 
-**English and German maps:** put both in the same folder. `coast.en.jpg` and `coast.de.jpg` are one figure (the site picks the language). A file with no `.en` / `.de` in the name is used in both languages until you add a twin. Add a caption under each figure.
+**English and German maps:** put both in the same folder. `coast.en.jpg` and `coast.de.jpg` are one figure (the site picks the language). A file with no `.en` / `.de` in the name, or a figure with only one language, is shown in both languages until you add a twin. Add a caption under each figure.
 
 Allowed types: `.jpg`, `.jpeg`, `.png`, `.webp`. Prefer a sharp file at least **1600px on the long side**. Homepage cards stay **4:3** and show the **whole sheet** (nothing cropped). Click a card to zoom.
 

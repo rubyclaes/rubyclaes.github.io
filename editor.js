@@ -544,19 +544,22 @@
     });
   }
 
-  function previewTile(src, langLabel, emptyHint) {
+  function previewTile(src, otherSrc, langLabel) {
     const value = String(src || "").trim();
-    const name = value ? fileName(value) : "—";
-    const hint = !value && emptyHint
-      ? `<span class="editor-pair-hint">${esc(emptyHint)}</span>`
+    const fallback = String(otherSrc || "").trim();
+    const shown = value || fallback;
+    const shared = !value && fallback;
+    const name = shown ? fileName(shown) : "—";
+    const hint = shared
+      ? `<span class="editor-pair-hint">Uses the other language until you add a twin file</span>`
       : "";
     return `<div class="editor-pair-lang">
       <span class="field-label">${esc(langLabel)}</span>
-      <div class="editor-image-preview is-empty" data-image-preview data-src="${esc(value)}" aria-hidden="true">
+      <div class="editor-image-preview is-empty" data-image-preview data-src="${esc(shown)}" aria-hidden="true">
         <img alt="">
-        <span class="editor-image-preview-label">${value ? "Missing" : "No photo"}</span>
+        <span class="editor-image-preview-label">${shown ? "Missing" : "No photo"}</span>
       </div>
-      <span class="editor-image-name" title="${esc(value || name)}">${esc(name)}</span>
+      <span class="editor-image-name" title="${esc(shown || name)}">${esc(name)}</span>
       ${hint}
     </div>`;
   }
@@ -574,7 +577,6 @@
         const coverBtn = imageIndex === 0
           ? ""
           : `<button type="button" class="ghost" data-action="cover-image" data-index="${index}" data-image="${imageIndex}">Use as cover</button>`;
-        const deHint = item.en ? "Uses English until you add a .de file" : "";
         const upDisabled = imageIndex === 0 ? " disabled" : "";
         const downDisabled = imageIndex === images.length - 1 ? " disabled" : "";
         return `<figure class="editor-image-tile editor-pair-tile">
@@ -588,8 +590,8 @@
             </div>
           </div>
           <div class="editor-pair-langs">
-            ${previewTile(item.en, "English", "")}
-            ${previewTile(item.de, "German", deHint)}
+            ${previewTile(item.en, item.de, "English")}
+            ${previewTile(item.de, item.en, "German")}
           </div>
           ${locFields("CONTENT.projects." + index + ".images." + imageIndex + ".caption", item.caption, { label: "Caption", multiline: true, gridClass: "editor-pair-captions" })}
         </figure>`;
@@ -608,7 +610,7 @@
         </div>`
       : `<p class="editor-help">Start the content studio to add or remove photos.</p>`;
     return `<p class="editor-sub">Photos</p>
-      <p class="editor-help">These files live in <code>${esc(folder)}</code> (folder ${esc(folderId)} stays put if you move the card). Cover is the homepage card. Use <strong>Move up / Move down</strong> for gallery order, or <strong>Use as cover</strong> to jump a figure to first. Pair languages with <code>name.en.jpg</code> and <code>name.de.jpg</code>.</p>
+      <p class="editor-help">These files live in <code>${esc(folder)}</code> (folder ${esc(folderId)} stays put if you move the card). Cover is the homepage card. Use <strong>Move up / Move down</strong> for gallery order, or <strong>Use as cover</strong> to jump a figure to first. Pair languages with <code>name.en.jpg</code> and <code>name.de.jpg</code>. If only one file exists, both languages show it.</p>
       <div class="editor-image-grid" data-image-drop="${index}">
         ${empty}${tiles}
       </div>

@@ -380,32 +380,32 @@ const CONTENT = {
       ],
       images: [
         {
-          en: "images/portfolio/4/Poster_Claes_23.jpg",
-          de: "",
+          en: "",
+          de: "images/portfolio/4/GermanNorthSeaCoast.de.jpg",
           caption: {
             en: "Poster: the German North Sea coast",
             de: "Poster: die deutsche Nordseeküste"
           }
         },
         {
-          en: "images/portfolio/4/Hamburg.png",
-          de: "",
+          en: "",
+          de: "images/portfolio/4/FloodScenariosHamburg.de.png",
           caption: {
             en: "Flood risk in Hamburg under three scenarios",
             de: "Hochwasserrisiko in Hamburg unter drei Szenarien"
           }
         },
         {
-          en: "images/portfolio/4/Rindhaltung.png",
-          de: "",
+          en: "",
+          de: "images/portfolio/4/CatleFarmingGermany2020.de.png",
           caption: {
             en: "Cattle farming in Germany (NUTS 3)",
             de: "Rinderhaltung in Deutschland (NUTS 3)"
           }
         },
         {
-          en: "images/portfolio/4/Schutzmaßnahmen.png",
-          de: "",
+          en: "",
+          de: "images/portfolio/4/FloodProtectionMeasures.de.png",
           caption: {
             en: "Flood protection methods in Lower Saxony",
             de: "Hochwasserschutzmaßnahmen in Niedersachsen"
