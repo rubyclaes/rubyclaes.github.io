@@ -281,7 +281,16 @@ const CONTENT = {
       folder: "1",
       tools: [],
       skills: [],
-      images: [],
+      images: [
+        {
+          en: "images/portfolio/1/thesis-placeholder.png",
+          de: "",
+          caption: {
+            en: "",
+            de: ""
+          }
+        }
+      ],
       title: {
         en: "Bachelor thesis (in progress)",
         de: "Bachelorarbeit (in Arbeit)"
@@ -291,8 +300,8 @@ const CONTENT = {
         de: "RWTH Aachen"
       },
       description: {
-        en: "Sedimentological features of palaeotsunamis in Greece. A key figure or map will go here when the thesis is finished.",
-        de: "Sedimentologische Merkmale von Paläotsunamis in Griechenland. Eine zentrale Abbildung oder Karte folgt nach Abschluss der Arbeit."
+        en: "Sedimentological features of palaeotsunamis in Greece.",
+        de: "Sedimentologische Merkmale von Paläotsunamis in Griechenland."
       }
     },
     {
