@@ -297,20 +297,27 @@ const CONTENT = {
     },
     {
       folder: "2",
-      tools: ["QGIS", "Sentinel-2", "Excel"],
-      skills: ["ring", "grid"],
+      tools: [
+        "QGIS",
+        "Sentinel-2",
+        "Excel"
+      ],
+      skills: [
+        "ring",
+        "grid"
+      ],
       images: [
         {
-          en: "images/portfolio/2/NDVI_AMS_Fixed.png",
-          de: "",
+          en: "images/portfolio/2/NDVI.en.png",
+          de: "images/portfolio/2/NDVI.de.png",
           caption: {
             en: "NDVI of Amsterdam parks from Sentinel-2",
             de: "NDVI der Amsterdamer Parks aus Sentinel-2"
           }
         },
         {
-          en: "images/portfolio/2/LST_Amsterdam_Done.png",
-          de: "",
+          en: "images/portfolio/2/LST.en.png",
+          de: "images/portfolio/2/LST.de.png",
           caption: {
             en: "Land surface temperature, Amsterdam",
             de: "Landoberflächentemperatur, Amsterdam"
@@ -332,15 +339,20 @@ const CONTENT = {
     },
     {
       folder: "3",
-      tools: ["QGIS"],
-      skills: ["ring", "contour"],
+      tools: [
+        "QGIS"
+      ],
+      skills: [
+        "ring",
+        "contour"
+      ],
       images: [
         {
-          en: "images/portfolio/3/GOT map.png",
-          de: "",
+          en: "images/portfolio/3/GOT.en.png",
+          de: "images/portfolio/3/GOT.de.png",
           caption: {
-            en: "Game of Thrones filming locations by landscape type",
-            de: "Game-of-Thrones-Drehorte nach Landschaftstyp"
+            en: "",
+            de: ""
           }
         }
       ],
@@ -359,8 +371,13 @@ const CONTENT = {
     },
     {
       folder: "4",
-      tools: ["QGIS"],
-      skills: ["ring", "contour"],
+      tools: [
+        "QGIS"
+      ],
+      skills: [
+        "ring",
+        "contour"
+      ],
       images: [
         {
           en: "images/portfolio/4/Poster_Claes_23.jpg",
@@ -410,23 +427,27 @@ const CONTENT = {
     },
     {
       folder: "5",
-      tools: ["QGIS"],
-      skills: ["ring"],
+      tools: [
+        "QGIS"
+      ],
+      skills: [
+        "ring"
+      ],
       images: [
         {
-          en: "images/portfolio/5/Karte_2_DEV_GIS_Claes.png",
-          de: "",
+          en: "images/portfolio/5/DEV.en.png",
+          de: "images/portfolio/5/DEV.de.png",
           caption: {
-            en: "DEV analysis of the Erft region",
-            de: "DEV-Analyse der Erft-Region"
+            en: "",
+            de: ""
           }
         },
         {
-          en: "images/portfolio/5/Karte_5_Risikoananalyse_GIS_Claes.png",
-          de: "",
+          en: "images/portfolio/5/FloodRisk.en.png",
+          de: "images/portfolio/5/FloodRisk.de.png",
           caption: {
-            en: "Flood risk analysis of the Erft region",
-            de: "Hochwasserrisikoanalyse der Erft-Region"
+            en: "",
+            de: ""
           }
         }
       ],
