@@ -300,11 +300,12 @@ const CONTENT = {
       tools: [
         "QGIS",
         "Sentinel-2",
-        "Excel"
+        "Excel",
+        "Landsat"
       ],
       skills: [
         "ring",
-        "grid"
+        "hatch"
       ],
       images: [
         {
@@ -333,14 +334,15 @@ const CONTENT = {
         de: "Forschungsarbeit · NDVI & LST"
       },
       description: {
-        en: "How much do Amsterdam’s parks cool the city? Open Sentinel-2 imagery was classified and summarised in QGIS, then compared in Excel. The maps show vegetation (NDVI) against land surface temperature as a nature-based cooling signal.",
-        de: "Wie stark kühlen Amsterdams Parks die Stadt? Offene Sentinel-2-Bilder wurden in QGIS klassifiziert und zusammengefasst, danach in Excel verglichen. Die Karten zeigen Vegetation (NDVI) gegenüber der Landoberflächentemperatur als naturbasiertes Kühlsignal."
+        en: "How much do Amsterdam’s parks cool the city? Open Sentinel-2 NDVI was mapped against Landsat land surface temperature in QGIS, then compared in Excel. Cooler surfaces line up with park vegetation, a nature-based cooling signal.",
+        de: "Wie stark kühlen Amsterdams Parks die Stadt? Offene Sentinel-2-NDVI wurde in QGIS der Landsat-Landoberflächentemperatur gegenübergestellt und in Excel verglichen. Kühlerer Untergrund fällt mit Parkvegetation zusammen, ein naturbasiertes Kühlsignal."
       }
     },
     {
       folder: "3",
       tools: [
-        "QGIS"
+        "QGIS",
+        "OpenStreetMap"
       ],
       skills: [
         "ring",
@@ -351,8 +353,8 @@ const CONTENT = {
           en: "images/portfolio/3/GOT.en.png",
           de: "images/portfolio/3/GOT.de.png",
           caption: {
-            en: "",
-            de: ""
+            en: "Filming locations by landscape type",
+            de: "Drehorte nach Landschaftstyp"
           }
         }
       ],
@@ -365,14 +367,15 @@ const CONTENT = {
         de: "Hausarbeit · Filmindustrie"
       },
       description: {
-        en: "Where was Game of Thrones filmed in Northern Ireland, and in which landscapes? Locations were mapped and grouped by natural setting. Graded 1,7.",
-        de: "Wo wurde Game of Thrones in Nordirland gedreht, und in welchen Landschaften? Drehorte wurden kartiert und nach natürlicher Umgebung gruppiert. Note 1,7."
+        en: "Where was Game of Thrones filmed in Northern Ireland, and in which landscapes? Locations from OSM and published sources were mapped in QGIS and typed by setting (coast, upland, river, castle). One sheet shows the geography behind the production.\n\nGrade: 1.7 (in Germany 1.0 is best)",
+        de: "Wo wurde Game of Thrones in Nordirland gedreht, und in welchen Landschaften? Drehorte aus OSM und veröffentlichten Quellen wurden in QGIS kartiert und nach Kulisse gegliedert (Küste, Gebirge, Fluss, Burg). Ein Blatt zeigt die Geographie hinter der Produktion.\n\nNote 1,7"
       }
     },
     {
       folder: "4",
       tools: [
-        "QGIS"
+        "QGIS",
+        "Inkscape"
       ],
       skills: [
         "ring",
@@ -421,8 +424,8 @@ const CONTENT = {
         de: "Poster · Geovisualisierung"
       },
       description: {
-        en: "A poster on the German North Sea coast, with supporting maps of Hamburg flood scenarios, cattle farming at NUTS 3, and flood protection in Lower Saxony. Graded 1,0.",
-        de: "Ein Poster zur deutschen Nordseeküste, ergänzt durch Karten zu Hamburger Hochwasserszenarien, Rinderhaltung auf NUTS-3-Ebene und Hochwasserschutz in Niedersachsen. Note 1,0."
+        en: "How does sea-level rise threaten farming on the German North Sea coast? A poster combines global sea-level context with three QGIS maps: Hamburg flood scenarios, cattle density at NUTS 3, and dike and dune protection in Lower Saxony. Livestock is concentrated on low marsh behind the sea defences.\n\nGraded 1.0 (best possible grade)",
+        de: "Wie gefährdet der Meeresspiegelanstieg die Landwirtschaft an der deutschen Nordseeküste? Ein Poster verbindet den globalen Meeresspiegel mit drei QGIS-Karten: Hamburger Überflutungsszenarien, Rinderdichte auf NUTS-3-Ebene und Deich- und Dünenschutz in Niedersachsen. Die Viehhaltung liegt vor allem auf niedrigem Marschland hinter den Küstenschutzanlagen.\n\nNote 1,0"
       }
     },
     {
@@ -431,23 +434,24 @@ const CONTENT = {
         "QGIS"
       ],
       skills: [
-        "ring"
+        "ring",
+        "contour"
       ],
       images: [
         {
           en: "images/portfolio/5/DEV.en.png",
           de: "images/portfolio/5/DEV.de.png",
           caption: {
-            en: "",
-            de: ""
+            en: "Deviation from mean elevation, Erft region",
+            de: "Abweichung vom mittleren Höhenwert, Erft-Region"
           }
         },
         {
           en: "images/portfolio/5/FloodRisk.en.png",
           de: "images/portfolio/5/FloodRisk.de.png",
           caption: {
-            en: "",
-            de: ""
+            en: "Land use and 5 m inundation along the Erft",
+            de: "Flächennutzung und 5-m-Überflutung an der Erft"
           }
         }
       ],
@@ -456,12 +460,12 @@ const CONTENT = {
         de: "Überflutungsrisikoanalyse der Erft-Region"
       },
       tag: {
-        en: "Geovisualisation · QGIS",
+        en: "Geovisualisation · Flood & Terrain",
         de: "Geovisualisierung · QGIS"
       },
       description: {
-        en: "What is the flood risk along the Erft? Terrain and exposure were mapped in QGIS. The sheets show a DEV analysis and a flood-risk map of the region.",
-        de: "Wie hoch ist das Hochwasserrisiko an der Erft? Gelände und Exposition wurden in QGIS kartiert. Die Blätter zeigen eine DEV-Analyse und eine Risikokarte der Region."
+        en: "Where would a 5 m water-level rise hit the Erft? A DEM deviation (DEV) map separates valleys from ridges; land use was then overlaid with a 5 m inundation. The flood belt follows the valley floor through farmland and settlement.",
+        de: "Wo träfe ein Wasseranstieg von 5 m die Erft? Eine DEV-Karte (Abweichung vom mittleren Höhenwert) trennt Täler von Rücken; danach wurde die Flächennutzung mit einer 5-m-Überflutung überlagert. Der Überflutungsstreifen folgt der Talsohle durch Landwirtschaft und Siedlung."
       }
     }
   ],
