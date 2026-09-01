@@ -300,17 +300,17 @@ const CONTENT = {
         de: "RWTH Aachen"
       },
       description: {
-        en: "Sedimentological features of palaeotsunamis in Greece.",
-        de: "Sedimentologische Merkmale von Paläotsunamis in Griechenland."
+        en: "Sedimentological features of unknown Tsunami events in Greece.",
+        de: "Sedimentologische Merkmale von unbekannte Tsunamiereignisse in Griechenland."
       }
     },
     {
       folder: "2",
       tools: [
         "QGIS",
-        "Sentinel-2",
         "Excel",
-        "Landsat"
+        "Landsat",
+        "Sentinel-2"
       ],
       skills: [
         "ring",
@@ -321,16 +321,16 @@ const CONTENT = {
           en: "images/portfolio/2/NDVI.en.png",
           de: "images/portfolio/2/NDVI.de.png",
           caption: {
-            en: "NDVI of Amsterdam parks from Sentinel-2",
-            de: "NDVI der Amsterdamer Parks aus Sentinel-2"
+            en: "NDVI of Amsterdam from Sentinel-2 data ",
+            de: "NDVI von Amsterdam aus Sentinel-2 Daten "
           }
         },
         {
           en: "images/portfolio/2/LST.en.png",
           de: "images/portfolio/2/LST.de.png",
           caption: {
-            en: "Land surface temperature, Amsterdam",
-            de: "Landoberflächentemperatur, Amsterdam"
+            en: "Land surface temperature of Amsterdam",
+            de: "Landoberflächentemperatur von Amsterdam"
           }
         }
       ],
@@ -343,15 +343,15 @@ const CONTENT = {
         de: "Forschungsarbeit · NDVI & LST"
       },
       description: {
-        en: "How much do Amsterdam’s parks cool the city? Open Sentinel-2 NDVI was mapped against Landsat land surface temperature in QGIS, then compared in Excel. Cooler surfaces line up with park vegetation, a nature-based cooling signal.",
-        de: "Wie stark kühlen Amsterdams Parks die Stadt? Offene Sentinel-2-NDVI wurde in QGIS der Landsat-Landoberflächentemperatur gegenübergestellt und in Excel verglichen. Kühlerer Untergrund fällt mit Parkvegetation zusammen, ein naturbasiertes Kühlsignal."
+        en: "Amsterdam exhibits considerable urban heating is a serious concern for the near future under changing climate conditions. An NDVI map was calculated and later compared against Landsat land surface temperature in QGIS to analyse if there is any significant cooling and whether this is attributable to nature-based solutions. Cooler surfaces line up with park vegetation, a nature-based cooling signal.",
+        de: "Amsterdam weist eine beträchtliche städtische Erwärmung auf, die angesichts der sich ändernden Klimabedingungen in naher Zukunft ein ernstes Problem darstellen wird. Eine NDVI-Karte wurde berechnet und später mit der Landsat-Landoberflächentemperatur in QGIS verglichen, um zu analysieren, ob es zu einer signifikanten Abkühlung kommt und ob diese auf naturbasierte Lösungen zurückzuführen ist. Kühlere Flächen reihen sich an die Parkvegetation, ein naturbedingtes Abkühlungssignal."
       }
     },
     {
       folder: "3",
       tools: [
         "QGIS",
-        "OpenStreetMap"
+        "Inkscape"
       ],
       skills: [
         "ring",
@@ -362,8 +362,8 @@ const CONTENT = {
           en: "images/portfolio/3/GOT.en.png",
           de: "images/portfolio/3/GOT.de.png",
           caption: {
-            en: "Filming locations by landscape type",
-            de: "Drehorte nach Landschaftstyp"
+            en: "Filming locations in North Ireland",
+            de: "Drehorte in Nordirland"
           }
         }
       ],
@@ -376,8 +376,8 @@ const CONTENT = {
         de: "Hausarbeit · Filmindustrie"
       },
       description: {
-        en: "Where was Game of Thrones filmed in Northern Ireland, and in which landscapes? Locations from OSM and published sources were mapped in QGIS and typed by setting (coast, upland, river, castle). One sheet shows the geography behind the production.\n\nGrade: 1.7 (in Germany 1.0 is best)",
-        de: "Wo wurde Game of Thrones in Nordirland gedreht, und in welchen Landschaften? Drehorte aus OSM und veröffentlichten Quellen wurden in QGIS kartiert und nach Kulisse gegliedert (Küste, Gebirge, Fluss, Burg). Ein Blatt zeigt die Geographie hinter der Produktion.\n\nNote 1,7"
+        en: "Where was Game of Thrones filmed in Northern Ireland, and in which landscapes? Locations were extracted from various datasets and published sources were mapped in QGIS and categorized by setting (coast, upland, river, castle). \n\n(German) Grade: 1.7 ",
+        de: "Wo wurde Game of Thrones in Nordirland gedreht, und in welchen Landschaften? Drehorte wurden aus unterschiedliche Datensets und veröffentlichten Quellen entnommen und in QGIS kartiert und nach natürliche Landschaft gegliedert (Küste, Gebirge, Fluss, Burg). \n\nNote 1,7"
       }
     },
     {
@@ -433,14 +433,15 @@ const CONTENT = {
         de: "Poster · Geovisualisierung"
       },
       description: {
-        en: "How does sea-level rise threaten farming on the German North Sea coast? A poster combines global sea-level context with three QGIS maps: Hamburg flood scenarios, cattle density at NUTS 3, and dike and dune protection in Lower Saxony. Livestock is concentrated on low marsh behind the sea defences.\n\nGraded 1.0 (best possible grade)",
-        de: "Wie gefährdet der Meeresspiegelanstieg die Landwirtschaft an der deutschen Nordseeküste? Ein Poster verbindet den globalen Meeresspiegel mit drei QGIS-Karten: Hamburger Überflutungsszenarien, Rinderdichte auf NUTS-3-Ebene und Deich- und Dünenschutz in Niedersachsen. Die Viehhaltung liegt vor allem auf niedrigem Marschland hinter den Küstenschutzanlagen.\n\nNote 1,0"
+        en: "This poster combines the rising sea-level and the effect it has across multiple disciplines with three QGIS maps: Hamburg flood scenarios, cattle density at NUTS 3, and dike and dune protection in Lower Saxony. Livestock is concentrated on low marsh behind the sea defences.\n\n(German) Grade: 1.0",
+        de: "Dieses Poster verbindet den steigenden Meeresspiegel und die damit verbundenen Auswirkungen mit drei QGIS-Karten: Hamburger Überflutungsszenarien, Rinderdichte auf NUTS-3-Ebene und Hochwasserschutzmaßnahmen in Niedersachsen. Die Rinderhaltung liegt vor allem auf niedrigem Marschland hinter den Küstenschutzanlagen.\n\nNote: 1,0"
       }
     },
     {
       folder: "5",
       tools: [
-        "QGIS"
+        "QGIS",
+        "Inkscape"
       ],
       skills: [
         "ring",
