@@ -105,14 +105,6 @@ const UI = {
     en: "Languages",
     de: "Sprachen"
   },
-  scale: {
-    en: "Scale",
-    de: "Maßstab"
-  },
-  scaleCaption: {
-    en: "Entry-level → Field-ready",
-    de: "Einstieg → praxistauglich"
-  },
   linkedin: {
     en: "LinkedIn",
     de: "LinkedIn"
