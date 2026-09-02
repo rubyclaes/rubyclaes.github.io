@@ -151,7 +151,6 @@
     if ($("name")) $("name").textContent = name;
     if ($("tagline")) $("tagline").textContent = tagline;
     if ($("citizenship")) $("citizenship").textContent = t(CONTENT.citizenship, lang);
-    if ($("availability")) $("availability").textContent = t(CONTENT.availability, lang);
 
     const c = SHARED.contact || {};
     const contactEl = $("contact");

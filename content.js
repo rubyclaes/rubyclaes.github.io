@@ -113,10 +113,6 @@ const UI = {
     en: "Entry-level → Field-ready",
     de: "Einstieg → praxistauglich"
   },
-  availabilityLabel: {
-    en: "Availability",
-    de: "Verfügbarkeit"
-  },
   linkedin: {
     en: "LinkedIn",
     de: "LinkedIn"
@@ -618,9 +614,6 @@ const CONTENT = {
   languages: {
     en: "English (native)  ·  German (fluent, C1)  ·  Basic: Italian, French, Spanish, Flemish, Korean",
     de: "Englisch (Muttersprache)  ·  Deutsch (fließend, C1)  ·  Grundkenntnisse: Italienisch, Französisch, Spanisch, Flämisch, Koreanisch"
-  },
-  availability: {
-    en: "",
-    de: ""
+
   }
 };
