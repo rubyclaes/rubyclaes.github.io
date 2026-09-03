@@ -153,6 +153,7 @@ GitHub Desktop includes Git for itself. VS Code sometimes still wants Git on Win
 | Clone or push asks you to log in | Sign in with GitHub (Allow the dialog, or the VS Code Accounts icon, or GitHub Desktop). |
 | **Push** is rejected / “pull first” | **⋯ → Pull**, then **Sync Changes** again. |
 | The studio says it is “not the local studio” | Close that tab. Start `start-editor.bat` or `start-editor.sh` and use the window it opens. |
+| **Could not save: Failed to fetch** | The studio window was closed or stopped. Start `start-editor.bat` again, keep that window open, and Save in the new browser tab it opens (`http://127.0.0.1:…`). Do not use a leftover tab from last time. |
 | Double-clicking `start-editor.bat` does nothing | In VS Code: **Terminal → Run Task… → Start content studio**. Or install [Python](https://www.python.org/downloads/) (tick **Add python.exe to PATH**) and try the `.bat` again. |
 | Photo missing on the site | In the studio, open that project and click **Scan folder**, or **Add photos**. Confirm the file is in that project’s folder (`images/portfolio/4/` stays `4` even if the card moved). |
 | Live site looks old | Wait a minute, then **Ctrl+F5**. Confirm you clicked **Sync Changes**, not only **Commit**. |
@@ -162,7 +163,7 @@ GitHub Desktop includes Git for itself. VS Code sometimes still wants Git on Win
 
 ## Language
 
-The globe control switches **English** / **Deutsch** on the whole site, including the CV PDF.
+The globe control switches **English** / **Deutsch** on the whole site, including the CV PDF and Word file.
 
 - English is Australian English; German is written for a DACH reader (not the Australia move story).
 - The visitor’s language and light/dark choice are remembered in the browser.
@@ -172,7 +173,7 @@ The globe control switches **English** / **Deutsch** on the whole site, includin
 
 ## CV PDF
 
-Open `cv.html`, pick English or Deutsch, then **Download**. That uses the browser print dialog to save a PDF of the language on screen.
+Open `cv.html`, pick English or Deutsch, then **PDF** (browser print dialog) or **Word** (`.docx` of the language on screen).
 
 ---
 

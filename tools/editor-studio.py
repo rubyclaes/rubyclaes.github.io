@@ -128,8 +128,20 @@ def bump_content_cache() -> str:
         original = path.read_bytes().decode("utf-8")
         updated = STAMP_RE.sub("content.js?v=" + stamp, original)
         if updated != original:
-            path.write_bytes(updated.encode("utf-8"))
+            write_bytes_retry(path, updated.encode("utf-8"))
     return stamp
+
+
+def write_bytes_retry(path: Path, data: bytes, attempts: int = 6) -> None:
+    last = None
+    for i in range(attempts):
+        try:
+            path.write_bytes(data)
+            return
+        except OSError as error:
+            last = error
+            time.sleep(0.15 * (i + 1))
+    raise last
 
 
 class StudioHandler(SimpleHTTPRequestHandler):
@@ -139,6 +151,12 @@ class StudioHandler(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
         sys.stdout.write("[%s] %s\n" % (self.log_date_time_string(), format % args))
         sys.stdout.flush()
+
+    def handle_one_request(self):
+        try:
+            super().handle_one_request()
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError, TimeoutError):
+            pass
 
     def end_headers(self):
         self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
@@ -194,20 +212,30 @@ class StudioHandler(SimpleHTTPRequestHandler):
         self.send_json(200, {"ok": True})
 
     def save_content(self):
-        length = int(self.headers.get("Content-Length") or "0")
-        if length <= 0 or length > MAX_BODY:
-            self.send_json(400, {"ok": False, "error": "The file was empty or too large to save."})
-            return
-        text = self.rfile.read(length).decode("utf-8")
-        if "const SITE" not in text or "const CONTENT" not in text:
-            self.send_json(400, {"ok": False, "error": "That did not look like content.js."})
-            return
-        if not text.endswith("\n"):
-            text += "\n"
-        (ROOT / "content.js").write_bytes(text.encode("utf-8"))
-        stamp = bump_content_cache()
-        print("Saved content.js (cache %s)" % stamp, flush=True)
-        self.send_json(200, {"ok": True, "version": stamp})
+        try:
+            length = int(self.headers.get("Content-Length") or "0")
+            if length <= 0 or length > MAX_BODY:
+                self.send_json(400, {"ok": False, "error": "The file was empty or too large to save."})
+                return
+            text = self.rfile.read(length).decode("utf-8")
+            if "const SITE" not in text or "const CONTENT" not in text:
+                self.send_json(400, {"ok": False, "error": "That did not look like content.js."})
+                return
+            if not text.endswith("\n"):
+                text += "\n"
+            write_bytes_retry(ROOT / "content.js", text.encode("utf-8"))
+            stamp = bump_content_cache()
+            print("Saved content.js (cache %s)" % stamp, flush=True)
+            self.send_json(200, {"ok": True, "version": stamp})
+        except Exception as error:
+            print("Save failed: %s" % error, flush=True)
+            try:
+                self.send_json(500, {
+                    "ok": False,
+                    "error": "Could not write content.js. Keep the studio window open and try Save again."
+                })
+            except Exception:
+                pass
 
     def save_image(self, parsed):
         number = parse_project(query_value(parsed, "project"))

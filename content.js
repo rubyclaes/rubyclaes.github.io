@@ -86,12 +86,20 @@ const UI = {
     de: "Zurück zum Portfolio"
   },
   download: {
-    en: "Download",
-    de: "Herunterladen"
+    en: "PDF",
+    de: "PDF"
   },
   downloadAria: {
-    en: "Download CV PDF",
+    en: "Download CV as PDF",
     de: "Lebenslauf als PDF herunterladen"
+  },
+  downloadWord: {
+    en: "Word",
+    de: "Word"
+  },
+  downloadWordAria: {
+    en: "Download CV as Word",
+    de: "Lebenslauf als Word-Datei herunterladen"
   },
   education: {
     en: "Education",

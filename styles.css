@@ -349,6 +349,13 @@ h1#name {
   outline-offset: 2px;
 }
 
+.cv-download-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+  align-items: center;
+}
 .cv-download-btn {
   font-family: var(--mono);
   font-size: 12px;
@@ -358,7 +365,7 @@ h1#name {
   background: none;
   border: none;
   padding: 0;
-  margin-left: auto;
+  margin-left: 0;
   cursor: pointer;
 }
 .cv-download-btn:hover { color: var(--accent); }
@@ -404,6 +411,20 @@ h1#name {
 .cv-page .neatline-nav .cv-download-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.cv-page .neatline-nav .cv-download-btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: none;
+}
+
+.cv-page .neatline-nav .cv-download-btn-secondary:hover {
+  color: var(--accent);
+  background: transparent;
+  border-color: var(--accent);
+  box-shadow: none;
 }
 
 .cv-page .neatline-nav .cv-back-btn {
@@ -796,7 +817,7 @@ p#profile-text { max-width: 62ch; }
   .titleblock { flex-direction: column; align-items: flex-start; }
   .title-contact { text-align: left; }
   .portfolio-page .neatline-nav .nav-external { margin-left: 0; }
-  .cv-page .neatline-nav .cv-download-btn { margin-left: 0; }
+  .cv-page .neatline-nav .cv-download-actions { margin-left: 0; }
   .neatline-nav .nav-external .cv-label-desktop { display: none; }
   .neatline-nav .nav-external .cv-label-mobile { display: inline; }
   .legend-row { grid-template-columns: 32px 1fr; }

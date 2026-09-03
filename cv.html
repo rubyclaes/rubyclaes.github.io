@@ -49,7 +49,7 @@
 <meta name="msapplication-config" content="icons/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
 
-<link rel="stylesheet" href="styles.css?v=20260831f">
+<link rel="stylesheet" href="styles.css?v=20260903b">
 
 <!-- Umami Web Analytics -->
 <script defer src="https://analytics.kwokah.com/script.js" data-website-id="da9b9f51-0f4f-4b73-8ba0-0e90532a5e77"></script>
@@ -105,14 +105,19 @@
 
   <nav class="neatline-nav">
     <a href="index.html" class="cv-back-btn" data-i18n="backToPortfolio">Back to Portfolio</a>
-    <button type="button" id="download-cv-btn" class="cv-download-btn" data-i18n-aria="downloadAria">
-      <span class="cv-download-icon" aria-hidden="true">
-        <svg viewBox="0 0 16 16" role="img" focusable="false">
-          <path d="M3.5 1h6l3 3v10.5a.5.5 0 0 1-.5.5h-8.5a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5zm5.5 1.2v2.8h2.8zM6 9h1.2l1 1.5 1-1.5h1.2l-1.6 2.2L10.5 14H9.3L8.2 12.3 7.1 14H5.9l1.7-2.8z" />
-        </svg>
-      </span>
-      <span data-i18n="download">Download</span>
-    </button>
+    <div class="cv-download-actions">
+      <button type="button" id="download-cv-btn" class="cv-download-btn" data-i18n-aria="downloadAria">
+        <span class="cv-download-icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" role="img" focusable="false">
+            <path d="M3.5 1h6l3 3v10.5a.5.5 0 0 1-.5.5h-8.5a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5zm5.5 1.2v2.8h2.8zM6 9h1.2l1 1.5 1-1.5h1.2l-1.6 2.2L10.5 14H9.3L8.2 12.3 7.1 14H5.9l1.7-2.8z" />
+          </svg>
+        </span>
+        <span data-i18n="download">PDF</span>
+      </button>
+      <button type="button" id="download-cv-word-btn" class="cv-download-btn cv-download-btn-secondary" data-i18n-aria="downloadWordAria">
+        <span data-i18n="downloadWord">Word</span>
+      </button>
+    </div>
   </nav>
 
   <section class="block" id="profile-cv">
@@ -150,10 +155,10 @@
   </footer>
 </div>
 
-<script src="content.js?v=20260903-1444"></script>
+<script src="content.js?v=20260903-1456"></script>
 <script src="symbols.js?v=20260814g"></script>
 <script src="theme.js?v=20260814g"></script>
-<script src="script.js?v=20260831f"></script>
+<script src="script.js?v=20260903c"></script>
 <script>
   (function () {
     var columnLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];

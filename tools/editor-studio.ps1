@@ -183,7 +183,17 @@ try {
                     } else {
                         if (-not $text.EndsWith("`n")) { $text += "`n" }
                         $utf8NoBom = New-Object System.Text.UTF8Encoding $false
-                        [System.IO.File]::WriteAllText((Join-Path $Root "content.js"), $text, $utf8NoBom)
+                        $contentPath = Join-Path $Root "content.js"
+                        $written = $false
+                        for ($i = 0; $i -lt 6 -and -not $written; $i++) {
+                            try {
+                                [System.IO.File]::WriteAllText($contentPath, $text, $utf8NoBom)
+                                $written = $true
+                            } catch {
+                                Start-Sleep -Milliseconds (150 * ($i + 1))
+                                if ($i -eq 5) { throw }
+                            }
+                        }
                         $stamp = Update-ContentCache
                         Write-Host "Saved content.js (cache $stamp)"
                         Send-Json $response 200 @{ ok = $true; version = $stamp }
@@ -246,8 +256,9 @@ try {
                 }
             }
         } catch {
+            Write-Host "Studio error: $_"
             try {
-                $response.StatusCode = 500
+                Send-Json $response 500 @{ ok = $false; error = "Could not write content.js. Keep the studio window open and try Save again." }
             } catch { }
         } finally {
             try { $response.OutputStream.Close() } catch { }

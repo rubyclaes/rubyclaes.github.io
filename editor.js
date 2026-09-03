@@ -934,7 +934,17 @@
       setDirty(false);
       status("Saved content.js in this project. Click Preview, then commit and push when you are happy.", "ok");
     } catch (error) {
-      status("Could not save: " + (error && error.message ? error.message : "unknown error"), "error");
+      const raw = error && error.message ? String(error.message) : "unknown error";
+      const offline =
+        raw === "Failed to fetch" ||
+        raw === "Load failed" ||
+        raw.indexOf("NetworkError") !== -1;
+      status(
+        offline
+          ? "Could not save: the content studio is not running. Keep the start-editor window open, then Save in the tab it opened (http://127.0.0.1:…)."
+          : "Could not save: " + raw,
+        "error"
+      );
     }
   }
 
