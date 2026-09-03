@@ -494,10 +494,6 @@ const CONTENT = {
         {
           en: "Currently working on my bachelor thesis and completing a mandatory industry internship from October 2026.",
           de: "Arbeite derzeit an meiner Bachelorarbeit und absolviere ab Oktober 2026 mein Pflichtpraktikum. "
-        },
-        {
-          en: "",
-          de: ""
         }
       ]
     },
