@@ -189,12 +189,12 @@ const CONTENT = {
     de: "Essen, Deutschland"
   },
   shortProfile: {
-    en: "I am currently completing my Applied Geography degree in Germany and will be available for entry-level opportunities from late 2026 or early 2027, following the completion of my mandatory internship and Bachelor’s thesis. I am open to opportunities across Europe and Australia, with particular interest in Brisbane and roles within commuting distance of the NSW Central Coast.",
-    de: "Derzeit absolviere ich mein Studium der Angewandten Geographie in Deutschland und stehe nach Abschluss meines Pflichtpraktikums und meiner Bachelorarbeit ab Ende 2026 bzw. Anfang 2027 für den Berufseinstieg zur Verfügung. Ich bin flexibel hinsichtlich des Standorts und offen für Positionen in Europa und Australien, mit besonderem Interesse an Deutschland und dem deutschsprachigen Raum."
+    en: "I am currently completing my Applied Geography degree in Germany and will be available for entry-level opportunities from early 2027, following the completion of my mandatory internship and Bachelor’s thesis. I am open to opportunities across Europe and Australia, with particular interest in Brisbane and roles within commuting distance of the NSW Central Coast.",
+    de: "Derzeit absolviere ich mein Studium der Angewandten Geographie in Deutschland und stehe nach Abschluss meines Pflichtpraktikums und meiner Bachelorarbeit ab Anfang 2027 für den Berufseinstieg zur Verfügung. Ich bin flexibel hinsichtlich des Standorts und offen für Positionen in Europa und Australien, mit besonderem Interesse an Deutschland und dem deutschsprachigen Raum."
   },
   fullProfile: {
-    en: "Final-year B.Sc. Applied Geography student at RWTH Aachen University, expected to graduate in late 2026, with a broad academic background spanning GIS, spatial analysis, remote sensing, geoscience, geomorphology, geology, soil science and climatology. I have a strong particular interest in GIS and cartography, especially in transforming spatial data into clear, informative and visually compelling outputs.\n\nI am seeking an entry-level or graduate position in Europe or Australia where I can apply my geographical and analytical skills while continuing to develop professionally. GIS and spatial work are a particular area of interest, but I am also open to roles that draw on my broader background in geoscience, environmental applications and field-based geography. Through university projects, fieldwork and practical coursework, I have developed experience working with geospatial data, GIS software, remote sensing and geographical field methods.\n\nAs an Australian–Belgian dual citizen, I have full working rights in Australia and am open to relocating for the right opportunity. I am particularly interested in roles that allow me to combine technical GIS skills with broader geographical and environmental knowledge.\n",
-    de: "Geographiestudentin im letzten Bachelorjahr (B.Sc. Angewandte Geographie, RWTH Aachen University) mit voraussichtlichem Studienabschluss Ende 2026 und einem breit gefächerten fachlichen Hintergrund in GIS, Geodatenanalyse, Fernerkundung, Geowissenschaften, Geomorphologie, Geologie, Bodenkunde und Klimatologie. Mein besonderes Interesse gilt GIS und Kartografie, insbesondere der Aufbereitung räumlicher Daten zu aussagekräftigen, übersichtlichen und visuell ansprechenden Karten und Analysen.\n\nFür meinen Berufseinstieg suche ich eine Einstiegs- oder Graduate-Position in Europa, in der ich meine geographischen und analytischen Kenntnisse praktisch anwenden und weiterentwickeln kann. Dabei liegt mein Schwerpunkt auf GIS und räumlicher Datenanalyse, gleichzeitig bin ich offen für Tätigkeiten, die meine weiteren fachlichen Kenntnisse aus den Geowissenschaften, der Umweltplanung und der angewandten Geographie einbeziehen.\n\nDurch Studienprojekte, Geländepraktika und Exkursionen konnte ich praktische Erfahrungen im Umgang mit Geodaten, GIS-Software, Fernerkundung sowie verschiedenen geographischen und geowissenschaftlichen Feldmethoden sammeln. Ich arbeite mich schnell in neue Software und Methoden ein und möchte meine vielseitigen Kenntnisse gerne in einem praxisorientierten Arbeitsumfeld einsetzen."
+    en: "Final-year B.Sc. Applied Geography student at RWTH Aachen University, expected to graduate in late 2026, with a broad academic background spanning GIS, spatial analysis, remote sensing, geoscience, geomorphology, soil science and climatology. I have a strong particular interest in GIS and cartography, especially in transforming spatial data into clear, informative and visually compelling outputs.\n\nI am seeking an entry-level or graduate position in Europe or Australia where I can apply my geographical and analytical skills while continuing to develop professionally. GIS and spatial work are my particular area of interest, but I am also open to roles that draw on my broader background in geoscience, environmental applications and field-based geography. Through university projects, fieldwork and practical coursework, I have developed experience working with geospatial data, GIS software, remote sensing and geographical field methods.\n\nAs an Australian–Belgian dual citizen, I have full working rights in Australia and am open to relocating for the right opportunity. I am particularly interested in roles that allow me to combine technical GIS skills with broader geographical and environmental knowledge.\n",
+    de: "Geographiestudentin im letzten Bachelorjahr (B.Sc. Angewandte Geographie, RWTH Aachen University) mit voraussichtlichem Studienabschluss Ende 2026 und einem breit gefächerten fachlichen Hintergrund in GIS, Geodatenanalyse, Fernerkundung, Geowissenschaften, Geomorphologie, Bodenkunde und Klimatologie. Mein besonderes Interesse gilt GIS und Kartografie, insbesondere der Aufbereitung räumlicher Daten zu aussagekräftigen, übersichtlichen und visuell ansprechenden Karten und Analysen.\n\nFür meinen Berufseinstieg suche ich eine Einstiegs- oder Graduate-Position in Europa, in der ich meine geographischen und analytischen Kenntnisse praktisch anwenden und weiterentwickeln kann. Dabei liegt mein Schwerpunkt auf GIS und räumlicher Datenanalyse, gleichzeitig bin ich offen für Tätigkeiten, die meine weiteren fachlichen Kenntnisse aus den Geowissenschaften, der Umweltplanung und der angewandten Geographie einbeziehen.\n\nDurch Studienprojekte, Geländepraktika und Exkursionen konnte ich praktische Erfahrungen im Umgang mit Geodaten, GIS-Software, Fernerkundung sowie verschiedenen geographischen und geowissenschaftlichen Feldmethoden sammeln. Ich arbeite mich schnell in neue Software und Methoden ein und möchte meine vielseitigen Kenntnisse gerne in einem praxisorientierten Arbeitsumfeld einsetzen."
   },
   skills: [
     {
@@ -215,8 +215,8 @@ const CONTENT = {
         de: "Programmierung & Daten"
       },
       detail: {
-        en: "Python and R (basic)",
-        de: "Python und R (Grundkenntnisse)"
+        en: "Python, SPSS and R (basic)",
+        de: "Python, SPSS und R (Grundkenntnisse)"
       }
     },
     {
@@ -259,8 +259,8 @@ const CONTENT = {
         de: "Laborerfahrung "
       },
       detail: {
-        en: "Sediment sample analysis ",
-        de: "Analyse von Sedimentproben"
+        en: "Sediment sample analysis (basic)",
+        de: "Analyse von Sedimentproben (Grundkenntnisse)"
       }
     }
   ],
@@ -339,7 +339,8 @@ const CONTENT = {
       folder: "3",
       tools: [
         "QGIS",
-        "Inkscape"
+        "Inkscape",
+        "Excel"
       ],
       skills: [
         "ring",
@@ -458,12 +459,12 @@ const CONTENT = {
         de: "Überflutungsrisikoanalyse der Erft-Region"
       },
       tag: {
-        en: "Geovisualisation · Flood & Terrain",
+        en: "Geovisualisation · QGIS",
         de: "Geovisualisierung · QGIS"
       },
       description: {
-        en: "Where would a 5 m water-level rise hit the Erft? A DEM deviation (DEV) map separates valleys from ridges; land use was then overlaid with a 5 m inundation. The flood belt follows the valley floor through farmland and settlement.",
-        de: "Wo träfe ein Wasseranstieg von 5 m die Erft? Eine DEV-Karte (Abweichung vom mittleren Höhenwert) trennt Täler von Rücken; danach wurde die Flächennutzung mit einer 5-m-Überflutung überlagert. Der Überflutungsstreifen folgt der Talsohle durch Landwirtschaft und Siedlung."
+        en: "Where would a 5 m water-level rise hit the Erft? A DEM deviation (DEV) map separates valleys from ridges. The different land use classifications were then overlaid with a 5 m inundation to project a flooding scenario through the valley.",
+        de: "Wo träfe ein Wasseranstieg von 5 m die Erft? Eine DEV-Karte (Abweichung vom mittleren Höhenwert) trennt Täler von Rücken. Anschließend wurde wurde die Flächennutzung mit einer 5-m-Überflutung überlagert. Der Überflutungsstreifen folgt der Talsohle durch Landwirtschaft und Siedlung."
       }
     }
   ],
@@ -487,12 +488,12 @@ const CONTENT = {
           de: "Voraussichtlicher Abschluss: Ende 2026"
         },
         {
-          en: "Focus areas: GIS, geospatial analysis, human & physical geography, urban geography and spatial planning; minor in Geosciences with an elective focus on Geohazards",
-          de: "Schwerpunkte: GIS, Geodatenanalyse, Humangeographie und Physische Geographie, Stadtgeographie und Raumplanung; Nebenfach Geowissenschaften und Wahlpflichtfach in Georisiken"
+          en: "Focus areas: GIS, geospatial analysis, human & physical geography, climatology and urban geography; minor in Geosciences with an elective focus on Geohazards",
+          de: "Schwerpunkte: GIS, Geodatenanalyse, Humangeographie und Physische Geographie, Stadtgeographie und Klimatologie; Nebenfach Geowissenschaften und Wahlpflichtfach in Georisiken"
         },
         {
-          en: "Currently completing final exams, ahead of thesis and a mandatory industry internship from October 2026",
-          de: "Absolviere derzeit Abschlussprüfungen und Bachelorarbeit schreiben mit Pflichtpraktikum ab Oktober 2026"
+          en: "Currently working on my bachelor thesis and completing a mandatory industry internship from October 2026.",
+          de: "Arbeite derzeit an meiner Bachelorarbeit und absolviere ab Oktober 2026 mein Pflichtpraktikum. "
         },
         {
           en: "Bachelor thesis: Sedimentological features of unknown tsunami in Greece",
@@ -532,8 +533,8 @@ const CONTENT = {
         de: "Universitätsbibliothek der RWTH Aachen"
       },
       dates: {
-        en: "Dec 2025 – Present",
-        de: "Dez. 2025 – heute"
+        en: "Dec 2025 – Oct 2026 ",
+        de: "Dez. 2025 – Okt. 2026"
       },
       bullets: [
         {
@@ -606,6 +607,5 @@ const CONTENT = {
   languages: {
     en: "English (native)  ·  German (fluent, C1)  ·  Basic: Italian, French, Spanish, Flemish, Korean",
     de: "Englisch (Muttersprache)  ·  Deutsch (fließend, C1)  ·  Grundkenntnisse: Italienisch, Französisch, Spanisch, Flämisch, Koreanisch"
-
   }
 };
