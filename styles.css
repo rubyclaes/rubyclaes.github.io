@@ -917,6 +917,7 @@ p#profile-text { max-width: 62ch; }
   .title-contact {
     font-size: 8.7pt;
     line-height: 1.45;
+    white-space: normal;
   }
 
   .tagline {

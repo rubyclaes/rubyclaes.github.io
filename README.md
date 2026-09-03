@@ -175,6 +175,8 @@ The globe control switches **English** / **Deutsch** on the whole site, includin
 
 Open `cv.html`, pick English or Deutsch, then **PDF** (browser print dialog) or **Word** (`.docx` of the language on screen).
 
+Word follows the light CV sheet as closely as Word allows (Georgia / Calibri / Consolas, map-sheet colours, title block, clickable email and LinkedIn). To restyle it, edit `word-theme.js` and download Word again.
+
 ---
 
 ## Files (you can skip this)
@@ -188,6 +190,8 @@ Open `cv.html`, pick English or Deutsch, then **PDF** (browser print dialog) or 
 |- editor.html         Content studio (local only)
 |- content.js          All editable text — this is what Save updates
 |- symbols.js          Skill legend icons
+|- word-theme.js       Colours and fonts for the Word CV download
+|- word-export.js      Builds the Word file from word-theme.js
 |- script.js / theme.js / styles.css
 |- tools/              Helper that lets Save write content.js
 |- images/             Site images

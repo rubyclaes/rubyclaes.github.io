@@ -156,32 +156,52 @@
     const contactEl = $("contact");
     if (contactEl) {
       contactEl.innerHTML = "";
-      const lines = [t(CONTENT.location, lang), c.phone].filter(Boolean);
-      lines.forEach((line) => {
+
+      function displayUrl(href) {
+        return String(href || "").replace(/^https?:\/\//i, "").replace(/\/$/, "");
+      }
+
+      function absHref(href) {
+        const value = String(href || "").trim();
+        if (!value) return "";
+        if (/^[a-z][a-z0-9+.-]*:/i.test(value)) return value;
+        return "https://" + value;
+      }
+
+      function addContactText(text) {
         const p = document.createElement("p");
         p.style.margin = "0";
-        p.textContent = line;
+        p.textContent = text;
         contactEl.appendChild(p);
-      });
-      if (c.email) {
+      }
+
+      function addContactLink(href, label) {
         const p = document.createElement("p");
         p.style.margin = "0";
         const a = document.createElement("a");
-        a.href = c.emailLink || `mailto:${c.email}`;
-        a.textContent = c.email;
+        a.href = href;
+        a.textContent = label;
+        if (!/^mailto:/i.test(href)) {
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+        }
         p.appendChild(a);
         contactEl.appendChild(p);
       }
+
+      const location = t(CONTENT.location, lang);
+      if (location) addContactText(location);
+      if (c.phone) addContactText(c.phone);
+      if (c.email) addContactLink(c.emailLink || `mailto:${c.email}`, c.email);
       if (c.linkedin) {
-        const p = document.createElement("p");
-        p.style.margin = "0";
-        const a = document.createElement("a");
-        a.href = c.linkedin;
-        a.textContent = t(UI.linkedin, lang);
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        p.appendChild(a);
-        contactEl.appendChild(p);
+        const linkedinHref = absHref(c.linkedin);
+        addContactLink(
+          linkedinHref,
+          isCVPage ? displayUrl(c.linkedin) : t(UI.linkedin, lang)
+        );
+      }
+      if (isCVPage && c.website) {
+        addContactLink(absHref(c.website), displayUrl(c.website));
       }
     }
 
@@ -862,305 +882,17 @@
   if (downloadBtn) downloadBtn.addEventListener("click", () => window.print());
 
   const wordBtn = $("download-cv-word-btn");
-  if (wordBtn) wordBtn.addEventListener("click", () => downloadCvWord(currentLang));
-
-  function xmlEscape(value) {
-    return String(value || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-
-  function wordText(value) {
-    const text = String(value || "");
-    const space = /^\s|\s$/.test(text) ? ' xml:space="preserve"' : "";
-    return `<w:t${space}>${xmlEscape(text)}</w:t>`;
-  }
-
-  function wordParagraph(text, style) {
-    const lines = String(text == null ? "" : text).split(/\n/);
-    return lines.map((line) => {
-      const pr = style ? `<w:pPr><w:pStyle w:val="${style}"/></w:pPr>` : "";
-      if (!String(line).length) return `<w:p>${pr}</w:p>`;
-      return `<w:p>${pr}<w:r>${wordText(line)}</w:r></w:p>`;
-    }).join("");
-  }
-
-  function wordLinkRun(href, label, relId) {
-    return `<w:hyperlink r:id="${relId}" w:history="1">
-      <w:r>
-        <w:rPr>
-          <w:rStyle w:val="Hyperlink"/>
-          <w:color w:val="0563C1"/>
-          <w:u w:val="single"/>
-        </w:rPr>
-        ${wordText(label)}
-      </w:r>
-    </w:hyperlink>`;
-  }
-
-  function wordPlainRun(text) {
-    return `<w:r>${wordText(text)}</w:r>`;
-  }
-
-  function wordMixedParagraph(parts, style) {
-    const pr = style ? `<w:pPr><w:pStyle w:val="${style}"/></w:pPr>` : "";
-    return `<w:p>${pr}${parts.join("")}</w:p>`;
-  }
-
-  function crc32(bytes) {
-    const table = crc32.table || (crc32.table = (function () {
-      const out = new Uint32Array(256);
-      for (let n = 0; n < 256; n += 1) {
-        let c = n;
-        for (let k = 0; k < 8; k += 1) {
-          c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
-        }
-        out[n] = c >>> 0;
-      }
-      return out;
-    }()));
-    let crc = 0 ^ -1;
-    for (let i = 0; i < bytes.length; i += 1) {
-      crc = (crc >>> 8) ^ table[(crc ^ bytes[i]) & 0xff];
-    }
-    return (crc ^ -1) >>> 0;
-  }
-
-  function u16(n) {
-    return new Uint8Array([n & 0xff, (n >>> 8) & 0xff]);
-  }
-
-  function u32(n) {
-    return new Uint8Array([n & 0xff, (n >>> 8) & 0xff, (n >>> 16) & 0xff, (n >>> 24) & 0xff]);
-  }
-
-  function concatBytes(parts) {
-    let length = 0;
-    parts.forEach((part) => {
-      length += part.length;
-    });
-    const out = new Uint8Array(length);
-    let offset = 0;
-    parts.forEach((part) => {
-      out.set(part, offset);
-      offset += part.length;
-    });
-    return out;
-  }
-
-  function zipStore(files) {
-    const enc = new TextEncoder();
-    const locals = [];
-    const centrals = [];
-    let offset = 0;
-    files.forEach((file) => {
-      const name = enc.encode(file.name);
-      const data = typeof file.data === "string" ? enc.encode(file.data) : file.data;
-      const crc = crc32(data);
-      const local = concatBytes([
-        u32(0x04034b50), u16(20), u16(0x0800), u16(0),
-        u16(0), u16(0), u32(crc), u32(data.length), u32(data.length),
-        u16(name.length), u16(0), name, data
-      ]);
-      locals.push(local);
-      centrals.push(concatBytes([
-        u32(0x02014b50), u16(20), u16(20), u16(0x0800), u16(0),
-        u16(0), u16(0), u32(crc), u32(data.length), u32(data.length),
-        u16(name.length), u16(0), u16(0), u16(0), u16(0), u32(0),
-        u32(offset), name
-      ]));
-      offset += local.length;
-    });
-    const central = concatBytes(centrals);
-    const eocd = concatBytes([
-      u32(0x06054b50), u16(0), u16(0), u16(files.length), u16(files.length),
-      u32(central.length), u32(offset), u16(0)
-    ]);
-    return new Blob([concatBytes(locals.concat([central, eocd]))], {
-      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  if (wordBtn) {
+    wordBtn.addEventListener("click", () => {
+      if (typeof window.downloadCvWordFile !== "function") return;
+      window.downloadCvWordFile({
+        lang: currentLang,
+        t: t,
+        SHARED: SHARED,
+        CONTENT: CONTENT,
+        UI: UI
+      });
     });
   }
 
-  function buildCvDocx(lang) {
-    const name = SHARED.name || "CV";
-    const contact = SHARED.contact || {};
-    const hyperlinks = [];
-    let relCount = 1;
-
-    function addHyperlink(href, label) {
-      relCount += 1;
-      const id = "rId" + relCount;
-      hyperlinks.push({ id: id, target: String(href || "").trim() });
-      return wordLinkRun(href, label, id);
-    }
-
-    const contactParts = [];
-    function addContactSep() {
-      if (contactParts.length) contactParts.push(wordPlainRun(" · "));
-    }
-    const location = t(CONTENT.location, lang);
-    if (location) contactParts.push(wordPlainRun(location));
-    if (contact.phone) {
-      addContactSep();
-      contactParts.push(wordPlainRun(contact.phone));
-    }
-    if (contact.email) {
-      addContactSep();
-      const mail = contact.emailLink && String(contact.emailLink).trim()
-        ? contact.emailLink.trim()
-        : "mailto:" + contact.email;
-      contactParts.push(addHyperlink(mail, contact.email));
-    }
-    if (contact.linkedin) {
-      addContactSep();
-      contactParts.push(addHyperlink(contact.linkedin, contact.linkedin.replace(/^https?:\/\//, "")));
-    }
-
-    let body = "";
-    body += wordParagraph(name, "Title");
-    body += wordParagraph(t(CONTENT.tagline, lang));
-    if (contactParts.length) body += wordMixedParagraph(contactParts);
-    const citizenship = t(CONTENT.citizenship, lang);
-    if (citizenship) body += wordParagraph(citizenship);
-
-    function section(title, contentXml) {
-      body += wordParagraph(title, "Heading1");
-      body += contentXml;
-    }
-
-    section(t(UI.profile, lang), wordParagraph(t(CONTENT.fullProfile, lang) || t(CONTENT.shortProfile, lang)));
-
-    const skillsXml = (CONTENT.skills || []).map((skill) => {
-      const label = t(skill.label, lang);
-      const detail = t(skill.detail, lang);
-      return wordParagraph(detail ? `${label} — ${detail}` : label);
-    }).join("");
-    section(t(UI.skills, lang), skillsXml);
-
-    function entriesXml(entries) {
-      return (entries || []).map((entry) => {
-        const role = t(entry.role, lang);
-        const dates = t(entry.dates, lang);
-        const head = dates ? `${role}  (${dates})` : role;
-        let xml = wordParagraph(head, "Heading2");
-        const org = t(entry.org, lang);
-        if (org) xml += wordParagraph(org);
-        (entry.bullets || []).forEach((bullet) => {
-          const line = t(bullet, lang);
-          if (line) xml += wordParagraph("• " + line);
-        });
-        return xml;
-      }).join("");
-    }
-
-    section(t(UI.education, lang), entriesXml(CONTENT.education));
-    section(t(UI.experience, lang), entriesXml(CONTENT.experience));
-    const languages = t(CONTENT.languages, lang);
-    if (languages) section(t(UI.languages, lang), wordParagraph(languages));
-
-    body += `<w:sectPr>
-      <w:pgSz w:w="11906" w:h="16838"/>
-      <w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134"/>
-    </w:sectPr>`;
-
-    const documentXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
-  <w:body>${body}</w:body>
-</w:document>`;
-
-    const stylesXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
-  <w:style w:type="paragraph" w:default="1" w:styleId="Normal">
-    <w:name w:val="Normal"/>
-    <w:qFormat/>
-    <w:pPr><w:spacing w:after="120"/></w:pPr>
-    <w:rPr>
-      <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-      <w:sz w:val="22"/><w:szCs w:val="22"/>
-      <w:color w:val="22303A"/>
-    </w:rPr>
-  </w:style>
-  <w:style w:type="paragraph" w:styleId="Title">
-    <w:name w:val="Title"/>
-    <w:basedOn w:val="Normal"/>
-    <w:qFormat/>
-    <w:pPr><w:spacing w:before="0" w:after="80"/></w:pPr>
-    <w:rPr><w:b/><w:sz w:val="44"/><w:szCs w:val="44"/></w:rPr>
-  </w:style>
-  <w:style w:type="paragraph" w:styleId="Heading1">
-    <w:name w:val="heading 1"/>
-    <w:basedOn w:val="Normal"/>
-    <w:qFormat/>
-    <w:pPr>
-      <w:outlineLvl w:val="0"/>
-      <w:spacing w:before="280" w:after="80"/>
-      <w:pBdr><w:bottom w:val="single" w:sz="6" w:space="4" w:color="C1560B"/></w:pBdr>
-    </w:pPr>
-    <w:rPr><w:b/><w:sz w:val="24"/><w:color w:val="C1560B"/></w:rPr>
-  </w:style>
-  <w:style w:type="paragraph" w:styleId="Heading2">
-    <w:name w:val="heading 2"/>
-    <w:basedOn w:val="Normal"/>
-    <w:qFormat/>
-    <w:pPr>
-      <w:outlineLvl w:val="1"/>
-      <w:spacing w:before="160" w:after="40"/>
-    </w:pPr>
-    <w:rPr><w:b/><w:sz w:val="22"/></w:rPr>
-  </w:style>
-  <w:style w:type="character" w:styleId="Hyperlink">
-    <w:name w:val="Hyperlink"/>
-    <w:rPr>
-      <w:color w:val="0563C1"/>
-      <w:u w:val="single"/>
-    </w:rPr>
-  </w:style>
-</w:styles>`;
-
-    const typesXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
-  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
-  <Default Extension="xml" ContentType="application/xml"/>
-  <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
-  <Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>
-</Types>`;
-
-    const relsXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
-</Relationships>`;
-
-    const linkRels = hyperlinks.map((item) => (
-      `<Relationship Id="${item.id}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink" Target="${xmlEscape(item.target)}" TargetMode="External"/>`
-    )).join("");
-
-    const docRelsXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
-  ${linkRels}
-</Relationships>`;
-
-    return zipStore([
-      { name: "[Content_Types].xml", data: typesXml },
-      { name: "_rels/.rels", data: relsXml },
-      { name: "word/document.xml", data: documentXml },
-      { name: "word/styles.xml", data: stylesXml },
-      { name: "word/_rels/document.xml.rels", data: docRelsXml }
-    ]);
-  }
-
-  function downloadCvWord(lang) {
-    const blob = buildCvDocx(lang);
-    const slug = String(SHARED.name || "CV").replace(/[^\w]+/g, "-").replace(/^-|-$/g, "") || "CV";
-    const suffix = lang === "de" ? "Lebenslauf" : "CV";
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `${slug}-${suffix}.docx`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  }
 })();

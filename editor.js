@@ -350,7 +350,7 @@
           <h2>Shared</h2>
           ${pageTag("both")}
         </div>
-        <p class="editor-help">Name and contact details on both pages. Same in every language.</p>
+        <p class="editor-help">Name and contact details. LinkedIn and the portfolio URL are printed as web addresses on the CV PDF and Word file.</p>
         <div class="field-grid">
           <label class="field">
             <span class="field-label">Name</span>
@@ -367,6 +367,10 @@
           <label class="field">
             <span class="field-label">LinkedIn URL</span>
             <input type="url" data-path="SHARED.contact.linkedin" value="${esc(contact.linkedin || "")}">
+          </label>
+          <label class="field">
+            <span class="field-label">Portfolio URL</span>
+            <input type="url" data-path="SHARED.contact.website" value="${esc(contact.website || "")}">
           </label>
           <label class="field">
             <span class="field-label">Phone (optional)</span>
