@@ -496,8 +496,8 @@ const CONTENT = {
           de: "Arbeite derzeit an meiner Bachelorarbeit und absolviere ab Oktober 2026 mein Pflichtpraktikum. "
         },
         {
-          en: "Bachelor thesis: Sedimentological features of unknown tsunami in Greece",
-          de: "Bachelorarbeit: Sedimentologische Merkmale von unbekannte Tsunamis in Griechenland"
+          en: "",
+          de: ""
         }
       ]
     },
