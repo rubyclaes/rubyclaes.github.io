@@ -7,7 +7,7 @@
    - Keep quote marks around every piece of text.
    - Keep commas between entries.
    - Translated fields look like:  { en: "English", de: "Deutsch" }
-   - SHARED is language-independent (name, email, LinkedIn, portfolio URL).
+   - SHARED is language-independent (name, email, LinkedIn).
    - Project photos live in images/portfolio/{folder}/. Folder numbers stay put when you reorder cards.
    - Language pairs: name.en.jpg + name.de.jpg. A file with no .en/.de is used in both languages.
    - Homepage order is this projects array. Move up / Move down in the studio; do not rename folders.
@@ -36,7 +36,6 @@ const SHARED = {
     email: "ruby.claes@gmail.com",
     emailLink: "mailto:ruby.claes@gmail.com",
     linkedin: "https://www.linkedin.com/in/rubyclaes",
-    website: "https://rubyclaes.github.io",
     phone: ""
   }
 };
@@ -224,8 +223,8 @@ const CONTENT = {
         de: "Programmierung & Daten"
       },
       detail: {
-        en: "Python, SPSS and R (basic)",
-        de: "Python, SPSS und R (Grundkenntnisse)"
+        en: "Python, SPSS, VS Code, GitHub and R (basic)",
+        de: "Python, SPSS, VS Code, GitHub und R (Grundkenntnisse)"
       }
     },
     {
