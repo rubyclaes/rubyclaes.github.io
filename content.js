@@ -282,8 +282,8 @@ const CONTENT = {
           en: "images/portfolio/1/thesis-placeholder.png",
           de: "",
           caption: {
-            en: "",
-            de: ""
+            en: "Bachelor thesis (in progress)",
+            de: "Bachelorarbeit (in Arbeit)"
           }
         }
       ],
