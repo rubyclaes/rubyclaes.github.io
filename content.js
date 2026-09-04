@@ -389,15 +389,15 @@ const CONTENT = {
       ],
       images: [
         {
-          en: "",
-          de: "images/portfolio/4/GermanNorthSeaCoast.de.jpg",
+          en: "images/portfolio/4/GermanNorthSeaCoast.en.png",
+          de: "images/portfolio/4/GermanNorthSeaCoast.de.png",
           caption: {
             en: "Poster: the German North Sea coast",
             de: "Poster: die deutsche Nordseeküste"
           }
         },
         {
-          en: "",
+          en: "images/portfolio/4/FloodScenariosHamburg.en.png",
           de: "images/portfolio/4/FloodScenariosHamburg.de.png",
           caption: {
             en: "Flood risk in Hamburg under three scenarios",
@@ -405,7 +405,7 @@ const CONTENT = {
           }
         },
         {
-          en: "",
+          en: "images/portfolio/4/CatleFarmingGermany2020.en.png",
           de: "images/portfolio/4/CatleFarmingGermany2020.de.png",
           caption: {
             en: "Cattle farming in Germany (NUTS 3)",
@@ -413,7 +413,7 @@ const CONTENT = {
           }
         },
         {
-          en: "",
+          en: "images/portfolio/4/FloodProtectionMeasures.en.png",
           de: "images/portfolio/4/FloodProtectionMeasures.de.png",
           caption: {
             en: "Flood protection methods in Lower Saxony",
