@@ -278,33 +278,6 @@ const CONTENT = {
   ],
   projects: [
     {
-      folder: "1",
-      tools: [],
-      skills: [],
-      images: [
-        {
-          en: "images/portfolio/1/ThesisPlaceHolder.en.png",
-          de: "images/portfolio/1/ThesisPlaceHolder.de.png",
-          caption: {
-            en: "Bachelor thesis (in progress)",
-            de: "Bachelorarbeit (in Arbeit)"
-          }
-        }
-      ],
-      title: {
-        en: "Bachelor thesis (in progress)",
-        de: "Bachelorarbeit (in Arbeit)"
-      },
-      tag: {
-        en: "RWTH Aachen",
-        de: "RWTH Aachen"
-      },
-      description: {
-        en: "Sedimentological features of unknown Tsunami events in Greece.",
-        de: "Sedimentologische Merkmale von unbekannte Tsunamiereignisse in Griechenland."
-      }
-    },
-    {
       folder: "2",
       tools: [
         "QGIS",
@@ -335,7 +308,7 @@ const CONTENT = {
         }
       ],
       title: {
-        en: "Quantifying Urban Park Cooling in Amsterdam: A Remote Sensing Assessment of Nature-based Solutions",
+        en: "Urban park cooling, Amsterdam",
         de: "Quantifizierung des Kühleffekts städtischer Parks in Amsterdam: Eine fernerkundungsbasierte Bewertung naturbasierter Lösungen"
       },
       tag: {
@@ -343,7 +316,7 @@ const CONTENT = {
         de: "Forschungsarbeit · NDVI & LST"
       },
       description: {
-        en: "Amsterdam exhibits considerable urban heating is a serious concern for the near future under changing climate conditions. An NDVI map was calculated and later compared against Landsat land surface temperature in QGIS to analyse if there is any significant cooling and whether this is attributable to nature-based solutions. Cooler surfaces line up with park vegetation, a nature-based cooling signal.",
+        en: "Quantifying Urban Park Cooling in Amsterdam: A Remote Sensing Assessment of Nature-based Solutions.\nDo Amsterdam’s parks show up as cooler ground on a hot day? Sentinel-2 NDVI was compared with Landsat land-surface temperature in QGIS. Cooler pixels line up with park vegetation, a nature-based cooling signal.",
         de: "Amsterdam weist eine beträchtliche städtische Erwärmung auf, die angesichts der sich ändernden Klimabedingungen in naher Zukunft ein ernstes Problem darstellen wird. Eine NDVI-Karte wurde berechnet und später mit der Landsat-Landoberflächentemperatur in QGIS verglichen, um zu analysieren, ob es zu einer signifikanten Abkühlung kommt und ob diese auf naturbasierte Lösungen zurückzuführen ist. Kühlere Flächen reihen sich an die Parkvegetation, ein naturbedingtes Abkühlungssignal."
       }
     },
@@ -377,7 +350,7 @@ const CONTENT = {
         de: "Hausarbeit · Filmindustrie"
       },
       description: {
-        en: "Where was Game of Thrones filmed in Northern Ireland, and in which landscapes? Locations were extracted from various datasets and published sources were mapped in QGIS and categorized by setting (coast, upland, river, castle). \n\n(German) Grade: 1.7 ",
+        en: "Where was the series filmed, and in which landscapes? Locations from published sources were mapped in QGIS and grouped by setting, coast, upland, river, castle.\n\nGerman grade 1.7 (a strong result)",
         de: "Wo wurde Game of Thrones in Nordirland gedreht, und in welchen Landschaften? Drehorte wurden aus unterschiedliche Datensets und veröffentlichten Quellen entnommen und in QGIS kartiert und nach natürliche Landschaft gegliedert (Küste, Gebirge, Fluss, Burg). \n\nNote 1,7"
       }
     },
@@ -434,7 +407,7 @@ const CONTENT = {
         de: "Poster · Geovisualisierung"
       },
       description: {
-        en: "This poster combines the rising sea-level and the effect it has across multiple disciplines with three QGIS maps: Hamburg flood scenarios, cattle density at NUTS 3, and dike and dune protection in Lower Saxony. Livestock is concentrated on low marsh behind the sea defences.\n\n(German) Grade: 1.0",
+        en: "A poster on sea-level rise, built around three QGIS maps: flood scenarios for Hamburg, cattle density at NUTS 3, and dike and dune protection in Lower Saxony. Livestock sits on low marsh behind the sea defences.\n\nGerman grade 1.0 (top marks)",
         de: "Dieses Poster verbindet den steigenden Meeresspiegel und die damit verbundenen Auswirkungen mit drei QGIS-Karten: Hamburger Überflutungsszenarien, Rinderdichte auf NUTS-3-Ebene und Hochwasserschutzmaßnahmen in Niedersachsen. Die Rinderhaltung liegt vor allem auf niedrigem Marschland hinter den Küstenschutzanlagen.\n\nNote: 1,0"
       }
     },
@@ -477,6 +450,33 @@ const CONTENT = {
       description: {
         en: "Where would a 5 m water-level rise hit the Erft? A DEM deviation (DEV) map separates valleys from ridges. The different land use classifications were then overlaid with a 5 m inundation to project a flooding scenario through the valley.",
         de: "Wo träfe ein Wasseranstieg von 5 m die Erft? Eine DEV-Karte (Abweichung vom mittleren Höhenwert) trennt Täler von Rücken. Anschließend wurde wurde die Flächennutzung mit einer 5-m-Überflutung überlagert. Der Überflutungsstreifen folgt der Talsohle durch Landwirtschaft und Siedlung."
+      }
+    },
+    {
+      folder: "1",
+      tools: [],
+      skills: [],
+      images: [
+        {
+          en: "images/portfolio/1/ThesisPlaceHolder.en.png",
+          de: "images/portfolio/1/ThesisPlaceHolder.de.png",
+          caption: {
+            en: "Bachelor thesis (in progress)",
+            de: "Bachelorarbeit (in Arbeit)"
+          }
+        }
+      ],
+      title: {
+        en: "Bachelor thesis (in progress)",
+        de: "Bachelorarbeit (in Arbeit)"
+      },
+      tag: {
+        en: "RWTH Aachen",
+        de: "RWTH Aachen"
+      },
+      description: {
+        en: "Sedimentological features of unknown Tsunami events in Greece.",
+        de: "Sedimentologische Merkmale von unbekannte Tsunamiereignisse in Griechenland."
       }
     }
   ],
