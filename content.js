@@ -126,28 +126,32 @@ const UI = {
     de: "Bild nicht gefunden:"
   },
   viewImage: {
-    en: "View larger image",
-    de: "Bild vergrößern"
+    en: "View larger figure",
+    de: "Abbildung vergrößern"
   },
   viewGallery: {
-    en: "Browse {count} photos: {title}",
-    de: "{count} Fotos ansehen: {title}"
+    en: "Browse {count} figures: {title}",
+    de: "{count} Abbildungen ansehen: {title}"
   },
   browsePhotos: {
-    en: "{count} photos",
-    de: "{count} Fotos"
+    en: "{count} figures",
+    de: "{count} Abbildungen"
   },
   previousImage: {
-    en: "Previous image",
-    de: "Vorheriges Bild"
+    en: "Previous figure",
+    de: "Vorherige Abbildung"
   },
   nextImage: {
-    en: "Next image",
-    de: "Nächstes Bild"
+    en: "Next figure",
+    de: "Nächste Abbildung"
   },
   imageCount: {
     en: "{current} / {total}",
     de: "{current} / {total}"
+  },
+  figureCount: {
+    en: "Figure {current} of {total}",
+    de: "Abbildung {current} von {total}"
   },
   closeImage: {
     en: "Close",
