@@ -279,8 +279,8 @@ const CONTENT = {
       skills: [],
       images: [
         {
-          en: "images/portfolio/1/thesis-placeholder.png",
-          de: "",
+          en: "images/portfolio/1/ThesisPlaceHolder.en.png",
+          de: "images/portfolio/1/ThesisPlaceHolder.de.png",
           caption: {
             en: "Bachelor thesis (in progress)",
             de: "Bachelorarbeit (in Arbeit)"
