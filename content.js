@@ -106,7 +106,7 @@ const UI = {
     de: "Ausbildung"
   },
   experience: {
-    en: "Field Experience",
+    en: "Experience",
     de: "Berufserfahrung"
   },
   languages: {
@@ -529,6 +529,26 @@ const CONTENT = {
   experience: [
     {
       role: {
+        en: "Student Intern",
+        de: "Studentische Praktikantin "
+      },
+      org: {
+        en: "RWE Power AG",
+        de: "RWE Power AG "
+      },
+      dates: {
+        en: "Oct 2026 - Nov 2026",
+        de: "Okt. 2026 - Nov. 2026"
+      },
+      bullets: [
+        {
+          en: "6-week Internship in the field of geomonitoring and geodata ",
+          de: "6-Wöchiger Praktikum im Bereich Geomonitoring und Geodaten "
+        }
+      ]
+    },
+    {
+      role: {
         en: "Library Assistant (Student Job)",
         de: "Studentische Hilfskraft (Bibliothek)"
       },
@@ -604,26 +624,6 @@ const CONTENT = {
         {
           en: "Delivered one-on-one tutoring sessions tailored to individual student needs",
           de: "Individuelle Nachhilfestunden, angepasst an den Lernstand"
-        }
-      ]
-    },
-    {
-      role: {
-        en: "Student Intern",
-        de: "Studentische Praktikantin "
-      },
-      org: {
-        en: "RWE Power AG",
-        de: "RWE Power AG "
-      },
-      dates: {
-        en: "Oct 2026 - Nov 2026",
-        de: "Okt. 2026 - Nov. 2026"
-      },
-      bullets: [
-        {
-          en: "6-week Internship in the field of geomonitoring and geodata ",
-          de: "6-Wöchiger Praktikum im Bereich Geomonitoring und Geodaten "
         }
       ]
     }
