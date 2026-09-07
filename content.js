@@ -606,6 +606,26 @@ const CONTENT = {
           de: "Individuelle Nachhilfestunden, angepasst an den Lernstand"
         }
       ]
+    },
+    {
+      role: {
+        en: "Student Intern",
+        de: "Studentische Praktikantin "
+      },
+      org: {
+        en: "RWE Power AG",
+        de: "RWE Power AG "
+      },
+      dates: {
+        en: "Oct 2026 - Nov 2026",
+        de: "Okt. 2026 - Nov. 2026"
+      },
+      bullets: [
+        {
+          en: "6-week Internship in the field of geomonitoring and geodata ",
+          de: "6-Wöchiger Praktikum im Bereich Geomonitoring und Geodaten "
+        }
+      ]
     }
   ],
   languages: {
