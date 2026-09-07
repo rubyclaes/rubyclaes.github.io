@@ -438,18 +438,13 @@
       bar.className = "project-media-bar";
       cue = document.createElement("p");
       cue.className = "project-media-cue";
-      const browse = document.createElement("span");
-      browse.className = "project-media-browse";
-      browse.textContent = fillCopy(t(UI.browsePhotos, lang) || "{count} photos", {
-        count: figures.length
-      });
+      cue.setAttribute("aria-hidden", "true");
       bar.appendChild(cue);
-      bar.appendChild(browse);
 
       const strip = document.createElement("div");
       strip.className = "project-media-strip";
       strip.setAttribute("role", "tablist");
-      strip.setAttribute("aria-label", fillCopy(t(UI.browsePhotos, lang) || "{count} photos", {
+      strip.setAttribute("aria-label", fillCopy(t(UI.browsePhotos, lang) || "{count} figures", {
         count: figures.length
       }));
       thumbs = figures.map((figure, index) => {
@@ -457,7 +452,7 @@
         thumb.type = "button";
         thumb.className = "project-media-thumb";
         thumb.setAttribute("role", "tab");
-        thumb.setAttribute("aria-label", figure.caption || formatImageCount(lang, index + 1, figures.length));
+        thumb.setAttribute("aria-label", figure.caption || formatFigureCount(lang, index + 1, figures.length));
         const thumbImg = document.createElement("img");
         thumbImg.src = figure.src;
         thumbImg.alt = "";
@@ -604,11 +599,22 @@
     caption: ""
   };
 
-  function formatImageCount(lang, current, total) {
-    const template = t(UI.imageCount, lang) || "{current} / {total}";
-    return template
+  function formatCount(template, current, total) {
+    return String(template || "")
       .replace("{current}", String(current))
       .replace("{total}", String(total));
+  }
+
+  function formatImageCount(lang, current, total) {
+    return formatCount(t(UI.imageCount, lang) || "{current} / {total}", current, total);
+  }
+
+  function formatFigureCount(lang, current, total) {
+    return formatCount(
+      t(UI.figureCount, lang) || t(UI.imageCount, lang) || "Figure {current} of {total}",
+      current,
+      total
+    );
   }
 
   function mountLightbox() {
@@ -804,7 +810,7 @@
       btn.className = "lightbox-thumb" + (index === lightboxState.index ? " is-active" : "");
       btn.setAttribute("data-lightbox", "goto");
       btn.setAttribute("data-index", String(index));
-      btn.setAttribute("aria-label", formatImageCount(currentLang, index + 1, items.length));
+      btn.setAttribute("aria-label", formatFigureCount(currentLang, index + 1, items.length));
       btn.setAttribute("aria-current", index === lightboxState.index ? "true" : "false");
       const thumb = document.createElement("img");
       thumb.src = src;
