@@ -779,6 +779,7 @@
       ${locFields("CONTENT.certificates." + index + ".title", entry.title, { label: "Course title" })}
       ${locFields("CONTENT.certificates." + index + ".issuer", entry.issuer, { label: "Provider / issuer" })}
       ${locFields("CONTENT.certificates." + index + ".dates", entry.dates, { label: "Date / period" })}
+      ${locFields("CONTENT.certificates." + index + ".image", entry.image || emptyLoc(), { label: "Certificate image / icon" })}
     </article>`;
   }
 

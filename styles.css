@@ -1444,6 +1444,48 @@ body.lightbox-open {
   background: rgba(255, 255, 255, 0.02);
 }
 
+.certificate-body {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.certificate-thumb {
+  flex-shrink: 0;
+  width: 96px;
+  height: 68px;
+  padding: 0;
+  border: 1px solid rgba(126, 146, 170, 0.7);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(240,244,248,0.7));
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(16, 24, 40, 0.05);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.certificate-thumb:hover,
+.certificate-thumb:focus-visible {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  box-shadow: 0 6px 16px rgba(31, 57, 78, 0.12);
+}
+
+.certificate-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.certificate-copy {
+  flex: 1;
+  min-width: 0;
+}
+
 .certificate-head {
   display: flex;
   flex-wrap: wrap;

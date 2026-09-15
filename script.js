@@ -253,14 +253,41 @@
       const title = t(entry.title, lang);
       const issuer = t(entry.issuer, lang);
       const dates = t(entry.dates, lang);
+      const image = t(entry.image, lang);
       const meta = [issuer, dates].filter(Boolean).join(" • ");
 
-      wrap.innerHTML = `
+      const body = document.createElement("div");
+      body.className = "certificate-body";
+
+      const text = document.createElement("div");
+      text.className = "certificate-copy";
+      text.innerHTML = `
         <div class="certificate-head">
           <span class="certificate-title">${escapeHtml(title)}</span>
           ${meta ? `<span class="certificate-meta">${escapeHtml(meta)}</span>` : ""}
         </div>
       `;
+      body.appendChild(text);
+
+      if (image) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "certificate-thumb";
+        button.setAttribute("aria-label", `${title || "Certificate"}`);
+        button.addEventListener("click", () => {
+          openLightbox([{ src: image, caption: title }], 0, title);
+        });
+
+        const img = document.createElement("img");
+        img.src = image;
+        img.alt = title || "Certificate";
+        img.loading = "lazy";
+        img.decoding = "async";
+        button.appendChild(img);
+        body.appendChild(button);
+      }
+
+      wrap.appendChild(body);
       container.appendChild(wrap);
     });
   }
