@@ -279,34 +279,16 @@ const CONTENT = {
   certificates: [
     {
       title: {
-        en: "Google Data Analytics",
-        de: "Google Data Analytics"
+        en: "Fit in IT - Introduction to Python",
+        de: "Fit in IT - Einführing in Python"
       },
       issuer: {
-        en: "Google / Coursera",
-        de: "Google / Coursera"
+        en: "RWTH Aachen University",
+        de: "RWTH Aachen Universität"
       },
       dates: {
-        en: "2025",
-        de: "2025"
-      },
-      image: {
-        en: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Crect width='160' height='160' rx='18' fill='%232c3d4f'/%3E%3Ccircle cx='80' cy='80' r='54' fill='none' stroke='%23d8e4ef' stroke-width='8'/%3E%3Cpath d='M80 36 L92 71 L128 71 L99 96 L111 132 L80 107 L49 132 L61 96 L32 71 L68 71 Z' fill='%2379d7d0'/%3E%3Crect x='42' y='116' width='76' height='10' rx='5' fill='%23d8e4ef'/%3E%3C/svg%3E",
-        de: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Crect width='160' height='160' rx='18' fill='%232c3d4f'/%3E%3Ccircle cx='80' cy='80' r='54' fill='none' stroke='%23d8e4ef' stroke-width='8'/%3E%3Cpath d='M80 36 L92 71 L128 71 L99 96 L111 132 L80 107 L49 132 L61 96 L32 71 L68 71 Z' fill='%2379d7d0'/%3E%3Crect x='42' y='116' width='76' height='10' rx='5' fill='%23d8e4ef'/%3E%3C/svg%3E"
-      }
-    },
-    {
-      title: {
-        en: "Introduction to GIS using QGIS",
-        de: "Einführung in GIS mit QGIS"
-      },
-      issuer: {
-        en: "University of California, Davis (Coursera)",
-        de: "University of California, Davis (Coursera)"
-      },
-      dates: {
-        en: "2024",
-        de: "2024"
+        en: "2026",
+        de: "2026"
       }
     }
   ],
@@ -318,7 +300,7 @@ const CONTENT = {
       images: [
         {
           en: "images/portfolio/1/ThesisPlaceHolder.en.png",
-          de: "",
+          de: "images/portfolio/1/ThesisPlaceHolder.de.png",
           caption: {
             en: "",
             de: ""
