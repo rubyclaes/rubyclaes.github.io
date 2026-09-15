@@ -1428,6 +1428,44 @@ body.lightbox-open {
   margin-bottom: 52px;
 }
 
+#certificates {
+  margin-bottom: 52px;
+}
+
+.certificates {
+  display: grid;
+  gap: 12px;
+}
+
+.certificate {
+  padding: 12px 14px;
+  border: 1px solid rgba(126, 146, 170, 0.45);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.certificate-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.certificate-title {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.certificate-meta {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
 /* Project cards */
 .projects {
   gap: 32px;

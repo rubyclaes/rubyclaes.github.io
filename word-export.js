@@ -652,6 +652,27 @@
       </w:tblBorders>`);
     }
 
+    const certificateEntries = (CONTENT.certificates || []).filter((entry) => entry);
+    if (certificateEntries.length) {
+      body += sectionHeading(t(UI.certificates, lang));
+      certificateEntries.forEach((entry) => {
+        const title = t(entry.title, lang);
+        const issuer = t(entry.issuer, lang);
+        const dates = t(entry.dates, lang);
+        const meta = [issuer, dates].filter(Boolean).join(" • ");
+        if (title) {
+          body += wordP(wordRun(title, {
+            font: th.fontBody, size: th.sizeRole, color: th.ink, bold: true
+          }), styleP("Role"));
+        }
+        if (meta) {
+          body += wordP(wordRun(meta, {
+            font: th.fontBody, size: th.sizeOrg, color: th.muted
+          }), styleP("Org"));
+        }
+      });
+    }
+
     function entriesXml(entries) {
       return (entries || []).map((entry) => {
         const role = t(entry.role, lang);

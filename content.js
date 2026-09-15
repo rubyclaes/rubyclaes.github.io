@@ -57,6 +57,10 @@ const UI = {
     en: "Skills",
     de: "Kompetenzen"
   },
+  certificates: {
+    en: "Certificates",
+    de: "Zertifikate"
+  },
   navProjects: {
     en: "Projects",
     de: "Projekte"
@@ -269,6 +273,36 @@ const CONTENT = {
       detail: {
         en: "Sediment sample analysis (basic)",
         de: "Analyse von Sedimentproben (Grundkenntnisse)"
+      }
+    }
+  ],
+  certificates: [
+    {
+      title: {
+        en: "Google Data Analytics",
+        de: "Google Data Analytics"
+      },
+      issuer: {
+        en: "Google / Coursera",
+        de: "Google / Coursera"
+      },
+      dates: {
+        en: "2025",
+        de: "2025"
+      }
+    },
+    {
+      title: {
+        en: "Introduction to GIS using QGIS",
+        de: "Einführung in GIS mit QGIS"
+      },
+      issuer: {
+        en: "University of California, Davis (Coursera)",
+        de: "University of California, Davis (Coursera)"
+      },
+      dates: {
+        en: "2024",
+        de: "2024"
       }
     }
   ],

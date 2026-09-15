@@ -210,12 +210,14 @@
         $("full-profile-text").textContent = t(CONTENT.fullProfile, lang) || t(CONTENT.shortProfile, lang);
       }
       renderLegend(lang);
+      renderCertificates($("certificates-list"), CONTENT.certificates || [], lang);
       renderEntries($("education"), CONTENT.education || [], lang);
       renderEntries($("experience"), CONTENT.experience || [], lang);
       if ($("languages")) $("languages").textContent = t(CONTENT.languages, lang);
     } else {
       if ($("profile-text")) $("profile-text").textContent = t(CONTENT.shortProfile, lang);
       renderLegend(lang);
+      renderCertificates($("certificates-list"), CONTENT.certificates || [], lang);
       renderProjects(lang);
     }
 
@@ -239,6 +241,27 @@
         <div class="legend-detail">${escapeHtml(t(skill.detail, lang))}</div>
       `;
       legendEl.appendChild(row);
+    });
+  }
+
+  function renderCertificates(container, entries, lang) {
+    if (!container) return;
+    container.innerHTML = "";
+    (entries || []).forEach((entry) => {
+      const wrap = document.createElement("div");
+      wrap.className = "certificate";
+      const title = t(entry.title, lang);
+      const issuer = t(entry.issuer, lang);
+      const dates = t(entry.dates, lang);
+      const meta = [issuer, dates].filter(Boolean).join(" • ");
+
+      wrap.innerHTML = `
+        <div class="certificate-head">
+          <span class="certificate-title">${escapeHtml(title)}</span>
+          ${meta ? `<span class="certificate-meta">${escapeHtml(meta)}</span>` : ""}
+        </div>
+      `;
+      container.appendChild(wrap);
     });
   }
 

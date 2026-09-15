@@ -333,6 +333,7 @@
     const contact = state.SHARED.contact || {};
     const content = state.CONTENT;
     const skills = content.skills || [];
+    const certificates = content.certificates || [];
     const projects = content.projects || [];
     const education = content.education || [];
     const experience = content.experience || [];
@@ -401,6 +402,16 @@
         <p class="editor-help">Pick a legend mark for each skill. Unused marks are available when you add another skill.</p>
         <div id="skills-list">${skills.map(renderSkill).join("")}</div>
         <button type="button" class="ghost" data-action="add-skill">+ Add skill</button>
+      </section>
+
+      <section class="editor-section">
+        <div class="editor-section-head">
+          <h2>Certificates</h2>
+          ${pageTag("both")}
+        </div>
+        <p class="editor-help">Add each completed course below the skills section.</p>
+        <div id="certificates-list">${certificates.map(renderCertificate).join("")}</div>
+        <button type="button" class="ghost" data-action="add-certificate">+ Add certificate</button>
       </section>
 
       <section class="editor-section">
@@ -759,6 +770,18 @@
     </article>`;
   }
 
+  function renderCertificate(entry, index) {
+    return `<article class="editor-card" data-list="certificates" data-index="${index}">
+      <div class="editor-card-head">
+        <strong>Certificate ${index + 1}</strong>
+        ${binButton("remove-certificate", `data-index="${index}"`, "Remove certificate")}
+      </div>
+      ${locFields("CONTENT.certificates." + index + ".title", entry.title, { label: "Course title" })}
+      ${locFields("CONTENT.certificates." + index + ".issuer", entry.issuer, { label: "Provider / issuer" })}
+      ${locFields("CONTENT.certificates." + index + ".dates", entry.dates, { label: "Date / period" })}
+    </article>`;
+  }
+
   function renderEntry(kind, entry, index) {
     const bullets = entry.bullets || [];
     const bulletHtml = bullets
@@ -1038,6 +1061,14 @@
       state.CONTENT.skills.push({ symbol: nextSymbol(), label: emptyLoc(), detail: emptyLoc() });
     } else if (action === "remove-skill") {
       state.CONTENT.skills.splice(index, 1);
+    } else if (action === "add-certificate") {
+      state.CONTENT.certificates.push({
+        title: emptyLoc(),
+        issuer: emptyLoc(),
+        dates: emptyLoc()
+      });
+    } else if (action === "remove-certificate") {
+      state.CONTENT.certificates.splice(index, 1);
     } else if (action === "add-project") {
       state.CONTENT.projects.push({
         folder: nextFolder(),
