@@ -289,6 +289,10 @@ const CONTENT = {
       dates: {
         en: "2026",
         de: "2026"
+      },
+      image: {
+        en: "images/certificates/Python_Certificate.jpg",
+        de: "images/certificates/Python_Certificate.jpg"
       }
     }
   ],
