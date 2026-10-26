@@ -496,7 +496,6 @@ h1#name {
 
 p#profile-text,
 p#full-profile-text {
-  max-width: 62ch;
   text-align: justify;
 }
 
