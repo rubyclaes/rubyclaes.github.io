@@ -216,8 +216,8 @@ const CONTENT = {
         de: "GIS & Geodatenwerkzeuge "
       },
       detail: {
-        en: "QGIS, spatial data analysis, cartographic design",
-        de: "QGIS, räumliche Datenanalyse, kartographische Gestaltung"
+        en: "QGIS, Geomedia and spatial data analysis",
+        de: "QGIS, Geomedia und räumliche Datenanalyse"
       }
     },
     {
@@ -250,7 +250,7 @@ const CONTENT = {
       },
       detail: {
         en: "Inkscape, data visualisation and cartographic representation",
-        de: "Inkscape, Datenvisualisierung und kartographische Darstellung"
+        de: "Inkscape, Datenvisualisierung und kartographische Gestaltung"
       }
     },
     {
