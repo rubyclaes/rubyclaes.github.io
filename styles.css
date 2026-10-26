@@ -494,7 +494,11 @@ h1#name {
   font-style: italic;
 }
 
-p#profile-text { max-width: 62ch; }
+p#profile-text,
+p#full-profile-text {
+  max-width: 62ch;
+  text-align: justify;
+}
 
 /* ---------- legend (skills) ---------- */
 

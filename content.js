@@ -249,8 +249,8 @@ const CONTENT = {
         de: "Design & Visualisierung"
       },
       detail: {
-        en: "Inkscape, map layout and cartographic representation",
-        de: "Inkscape, Kartenlayout und kartographische Darstellung"
+        en: "Inkscape, data visualisation and cartographic representation",
+        de: "Inkscape, Datenvisualisierung und kartographische Darstellung"
       }
     },
     {
@@ -330,7 +330,8 @@ const CONTENT = {
         "QGIS",
         "Excel",
         "Landsat",
-        "Sentinel-2"
+        "Sentinel-2",
+        "Inkscape"
       ],
       skills: [
         "ring",
