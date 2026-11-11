@@ -376,7 +376,7 @@ const CONTENT = {
         de: "Forschungsarbeit · NDVI & LST"
       },
       description: {
-        en: "Amsterdam exhibits considerable urban heating is a serious concern for the near future under changing climate conditions. An NDVI map was calculated and later compared against Landsat land surface temperature in QGIS to analyse if there is any significant cooling and whether this is attributable to nature-based solutions. Cooler surfaces line up with park vegetation, a nature-based cooling signal.",
+        en: "Amsterdam is experiencing considerable urban warming, which is likely to become a serious problem in the near future as the climate changes. An NDVI map was calculated and then compared with Landsat land surface temperature in QGIS, to analyse whether there is a significant cooling effect and whether it can be attributed to nature-based solutions. Cooler areas coincide with park vegetation, indicating a cooling effect from nature-based solutions.",
         de: "Amsterdam weist eine beträchtliche städtische Erwärmung auf, die angesichts der sich ändernden Klimabedingungen in naher Zukunft ein ernstes Problem darstellen wird. Eine NDVI-Karte wurde berechnet und später mit der Landsat-Landoberflächentemperatur in QGIS verglichen, um zu analysieren, ob es zu einer signifikanten Abkühlung kommt und ob diese auf naturbasierte Lösungen zurückzuführen ist. Kühlere Flächen reihen sich an die Parkvegetation, ein naturbedingtes Abkühlungssignal."
       }
     },
