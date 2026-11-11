@@ -299,15 +299,19 @@ const CONTENT = {
   projects: [
     {
       folder: "1",
-      tools: [],
+      tools: [
+        "QGIS",
+        "Excel",
+        "Inkscape"
+      ],
       skills: [],
       images: [
         {
           en: "images/portfolio/1/DEM_Profiles.png",
           de: "",
           caption: {
-            en: "Visualisation of geological and sedimentary features of study area (Peloponnese, Greece) ",
-            de: "Visualisierung der geologischen und sedimentologischen Merkmale des Untersuchungsgebiet (Peloponnes, Griechenland)"
+            en: "Digital Elevation Model of Southern Peloponnese, with according topographic profiles",
+            de: "Digital Geländemodel der südlichen Peloponnes mit dazugehörigen topographischen Profile "
           }
         },
         {
@@ -320,16 +324,16 @@ const CONTENT = {
         }
       ],
       title: {
-        en: "Bachelor thesis (in progress)",
-        de: "Bachelorarbeit (in Arbeit)"
+        en: "Bachelor thesis (in progress) - Sedimentological features of Paleotsunamis in Greece",
+        de: "Bachelorarbeit (in Arbeit) - Sedimentologische Merkmale von unbekannte Tsunamiereignisse in Griechenland."
       },
       tag: {
         en: "RWTH Aachen",
         de: "RWTH Aachen"
       },
       description: {
-        en: "Sedimentological features of unknown Tsunami events in Greece.",
-        de: "Sedimentologische Merkmale von unbekannte Tsunamiereignisse in Griechenland."
+        en: "Visualisation of geological and sedimentary features of study area (Peloponnese, Greece) ",
+        de: "Visualisierung der geologischen und sedimentologischen Merkmale des Untersuchungsgebiet (Peloponnes, Griechenland)"
       }
     },
     {
