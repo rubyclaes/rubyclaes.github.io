@@ -652,6 +652,14 @@
       </w:tblBorders>`);
     }
 
+    const languages = t(CONTENT.languages, lang);
+    if (languages) {
+      body += sectionHeading(t(UI.languages, lang));
+      body += wordP(wordRun(languages, {
+        font: th.fontBody, size: th.sizeBody, color: th.ink
+      }), styleP("Normal"));
+    }
+
     const certificateEntries = (CONTENT.certificates || []).filter((entry) => entry);
     if (certificateEntries.length) {
       body += sectionHeading(t(UI.certificates, lang));
@@ -714,14 +722,6 @@
     body += entriesXml(CONTENT.education);
     body += sectionHeading(t(UI.experience, lang));
     body += entriesXml(CONTENT.experience);
-
-    const languages = t(CONTENT.languages, lang);
-    if (languages) {
-      body += sectionHeading(t(UI.languages, lang));
-      body += wordP(wordRun(languages, {
-        font: th.fontBody, size: th.sizeBody, color: th.ink
-      }), styleP("Normal"));
-    }
 
     const borders = th.pageBorder ? `
       <w:pgBorders w:offsetFrom="page">

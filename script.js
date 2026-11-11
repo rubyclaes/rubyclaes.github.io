@@ -205,6 +205,8 @@
       }
     }
 
+    if ($("languages")) $("languages").textContent = t(CONTENT.languages, lang);
+
     if (isCVPage) {
       if ($("full-profile-text")) {
         $("full-profile-text").textContent = t(CONTENT.fullProfile, lang) || t(CONTENT.shortProfile, lang);
@@ -213,7 +215,6 @@
       renderCertificates($("certificates-list"), CONTENT.certificates || [], lang);
       renderEntries($("education"), CONTENT.education || [], lang);
       renderEntries($("experience"), CONTENT.experience || [], lang);
-      if ($("languages")) $("languages").textContent = t(CONTENT.languages, lang);
     } else {
       if ($("profile-text")) $("profile-text").textContent = t(CONTENT.shortProfile, lang);
       renderLegend(lang);
