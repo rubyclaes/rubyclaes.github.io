@@ -303,8 +303,16 @@ const CONTENT = {
       skills: [],
       images: [
         {
-          en: "images/portfolio/1/ThesisPlaceHolder.en.png",
-          de: "images/portfolio/1/ThesisPlaceHolder.de.png",
+          en: "images/portfolio/1/DEM_Profiles.png",
+          de: "",
+          caption: {
+            en: "Visualisation of geological and sedimentary features of study area (Peloponnese, Greece) ",
+            de: "Visualisierung der geologischen und sedimentologischen Merkmale des Untersuchungsgebiet (Peloponnes, Griechenland)"
+          }
+        },
+        {
+          en: "images/portfolio/1/study area 4326 FINAL.png",
+          de: "",
           caption: {
             en: "",
             de: ""
