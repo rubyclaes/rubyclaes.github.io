@@ -318,8 +318,16 @@ const CONTENT = {
           en: "images/portfolio/1/study area 4326 FINAL.png",
           de: "",
           caption: {
-            en: "",
-            de: ""
+            en: "Map of Study Area and Sediment Core Locations in Pounta Viglafia Bay in southeastern Peloponnese, Greece",
+            de: "Karte zum Untersuchungsgebiet und Bohrkern Standorte in Pounta Viglafia Bay in der südöstlichen Peloponnes, Griechenland"
+          }
+        },
+        {
+          en: "images/portfolio/1/log_bigger_FINAL.png",
+          de: "",
+          caption: {
+            en: "Sedimentological Characteristics and Statistical Parameters of Core PO10 in Pounta Viglafia Bay, Greece",
+            de: "Sedimentologische Merkmale und Statistische Parameter von Bohrkern PO10 in Pounta Viglafia Bay, Griechenland"
           }
         }
       ],
