@@ -307,19 +307,19 @@ const CONTENT = {
       skills: [],
       images: [
         {
-          en: "images/portfolio/1/DEM_Profiles.png",
-          de: "",
-          caption: {
-            en: "Digital Elevation Model of Southern Peloponnese, with according topographic profiles",
-            de: "Digital Geländemodel der südlichen Peloponnes mit dazugehörigen topographischen Profile "
-          }
-        },
-        {
           en: "images/portfolio/1/study area 4326 FINAL.png",
           de: "",
           caption: {
             en: "Map of Study Area and Sediment Core Locations in Pounta Viglafia Bay in southeastern Peloponnese, Greece",
             de: "Karte zum Untersuchungsgebiet und Bohrkern Standorte in Pounta Viglafia Bay in der südöstlichen Peloponnes, Griechenland"
+          }
+        },
+        {
+          en: "images/portfolio/1/DEM_Profiles.png",
+          de: "",
+          caption: {
+            en: "Digital Elevation Model of Southern Peloponnese, with according topographic profiles",
+            de: "Digital Geländemodel der südlichen Peloponnes mit dazugehörigen topographischen Profile "
           }
         },
         {
